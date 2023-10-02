@@ -25,13 +25,24 @@ wget -O jdk.zip "$NEXUS_JDK_URL"
 unzip jdk.zip -d "$APP_DIRECTORY"
 rm jdk.zip
 
-# Step 3: Build the Spring Boot application
-log "Step 3: Building Spring Boot application..."
+# Step 3: Copy Certificates to the Application Directory (if needed)
+log "Step 3: Copying Certificates to the Application Directory..."
 cd "$APP_DIRECTORY"
+
+# Assuming your certificates are stored in the "certs" folder within your repository
+CERTS_DIR="certs"
+cp "$CERTS_DIR"/* ./
+
+# Step 4: Import Certificates into JDK's Truststore
+log "Step 4: Importing Certificates into JDK's Truststore..."
+JAVA_HOME="$APP_DIRECTORY" ./bin/keytool -importcert -trustcacerts -file certificate.crt -alias myapp -keystore ./lib/security/cacerts -storepass changeit -noprompt
+
+# Step 5: Build the Spring Boot application
+log "Step 5: Building Spring Boot application..."
 $BUILD_COMMAND
 
-# Step 4: Run the Spring Boot application
-log "Step 4: Running Spring Boot application..."
+# Step 6: Run the Spring Boot application
+log "Step 6: Running Spring Boot application..."
 $RUN_COMMAND &
 
 # Wait for the application to start
