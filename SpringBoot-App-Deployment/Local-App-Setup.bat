@@ -1,68 +1,72 @@
-# Spring Boot Application Setup and Health Check Script
+#!/bin/bash
 
-**Author:** Harshal
+# Define variables
+GIT_REPO_URL="https://github.com/your/repo.git"
+NEXUS_JDK_URL="https://nexus.example.com/nexus/repository/maven-public/com/example/jdk/11.0.13/jdk-11.0.13.zip"
+APP_DIRECTORY="my-spring-boot-app"
+BUILD_COMMAND="./gradlew build"
+RUN_COMMAND="./gradlew bootRun"
+HEALTHCHECK_URL="http://localhost:8080/actuator/health"
+MAX_ATTEMPTS=10  # Number of health check attempts
+SLEEP_INTERVAL=10  # Number of seconds between health check attempts
+APPLICATION_PORT=8080  # Port for the Spring Boot application
 
-This script is designed to simplify the process of setting up and checking the health of a Spring Boot application. It covers the following steps:
+# Function to log messages with timestamp
+log() {
+  echo "$(date +"%Y-%m-%d %H:%M:%S") - $1"
+}
 
-1. Cloning a Git repository.
-2. Copying a JDK from a Nexus repository.
-3. Building and running the Spring Boot application.
-4. Continuously checking the application's health status until it's up and running.
+# Step 1: Clone the Git repository
+log "Step 1: Cloning Git repository..."
+git clone "$GIT_REPO_URL" "$APP_DIRECTORY"
 
-## Prerequisites
+# Step 2: Copy the JDK from Nexus (Assuming JDK is packaged as a ZIP file)
+log "Step 2: Copying JDK from Nexus..."
+wget -O jdk.zip "$NEXUS_JDK_URL"
+unzip jdk.zip -d "$APP_DIRECTORY"
+rm jdk.zip
 
-Before using this script, make sure you have the following:
+# Step 3: Copy Certificates to the Application Directory (if needed)
+log "Step 3: Copying Certificates to the Application Directory..."
+cd "$APP_DIRECTORY"
 
-- Git installed on your system.
-- The application's Git repository URL.
-- Access to a Nexus repository with the JDK package you need.
-- Gradle Wrapper (`gradlew`) or Gradle installed for building the Spring Boot application.
-- A running Spring Boot application that exposes a health check endpoint (usually `/actuator/health`).
+# Assuming your certificates are stored in the "certs" folder within your repository
+CERTS_DIR="certs"
+cp "$CERTS_DIR"/* ./
 
-## Usage
+# Step 4: Import Certificates into JDK's Truststore
+log "Step 4: Importing Certificates into JDK's Truststore..."
+JAVA_HOME="$APP_DIRECTORY" ./bin/keytool -importcert -trustcacerts -file certificate.crt -alias myapp -keystore ./lib/security/cacerts -storepass changeit -noprompt
 
-1. **Clone the Repository**: Replace `GIT_REPO_URL` with the URL of your Git repository.
+# Step 5: Build the Spring Boot application
+log "Step 5: Building Spring Boot application..."
+$BUILD_COMMAND
 
-2. **Copy JDK from Nexus**: Replace `NEXUS_JDK_URL` with the URL of the JDK package in your Nexus repository.
+# Step 6: Configure Spring Boot Profile, Xmx, and Port
+log "Step 6: Configuring Spring Boot Profile, Xmx, and Port..."
+echo "spring.profiles.active=localdev" >> application.properties
+echo "JAVA_OPTS=\"-Xmx1024m\"" >> application.properties
+echo "server.port=$APPLICATION_PORT" >> application.properties
+echo "server.http2.enabled=true" >> application.properties
 
-3. **Build and Run the Application**: Customize `BUILD_COMMAND` and `RUN_COMMAND` as needed for your project.
+# Step 7: Run the Spring Boot application
+log "Step 7: Running Spring Boot application..."
+$RUN_COMMAND &
 
-4. **Health Check**: The script continuously checks the health of the application using the `HEALTHCHECK_URL`. Customize this URL to match your application's health check endpoint.
+# Wait for the application to start
+log "Waiting for the application to start..."
+for ((i = 1; i <= MAX_ATTEMPTS; i++)); do
+  if curl --output /dev/null --silent --fail "$HEALTHCHECK_URL"; then
+    log "Health check passed. Application is running successfully."
+    break
+  fi
+  log "Health check attempt $i failed. Retrying in $SLEEP_INTERVAL seconds..."
+  sleep $SLEEP_INTERVAL
+done
 
-5. **Script Configuration**:
-   - You can adjust the `MAX_ATTEMPTS` and `SLEEP_INTERVAL` variables to control the number of health check attempts and the time between attempts.
-   - Customize the `APP_DIRECTORY` variable to set the directory where the application will be cloned.
-   - Set the `APPLICATION_PORT` variable to specify the port for the Spring Boot application.
-
-6. **Running the Script**:
-
-   ### On Windows
-   
-   - Open a Command Prompt (cmd).
-   - Navigate to the directory where the script is located.
-   - Run the script using the following command:
-     ```batch
-     setup-and-health-check.bat
-     ```
-
-   ### On Linux/macOS
-
-   - Open a terminal.
-   - Navigate to the directory where the script is located.
-   - Make the script executable (if not already) using the following command:
-     ```bash
-     chmod +x setup-and-health-check.sh
-     ```
-   - Run the script using the following command:
-     ```bash
-     ./setup-and-health-check.sh
-     ```
-
-7. **Monitoring**: The script logs the health check status. If the application is successfully running, it will indicate success. If the health check fails after all attempts, the script logs an error message.
-
-## Note
-
-- This script is intended for development and testing purposes.
-- Customize the script as needed to match your project's specific requirements.
-
-Feel free to reach out if you encounter any issues or have questions about using this script.
+if [ $i -gt $MAX_ATTEMPTS ]; then
+  log "Health check failed after $MAX_ATTEMPTS attempts. Application may not be running."
+  # Notify developer or perform further actions on failure
+  # Example: send an email to the developer
+  # mail -s "Error: Spring Boot App is Not Running" developer@example.com
+fi
