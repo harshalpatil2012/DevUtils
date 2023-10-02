@@ -1,67 +1,86 @@
-# Spring Boot Application Setup and Health Check Script
+===============================================
+Release Branches and Versioning Strategy
+===============================================
 
-**Author:** Harshal
+This document outlines the recommended strategy for managing release branches and versioning for a common web application.
 
-This script is designed to simplify the process of setting up and checking the health of a Spring Boot application. It covers the following steps:
+Release Branches:
+-----------------
 
-1. Cloning a Git repository.
-2. Copying a JDK from a Nexus repository.
-3. Building and running the Spring Boot application.
-4. Continuously checking the application's health status until it's up and running.
+1. Main Branch (Master):
+   - Represents the mainline development.
+   - All development work and features are initially branched off from 'main.'
 
-## Prerequisites
+2. Feature Branches:
+   - Created for new features or enhancements.
+   - Naming convention: 'feature/<feature-name>' or 'feature-<feature-name>'.
 
-Before using this script, make sure you have the following:
+3. Bugfix Branches:
+   - Created to fix issues in the codebase.
+   - Naming convention: 'bugfix/<issue-description>' or 'fix-<issue-description>'.
 
-- Git installed on your system.
-- The application's Git repository URL.
-- Access to a Nexus repository with the JDK package you need.
-- Gradle Wrapper (`gradlew`) or Gradle installed for building the Spring Boot application.
-- A running Spring Boot application that exposes a health check endpoint (usually `/actuator/health`).
+4. Release Branches:
+   - Created when preparing for a new version release.
+   - Naming convention: 'release/<version-number>' or 'v<version-number>'.
 
-## Usage
+5. Hotfix Branches:
+   - Used for critical bug fixes in the current production version.
+   - Naming convention: 'hotfix/<issue-description>' or 'fix-<issue-description>'.
 
-1. **Clone the Repository**: Replace `GIT_REPO_URL` with the URL of your Git repository.
+Versioning:
+-----------
 
-2. **Copy JDK from Nexus**: Replace `NEXUS_JDK_URL` with the URL of the JDK package in your Nexus repository.
+1. Semantic Versioning (SemVer):
+   - Follow Semantic Versioning (SemVer) format: MAJOR.MINOR.PATCH.
+   - Increment MAJOR for backward-incompatible changes.
+   - Increment MINOR for backward-compatible new features.
+   - Increment PATCH for backward-compatible bug fixes.
 
-3. **Build and Run the Application**: Customize `BUILD_COMMAND` and `RUN_COMMAND` as needed for your project.
+2. Release Candidate (RC) or Beta Versions:
+   - Consider creating RC or beta versions for testing.
+   - Labeled with '-rc' or '-beta' suffix (e.g., '1.0.0-rc1').
 
-4. **Health Check**: The script continuously checks the health of the application using the `HEALTHCHECK_URL`. Customize this URL to match your application's health check endpoint.
+3. Version Tags:
+   - Tag each release with a version number (e.g., 'v1.2.3') on the release branch.
+   - Ensure tags point to specific commits.
 
-5. **Script Configuration**:
-   - You can adjust the `MAX_ATTEMPTS` and `SLEEP_INTERVAL` variables to control the number of health check attempts and the time between attempts.
-   - Customize the `APP_DIRECTORY` variable to set the directory where the application will be cloned.
+4. Changelogs:
+   - Maintain a changelog describing changes in each release.
+   - Include in the repository for reference.
 
-6. **Running the Script**:
+5. Versioning in Code:
+   - Include the current version number in the codebase (e.g., configuration files).
 
-   ### On Windows
-   
-   - Open a Command Prompt (cmd).
-   - Navigate to the directory where the script is located.
-   - Run the script using the following command:
-     ```batch
-     setup-and-health-check.bat
-     ```
+Release Process:
+----------------
 
-   ### On Linux/macOS
+1. Feature Development:
+   - Develop features or enhancements in feature branches.
+   - Conduct code reviews and testing.
 
-   - Open a terminal.
-   - Navigate to the directory where the script is located.
-   - Make the script executable (if not already) using the following command:
-     ```bash
-     chmod +x setup-and-health-check.sh
-     ```
-   - Run the script using the following command:
-     ```bash
-     ./setup-and-health-check.sh
-     ```
+2. Bug Fixes:
+   - Address and fix bugs in bugfix branches.
+   - Verify fixes and testing.
 
-7. **Monitoring**: The script logs the health check status. If the application is successfully running, it will indicate success. If the health check fails after all attempts, the script logs an error message.
+3. Release Preparation:
+   - Create a release branch when preparing for a new version.
+   - Merge approved features and bug fixes into the release branch.
+   - Perform additional testing and validation.
 
-## Note
+4. Hotfixes (if needed):
+   - Address critical issues in production with hotfix branches.
 
-- This script is intended for development and testing purposes.
-- Customize the script as needed to match your project's specific requirements.
+5. Tagging and Deployment:
+   - Tag the release branch with the version number.
+   - Deploy tagged releases to staging/production.
 
-Feel free to reach out if you encounter any issues or have questions about using this script.
+6. Changelog Update:
+   - Update the changelog with release details.
+
+7. Merge to Main:
+   - After a successful release, merge release branch changes into 'main.'
+
+8. Repeat:
+   - Repeat the process for subsequent versions.
+
+This strategy helps manage and track development and deployment effectively while ensuring clear versioning and documentation.
