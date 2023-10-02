@@ -1,5 +1,7 @@
 # Spring Boot Application Setup and Health Check Script
 
+**Author:** Harshal
+
 This script is designed to simplify the process of setting up and checking the health of a Spring Boot application. It covers the following steps:
 
 1. Cloning a Git repository.

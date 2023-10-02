@@ -1,5 +1,7 @@
 # Bitbucket Repository Branch Count Script
 
+**Author:** Harshal
+
 This Python script allows you to fetch repository information and the number of branches for each repository in a Bitbucket project using the Bitbucket REST API.
 
 ## Prerequisites

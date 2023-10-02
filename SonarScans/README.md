@@ -1,6 +1,6 @@
-# DevUtils
-
 # Jenkins Pipeline for SonarQube Integration
+
+**Author:** Harshal
 
 ## Overview
 
