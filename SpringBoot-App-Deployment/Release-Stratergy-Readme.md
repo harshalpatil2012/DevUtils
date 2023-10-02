@@ -65,7 +65,7 @@ Release Process:
 3. Release Preparation:
    - Create a release branch when preparing for a new version.
    - Merge approved features and bug fixes into the release branch.
-   - Perform additional testing and validation.
+   - Perform additional testing and validation. 
 
 4. Hotfixes (if needed):
    - Address critical issues in production with hotfix branches.
