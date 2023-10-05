@@ -1,0 +1,292 @@
+Spring WebClient logging using Log4j2 in a Spring Boot application:
+
+1. Add Dependencies:
+Ensure you have the necessary dependencies for Spring WebFlux, Log4j2, and Spring Boot in your pom.xml or build.gradle file:
+
+xml
+
+<!-- Spring WebFlux -->
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-webflux</artifactId>
+</dependency>
+
+<!-- Logging with Log4j2 -->
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-log4j2</artifactId>
+</dependency>
+2. Create log4j2.properties File:
+Create a log4j2.properties configuration file in the src/main/resources directory. Here's a basic configuration using properties:
+
+properties
+
+# Define the root logger's log level and appender
+rootLogger.level = info
+rootLogger.appenderRefs = console
+rootLogger.appenderRef.console.ref = Console
+
+# Console appender configuration
+appender.console.type = Console
+appender.console.name = Console
+appender.console.layout.type = PatternLayout
+appender.console.layout.pattern = %d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n
+3. Create a Logging Filter:
+Create a custom ExchangeFilterFunction called RequestResponseLoggingFilter to log the request and response information using Log4j2. You can use the code from the previous responses for this filter.
+
+java
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.stereotype.Component;
+import org.springframework.web.reactive.function.client.ClientRequest;
+import org.springframework.web.reactive.function.client.ClientResponse;
+import org.springframework.web.reactive.function.client.ExchangeFilterFunction;
+import org.springframework.web.reactive.function.client.ExchangeFunction;
+import reactor.core.publisher.Mono;
+
+@Component
+public class RequestResponseLoggingFilter implements ExchangeFilterFunction {
+
+    private static final Logger logger = LogManager.getLogger(RequestResponseLoggingFilter.class);
+
+    @Override
+    public Mono<ClientResponse> filter(ClientRequest request, ExchangeFunction next) {
+        logRequest(request);
+        return next.exchange(request)
+                .doOnNext(this::logResponse);
+    }
+
+    private void logRequest(ClientRequest request) {
+        logger.info("Request: {} {}", request.method(), request.url());
+        request.headers().forEach((name, values) -> logger.info("{}: {}", name, values));
+    }
+
+    private void logResponse(ClientResponse response) {
+        logger.info("Response Status: {}", response.statusCode());
+        response.headers().asHttpHeaders().forEach((name, values) -> logger.info("{}: {}", name, values));
+    }
+}
+4. Usage:
+Use your WebClient with the Log4j2-based logging filter as shown below:
+
+java
+
+import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
+
+@Service
+public class MyService {
+
+    private final WebClient webClient;
+
+    public MyService(WebClient.Builder webClientBuilder) {
+        this.webClient = webClientBuilder.baseUrl("https://api.example.com").filter(new RequestResponseLoggingFilter()).build();
+    }
+
+    public Mono<String> fetchData() {
+        return webClient
+                .get()
+                .uri("/some/endpoint")
+                .retrieve()
+                .bodyToMono(String.class);
+    }
+}
+With this setup, Log4j2 will use the log4j2.properties configuration file for logging, and your WebClient requests and responses will be logged according to the specified log format.
+
+
+
+==========================
+Zuul filter logging:
+import com.netflix.zuul.ZuulFilter;
+import com.netflix.zuul.context.RequestContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
+
+@Component
+public class RequestResponseLoggingFilter extends ZuulFilter {
+
+    private static final Logger logger = LoggerFactory.getLogger(RequestResponseLoggingFilter.class);
+
+    @Override
+    public String filterType() {
+        return "pre"; // Filter type: "pre" for incoming requests
+    }
+
+    @Override
+    public int filterOrder() {
+        return 1; // Filter order, if you have multiple filters
+    }
+
+    @Override
+    public boolean shouldFilter() {
+        return true; // Always run this filter
+    }
+
+    @Override
+    public Object run() {
+        RequestContext context = RequestContext.getCurrentContext();
+        logger.info("Request: {} {} {}", context.getRequest().getMethod(),
+                context.getRequest().getRequestURI(), context.getRequest().getQueryString());
+
+        // Log request JSON if available
+        try {
+            String requestJson = context.getRequest().getReader().lines().reduce("", (accumulator, actual) -> accumulator + actual);
+            logger.info("Request JSON: {}", requestJson);
+        } catch (Exception e) {
+            logger.error("Error logging request JSON", e);
+        }
+
+        // If you want to log the response as well, you can do so here
+        // Log response JSON if available
+        try {
+            String responseJson = context.getResponseDataStream().toString();
+            logger.info("Response JSON: {}", responseJson);
+        } catch (Exception e) {
+            logger.error("Error logging response JSON", e);
+        }
+
+        // Continue the request
+        return null;
+    }
+}
+
+
+
+import com.netflix.zuul.ZuulFilter;
+import com.netflix.zuul.context.RequestContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.cloud.netflix.zuul.filters.ProxyRequestHelper;
+import org.springframework.stereotype.Component;
+
+import java.util.Enumeration;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import java.io.BufferedReader;
+
+@Component
+public class RequestResponseLoggingFilter extends ZuulFilter {
+
+    private static final Logger logger = LoggerFactory.getLogger(RequestResponseLoggingFilter.class);
+    private final ProxyRequestHelper proxyRequestHelper = new ProxyRequestHelper();
+
+    @Override
+    public String filterType() {
+        return "post"; // Filter type: "post" for outgoing responses
+    }
+
+    @Override
+    public int filterOrder() {
+        return 1; // Filter order, adjust as needed
+    }
+
+    @Override
+    public boolean shouldFilter() {
+        return true; // Always run this filter
+    }
+
+    @Override
+    public Object run() {
+        RequestContext context = RequestContext.getCurrentContext();
+        HttpServletRequest request = context.getRequest();
+
+        // Log request headers
+        Enumeration<String> requestHeaderNames = request.getHeaderNames();
+        while (requestHeaderNames.hasMoreElements()) {
+            String headerName = requestHeaderNames.nextElement();
+            String headerValue = request.getHeader(headerName);
+            logger.info("Request Header - {}: {}", headerName, headerValue);
+        }
+
+        // Log request cookies
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                logger.info("Request Cookie - {}: {}", cookie.getName(), cookie.getValue());
+            }
+        }
+
+        // Log request JSON and body
+        try {
+            BufferedReader reader = request.getReader();
+            StringBuilder requestJson = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                requestJson.append(line);
+            }
+            logger.info("Request JSON:\n{}", requestJson.toString());
+        } catch (Exception e) {
+            logger.error("Error logging request JSON", e);
+        }
+
+        // Log response headers
+        logger.info("Response Status: {}", context.getResponseStatusCode());
+        context.getZuulResponseHeaders().forEach(header -> {
+            logger.info("Response Header - {}: {}", header.first(), header.second());
+        });
+
+        // Log response JSON and body
+        try {
+            String responseBody = proxyRequestHelper.getResponseBody(requestContext.getResponse());
+            logger.info("Response JSON:\n{}", responseBody);
+        } catch (Exception e) {
+            logger.error("Error logging response JSON", e);
+        }
+
+        return null;
+    }
+}
+
+
+status = error
+
+appender.console.type = Console
+appender.console.name = Console
+appender.console.layout.type = PatternLayout
+appender.console.layout.pattern = [%d{HH:mm:ss.SSS}] [%t] %-5level %logger{36} - %msg%n
+
+rootLogger.level = INFO
+rootLogger.appenderRefs = console
+rootLogger.appenderRef.console.ref = Console
+
+
+{
+    "data": {
+        "api1": {
+            "field1": "value1",
+            "field2": "value2"
+        },
+        "api2": {
+            "field1": "value3",
+            "field2": "value4"
+        }
+        // More API records...
+    }
+}
+
+
+
+{
+    "data": [
+        {
+            "api": "api1",
+            "data": {
+                "field1": "value1",
+                "field2": "value2"
+            }
+        },
+        {
+            "api": "api2",
+            "data": {
+                "field1": "value3",
+                "field2": "value4"
+            }
+        }
+        // More API records...
+    ]
+}
+
+
