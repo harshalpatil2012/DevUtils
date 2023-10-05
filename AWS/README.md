@@ -1,5 +1,7 @@
 To print the request and response JSON in a Zuul Gateway API, you can use a custom Zuul filter as shown in the previous response. However, instead of just logging, you can extract the request and response data, convert it to JSON, and print it. Here's an example of how to do this:
 
+
+
 1. Create a custom Zuul filter to log the request and response JSON:
 
 ```java
