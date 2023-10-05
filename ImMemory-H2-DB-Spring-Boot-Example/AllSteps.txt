@@ -1,0 +1,94 @@
+complete code for integrating the provided SQL script into a Spring Boot application with an embedded H2 database, with the DatabaseConfig class configured to run only for the local-dev profile:
+
+1. Add the H2 Dependency in pom.xml (Maven) or build.gradle (Gradle):
+
+Maven (pom.xml):
+
+xml
+
+<dependencies>
+    <!-- Other dependencies -->
+
+    <!-- H2 Database Dependency (for local dev profile) -->
+    <dependency>
+        <groupId>com.h2database</groupId>
+        <artifactId>h2</artifactId>
+        <scope>runtime</scope>
+    </dependency>
+</dependencies>
+
+Gradle (build.gradle):
+
+gradle
+
+dependencies {
+    // Other dependencies
+    
+    // H2 Database Dependency (for local dev profile)
+    runtimeOnly 'com.h2database:h2'
+}
+2. Create Your SQL Script (your-script.sql):
+
+Place your SQL script in the project root folder, specifically in database/localDB with the name your-script.sql.
+
+3. Configure application.properties (or application.yml):
+
+Configure your application.properties or application.yml to set the script location property:
+
+Using application.properties:
+
+properties
+
+# src/main/resources/application.properties
+
+# Set the script location property
+your-script-location=file:./database/localDB/your-script.sql
+Using application.yml:
+
+yaml
+
+# src/main/resources/application.yml
+
+# Set the script location property
+your-script-location: file:./database/localDB/your-script.sql
+4. Create DatabaseConfig for Script Execution:
+
+Create a configuration class to execute the SQL script during application startup, and make it active only for the local-dev profile:
+
+java
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
+import org.springframework.jdbc.datasource.init.DataSourceInitializer;
+import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
+
+import javax.sql.DataSource;
+
+@Configuration
+@Profile("local-dev") // Specify that this configuration is active only for the local-dev profile
+public class DatabaseConfig {
+
+    @Value("${your-script-location}")
+    private String scriptLocation;
+
+    @Bean
+    public DataSourceInitializer dataSourceInitializer(DataSource dataSource) {
+        DataSourceInitializer initializer = new DataSourceInitializer();
+        initializer.setDataSource(dataSource);
+        ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
+
+        // Load the script from the specified location
+        Resource scriptResource = new FileSystemResource(scriptLocation);
+        populator.addScript(scriptResource);
+
+        initializer.setDatabasePopulator(populator);
+        return initializer;
+    }
+}
+5. Run Your Spring Boot Application with the Local Dev Profile:
+
+When you run your Spring Boot application with the local-dev profile (by setting spring.profiles.active=local-dev in your application.properties or application.yml), the H2 database will be initialized, and your SQL script will be executed during application startup. You can access the H2 console at http://localhost:8080/h2-console to interact with the database if needed.
