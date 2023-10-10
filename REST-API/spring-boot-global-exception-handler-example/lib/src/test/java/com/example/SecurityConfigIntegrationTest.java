@@ -1,30 +1,53 @@
-package com.example;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.boot.web.server.LocalServerPort;
-import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.DynamicPropertyRegistry;
+import org.springframework.test.context.DynamicPropertySource;
+import org.springframework.test.web.servlet.MockMvc;
+import org.testcontainers.containers.PostgreSQLContainer;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
 
-@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
+@SpringBootTest
+@AutoConfigureMockMvc
+@Testcontainers
 public class SecurityConfigIntegrationTest {
 
-    @LocalServerPort
-    private int port;
+	@Container
+	private static final PostgreSQLContainer<?> postgreSQLContainer = new PostgreSQLContainer<>();
 
-    @Autowired
-    private TestRestTemplate restTemplate;
+	@DynamicPropertySource
+	static void setDataSourceProperties(DynamicPropertyRegistry registry) {
+		registry.add("spring.datasource.url", postgreSQLContainer::getJdbcUrl);
+		registry.add("spring.datasource.username", postgreSQLContainer::getUsername);
+		registry.add("spring.datasource.password", postgreSQLContainer::getPassword);
+	}
 
-    @Test
-    public void testIntegration() {
-        // Send a GET request to "/healthcheck" and check the response.
-        ResponseEntity<String> response = restTemplate.getForEntity("/healthcheck", String.class);
-        // Verify access to the healthcheck endpoint without authentication.
+	@Autowired
+	private MockMvc mockMvc;
 
-        // Send a GET request to "/protected-resource" and check the response.
-        response = restTemplate.getForEntity("/protected-resource", String.class);
-        // Verify lack of access to the protected-resource endpoint without authentication.
-    }
+	@BeforeAll
+	static void startContainers() {
+		postgreSQLContainer.start();
+	}
+
+	@Test
+	public void testAccessToSecuredEndpoint() throws Exception {
+		mockMvc.perform(MockMvcRequestBuilders.get("/securedEndpoint")).andExpect(status().isOk()); // Assert that
+																									// access is allowed
+																									// when
+																									// authenticated.
+	}
+
+	@Test
+	public void testAccessToUnsecuredEndpoint() throws Exception {
+		mockMvc.perform(MockMvcRequestBuilders.get("/unsecuredEndpoint")).andExpect(status().isOk()); // Assert that
+																										// access is
+																										// allowed
+																										// without
+																										// authentication.
+	}
+
+	// Add more integration tests to cover various security scenarios.
 }

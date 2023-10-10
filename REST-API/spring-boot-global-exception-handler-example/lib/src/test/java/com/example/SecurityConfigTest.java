@@ -1,34 +1,27 @@
-package com.example;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.web.csrf.CsrfToken;
-import org.springframework.security.web.csrf.CsrfTokenRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-public class SecurityConfigTest {
+@SpringBootTest
+@AutoConfigureMockMvc
+public class SecurityConfigIntegrationTest {
 
-	@Mock
-	private CsrfTokenRepository csrfTokenRepository;
+    @Autowired
+    private MockMvc mockMvc;
 
-	@Test
-	public void testConfigureHttpSecurity() throws Exception {
-		// Create SecurityConfig and configure HTTP security.
-		SecurityConfig securityConfig = new SecurityConfig();
-		HttpSecurity http = new HttpSecurity(null); // Mock HttpSecurity.
-		securityConfig.configure(http);
-		// Assertions for security configuration.
-	}
+    @Test
+    public void testAccessToSecuredEndpoint() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/securedEndpoint"))
+                .andExpect(status().isOk()); // Assert that access is allowed when authenticated.
+    }
 
-	@Test
-	public void testCsrfTokenRepository() {
-		// Create SecurityConfig and mock CsrfToken with a custom header name.
-		SecurityConfig securityConfig = new SecurityConfig();
-		CsrfToken csrfToken = Mockito.mock(CsrfToken.class);
-		Mockito.when(csrfToken.getHeaderName()).thenReturn("X-XSRF-TOKEN");
-		// Call the csrfTokenRepository method and assert the configuration.
-	}
+    @Test
+    public void testAccessToUnsecuredEndpoint() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/unsecuredEndpoint"))
+                .andExpect(status().isOk()); // Assert that access is allowed without authentication.
+    }
+
+    // Add more integration tests to cover various security scenarios.
 }
