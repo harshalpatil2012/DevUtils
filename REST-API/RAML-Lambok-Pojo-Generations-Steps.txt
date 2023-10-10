@@ -1,0 +1,54 @@
+step-by-step example of how to achieve this:
+
+Assuming you have the "mulesoft-labs/raml-java-tools" tool downloaded and set up:
+
+Step 1: Prepare Your RAML File
+
+Create a RAML file that defines your API data types. For example, you can create a file named api.raml:
+
+raml
+Copy code
+# My API RAML Specification
+
+types:
+  Person:
+    properties:
+      firstName: string
+      lastName: string
+
+Using the tool, generate Java POJOs with Lombok annotations based on your RAML specification. Run the following command in your terminal:
+
+shell
+
+java -jar raml-to-pojo.jar -l lombok -p com.example.generated -d src/main/java /path/to/your/api.raml
+-l lombok specifies that you want to use Lombok annotations.
+-p com.example.generated specifies the package name for the generated POJOs.
+-d src/main/java specifies the output directory for the generated Java files.
+/path/to/your/api.raml should be replaced with the actual path to your RAML file.
+This command will generate Java POJOs in the specified package and output directory with Lombok annotations applied.
+
+Step 3: Include Generated POJOs in Your Project
+
+Include the generated POJOs in your Java project. You will need to make sure that the Lombok library is also included as a dependency in your project.
+
+Step 4: Use Generated POJOs in Your Code
+
+You can now use the generated POJOs with Lombok annotations in your Java code to work with data structures defined in your RAML specification. For example:
+
+java
+Copy code
+import com.example.generated.Person;
+
+public class Main {
+    public static void main(String[] args) {
+        Person person = new Person();
+        person.setFirstName("John");
+        person.setLastName("Doe");
+
+        System.out.println("First Name: " + person.getFirstName());
+        System.out.println("Last Name: " + person.getLastName());
+    }
+}
+Make sure to adapt the package name and paths to match your project's structure and configuration.
+
+Please consult the documentation of the "mulesoft-labs/raml-java-tools" tool for any specific details or updates related to its usage, as the tool's features may have evolved
