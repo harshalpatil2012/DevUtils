@@ -20,6 +20,7 @@ dependencies {
     testImplementation 'org.testcontainers:junit-jupiter:1.16.3'
     testImplementation 'org.testcontainers:postgresql:1.16.3'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
+    providedCompile group: 'javax.servlet', name: 'javax.servlet-api', version: '3.0.1'
 }
 
 test {

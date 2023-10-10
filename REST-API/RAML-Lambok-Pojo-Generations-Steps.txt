@@ -15,6 +15,7 @@ types:
     properties:
       firstName: string
       lastName: string
+Step 2: Generate Java POJOs
 
 Using the tool, generate Java POJOs with Lombok annotations based on your RAML specification. Run the following command in your terminal:
 
