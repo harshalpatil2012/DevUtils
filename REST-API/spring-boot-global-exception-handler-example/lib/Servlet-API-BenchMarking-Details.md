@@ -1,8 +1,9 @@
-# Servlet Performance Metrics Readme
+# Servlet Performance Metrics
 
-Welcome to the Servlet Performance Metrics Readme! This document provides valuable insights into the performance metrics of different Servlet API versions, including latency, average throughput, and the minimum requirements for Tomcat and JDK versions.
+Welcome to the Servlet Performance Metrics documentation! This readme provides insights into the performance metrics of different Servlet API versions, including latency, average throughput, and minimum requirements for Tomcat and JDK versions.
 
 ## Table of Contents
+
 - [Introduction](#introduction)
 - [Servlet Performance Metrics](#servlet-performance-metrics)
 - [Latency Improvement](#latency-improvement)
@@ -13,18 +14,18 @@ Welcome to the Servlet Performance Metrics Readme! This document provides valuab
 
 ## Introduction
 
-This readme file offers a comprehensive overview of the performance metrics for various Servlet API versions. It outlines the key parameters like latency, average throughput, and the minimum requirements for Tomcat and JDK versions for each Servlet version.
+This document offers a comprehensive overview of the performance metrics for various Servlet API versions. It outlines key parameters such as latency, average throughput, and the minimum requirements for Tomcat and JDK versions for each Servlet version.
 
 ## Servlet Performance Metrics
 
 Here is a summary of the performance metrics for different Servlet versions:
 
 | Servlet Version | Tomcat Version | Min JDK Version | Latency (ms) | Average Throughput (requests/second) |
-|---|---|---|---|---|
-| 3.1 | 8 | 8 | 8.5 | 1000 |
-| 4   | 9 | 11 | 7.5 | 1200 |
-| 5   | 10 | 11 | 7   | 1400 |
-| 6   | 11 | 17 | 6.5 | 1600 |
+| ---             | ---           | ---            | ---          | ---                                |
+| 3.1             | 8             | 8              | 8.5          | 1000                               |
+| 4               | 9             | 11             | 7.5          | 1200                               |
+| 5               | 10            | 11             | 7            | 1400                               |
+| 6               | 11            | 17             | 6.5          | 1600                               |
 
 ## Latency Improvement
 
@@ -39,21 +40,10 @@ Throughput improvement reflects the percentage increase in throughput from one S
 Here are the minimum Tomcat and JDK requirements for each Servlet version:
 
 | Servlet Version | Minimum Tomcat Version | Minimum JDK Version |
-|---|---|---|
-| 4 | 9  | 11 |
-| 5 | 10 | 11 |
-| 6 | 11 | 17 |
-
-## Tomcat and JDK Requirements
-
-Here are the minimum Tomcat and JDK requirements for each Servlet version:
-
-| Servlet Version | Minimum Tomcat Version | Minimum JDK Version |
-|---|---|---|
-| 4 | 9 | 11 |
-| 5 | 10 | 11 |
-| 6 | 11 | 17 |
-
+| ---             | ---                    | ---                 |
+| 4               | 9                      | 11                  |
+| 5               | 10                     | 11                  |
+| 6               | 11                     | 17                  |
 
 ## Conclusion
 
