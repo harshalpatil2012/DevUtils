@@ -191,7 +191,7 @@ Add Dependencies:
 Add the necessary dependencies to your pom.xml file:
 
 xml
-Copy code
+
 <dependencies>
     <dependency>
         <groupId>org.springframework.boot</groupId>
@@ -208,7 +208,7 @@ Copy code
 </dependencies>
 Create a log4j2.properties file in the src/main/resources directory with the following configuration:
 properties
-Copy code
+
 status = info
 
 # Define properties for log file and layout pattern
@@ -253,12 +253,12 @@ In your application.properties or application.yml, specify Log4j2 as the logging
 For application.properties:
 
 properties
-Copy code
+
 logging.config=classpath:log4j2.properties
 For application.yml:
 
 yaml
-Copy code
+
 logging:
   config: classpath:log4j2.properties
 Run your Spring Boot Application:
@@ -272,7 +272,7 @@ This setup provides a complete solution for configuring Log4j2 with LMAX Disrupt
 here is the consolidated README.md markup:
 
 markdown
-Copy code
+
 # Spring Boot with Redisson and Spring Session
 
 This repository demonstrates how to use Redisson with Spring Boot and Spring Session for session management. You can easily configure Redisson to store session data in Redis when Redis is enabled.
@@ -303,7 +303,7 @@ dependencies {
 Configuration
 Create a Redisson configuration class to configure RedissonClient:
 java
-Copy code
+
 import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;
 import org.redisson.config.Config;
@@ -336,7 +336,7 @@ public class RedissonSessionConfig {
 }
 Set the active profile in your application.properties or application.yml:
 properties
-Copy code
+
 # Enable the "redis" profile when Redis is enabled
 spring.profiles.active=redis
 Usage
@@ -348,13 +348,13 @@ Make sure your Redis server is running and accessible.
 To run the Spring Boot application:
 
 bash
-Copy code
+
 ./gradlew bootRun
 License
 This project is licensed under the MIT License. See the LICENSE file for details.
 
 css
-Copy code
+
 
 This consolidated `README.md` includes all the relevant information in a clear and organized manner. Make sure to customize it with your specific details, versions, and server configurations as needed.
 
@@ -376,7 +376,7 @@ We'll add a property to specify whether to run Redis in embedded mode for local 
 build.gradle:
 
 groovy
-Copy code
+
 plugins {
     id 'org.springframework.boot' version '2.6.3'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
@@ -403,7 +403,7 @@ test {
 application.properties:
 
 properties
-Copy code
+
 # Set this property to 'true' to enable Redis, and 'false' to disable it.
 myapp.redis.enabled=true
 
@@ -415,7 +415,7 @@ spring.redis.port=6379
 RedissonSessionConfig.java:
 
 java
-Copy code
+
 import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;
 import org.redisson.config.Config;
@@ -462,11 +462,11 @@ With these changes, you can control whether Redis is enabled, and if enabled, wh
 
 User
 or provide crisp readmefile
-ChatGPT
+
 Certainly, here's a more concise README file for your Spring Boot web application with Redis configuration options:
 
 markdown
-Copy code
+
 # Spring Boot with Redisson and Spring Session
 
 This repository demonstrates how to configure Redis usage for your Spring Boot application based on different scenarios.
@@ -483,7 +483,7 @@ myapp.redis.enabled=true
 To Disable Redis:
 
 properties
-Copy code
+
 myapp.redis.enabled=false
 2. Run Redis in Local Embedded Mode
 For local development, you can choose to run an embedded Redis server.
@@ -491,18 +491,18 @@ For local development, you can choose to run an embedded Redis server.
 To Run Redis in Embedded Mode Locally:
 
 properties
-Copy code
+
 myapp.redis.mode=true
 To Use a Standalone Redis Server (default):
 
 properties
-Copy code
+
 myapp.redis.mode=false
 Dependencies
 In your build.gradle, include the following dependencies:
 
 groovy
-Copy code
+
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
@@ -518,4 +518,145 @@ css
 
 
 
+health check
+===============
+implementation 'org.springframework.boot:spring-boot-starter'
+implementation 'org.springframework.boot:spring-boot-starter-security'
+Create the Security Configuration:
+
+Create a class that configures security and allows unauthenticated access to the health check URL. Here's a complete SecurityConfig class:
+
+java
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+
+@Configuration
+@EnableWebSecurity
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http
+            .authorizeRequests()
+                .antMatchers("/actuator/health").permitAll() // Allow access to health check URL
+                .anyRequest().authenticated()
+            .and()
+                .httpBasic(); // Use HTTP Basic Authentication
+    }
+}
+Create the Health Check Controller:
+
+Create a controller with a health check endpoint that returns a simple response. You can customize this based on your requirements.
+
+java
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class HealthCheckController {
+
+    @GetMapping("/actuator/health")
+    public String healthCheck() {
+        return "Application is healthy";
+    }
+}
+Configure Actuator Properties:
+
+In your application.properties or application.yml, you can configure Spring Boot Actuator properties to specify the roles and permissions needed for other actuator endpoints, if required. For the health endpoint, no additional configuration is needed to allow unauthenticated access.
+
+application.properties:
+
+properties
+
+management.endpoint.health.show-details=always
+Run Your Application:
+Start your Spring Boot application, and you can access the health check URL at http://localhost:8080/actuator/health. It will not require authentication and bypass all security checks.
+
+Remember that this example uses simple HTTP Basic Authentication for simplicity. Depending on your specific security requirements, you might use different authentication methods and configure more fine-grained security settings.
+
+
+
+===============
+
+Spring BOM
+plugins {
+    id 'org.springframework.boot' version '2.5.4'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'java'
+}
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    jacksonVersion = '2.12.5'
+    lombokVersion = '1.18.22'
+    commonsLangVersion = '3.12.0'
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    // Jackson
+    implementation "com.fasterxml.jackson.core:jackson-databind:$jacksonVersion"
+
+    // Lombok
+    compileOnly "org.projectlombok:lombok:$lombokVersion"
+    annotationProcessor "org.projectlombok:lombok:$lombokVersion"
+
+    // Apache Commons Lang
+    implementation "org.apache.commons:commons-lang3:$commonsLangVersion"
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.boot:spring-boot-dependencies:2.5.4"
+    }
+}
+
+// Source and target compatibility
+sourceCompatibility = 11 // Replace with your desired version
+targetCompatibility = 11 // Replace with your desired version
+
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'org.springframework.boot'
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        // Define project-specific dependencies here if needed
+    }
+}
+
+compileJava {
+    options.compilerArgs += ["-Xlint:deprecation"]
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src/main/java']
+        }
+    }
+}
+
+test {
+    useJUnitPlatform()
+}
+
+
+
+=======================
+systemProp.javax.net.ssl.trustStore=path/to/your/truststore.jks
+systemProp.javax.net.ssl.trustStorePassword=truststore_password
 
