@@ -660,3 +660,73 @@ test {
 systemProp.javax.net.ssl.trustStore=path/to/your/truststore.jks
 systemProp.javax.net.ssl.trustStorePassword=truststore_password
 
+
+Spring boot project
+
+
+here's the consolidated Gradle code for your multi-module Spring Boot project, including an in-house repository, common plugins, and a Bill of Materials (BOM) for common dependencies:
+
+**Root `settings.gradle`:**
+
+```gradle
+include ':MySpringBootWebApp', ':common'
+```
+
+**Root `build.gradle`:**
+
+```gradle
+subprojects {
+    apply plugin: 'java'
+
+    repositories {
+        maven {
+            url 'your-inhouse-repo-url'
+        }
+        jcenter() // Add other repositories as needed
+    }
+
+    dependencies {
+        implementation platform("org.springframework.boot:spring-boot-dependencies:2.5.4")
+        // Define common dependencies here
+    }
+
+    // Define other common configurations or tasks if needed
+}
+```
+
+**"MySpringBootWebApp" `build.gradle`:**
+
+```gradle
+plugins {
+    id 'org.springframework.boot' version '2.5.4'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+}
+
+apply plugin: 'java'
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    // Add other dependencies from your in-house repository
+}
+
+bootJar {
+    enabled = true
+}
+
+war {
+    enabled = true
+}
+```
+
+**"common" `build.gradle`:**
+
+```gradle
+apply plugin: 'java'
+
+dependencies {
+    // Add common dependencies from your in-house repository
+}
+```
+
+With this consolidated code, you have a multi-module Spring Boot project that includes an in-house repository, common dependencies managed by a BOM, and common configurations applied to all subprojects. Make sure to replace `'your-inhouse-repo-url'` with the actual URL of your in-house repository and add any other specific dependencies or configurations as needed.
+
