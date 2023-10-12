@@ -1,4 +1,4 @@
-If you need to populate the CommonApiContract with headers that may come from different sources or need dynamic values, you can make use of @Value annotations to inject values from configuration properties, environment variables, or other sources. Here's an updated example:
+koIf you need to populate the CommonApiContract with headers that may come from different sources or need dynamic values, you can make use of @Value annotations to inject values from configuration properties, environment variables, or other sources. Here's an updated example:
 
 Modify the CommonApiContract class to use @Value annotations for headers:
 java
@@ -730,3 +730,46 @@ dependencies {
 
 With this consolidated code, you have a multi-module Spring Boot project that includes an in-house repository, common dependencies managed by a BOM, and common configurations applied to all subprojects. Make sure to replace `'your-inhouse-repo-url'` with the actual URL of your in-house repository and add any other specific dependencies or configurations as needed.
 
+
+
+To integrate JaCoCo for code coverage in your Gradle project with the latest JaCoCo version, you can follow these steps. You'll need to apply the JaCoCo plugin and configure it in your project. Make sure to replace 'your.group.id' with your actual project's group ID:In your root build.gradle (the same one used in your previous exercises), apply the JaCoCo plugin at the top of the file and configure it:buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'org.jacoco:org.jacoco.core:0.8.7'
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'jacoco'
+
+allprojects {
+    // Your existing configurations here
+
+    jacoco {
+        toolVersion = '0.8.7' // Use the latest JaCoCo version
+    }
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled true
+        html.enabled true
+    }
+}In this configuration:The buildscript block fetches the JaCoCo dependency (replace the version with the latest available).The jacoco block inside the allprojects block sets the JaCoCo version.In the "MySpringBootWebApp" module's build.gradle, add the following to apply the JaCoCo plugin and define a dependency on the test task:apply plugin: 'jacoco'
+
+dependencies {
+    // Your existing dependencies here
+}
+
+test {
+    finalizedBy jacocoTestReport
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled true
+        html.enabled true
+    }
+}This configuration applies the JaCoCo plugin to the specific module and ensures that the code coverage report is generated after running tests.You can now generate code coverage reports for your project by running the following command from the root project directory:./gradlew clean build jacocoTestReportThis command will build your project, run tests, and generate JaCoCo code coverage reports in both XML and HTML formats. You can find the HTML report in the build/reports/jacoco/test/html directory for each module.Please note that you may need to adapt the paths or configurations based on your project's specific structure and requirements.
