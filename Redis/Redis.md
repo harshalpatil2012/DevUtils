@@ -671,7 +671,7 @@ here's the consolidated Gradle code for your multi-module Spring Boot project, i
 ```gradle
 include ':MySpringBootWebApp', ':common'
 ```
-
+  
 **Root `build.gradle`:**
 
 ```gradle
