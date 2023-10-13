@@ -1,4 +1,4 @@
-koWhen building a proxy gateway application in Spring Boot with WebClient for API calls, you should consider implementing various security measures, including OWASP recommendations and other filters to enhance the security of your application. Here's a list of some key security measures and filters you should consider:
+inkoWhen building a proxy gateway application in Spring Boot with WebClient for API calls, you should consider implementing various security measures, including OWASP recommendations and other filters to enhance the security of your application. Here's a list of some key security measures and filters you should consider:
 
 1. **Authentication and Authorization**:
    - Implement user authentication using Spring Security.
@@ -105,6 +105,11 @@ https://github.com/spring-cloud-samples/spring-cloud-gateway-sample
 ThomasVitale/spring-cloud-gateway-resilience-security-goto-2021: This project provides a sample Spring Cloud Gateway application that implements resilience and security features, including circuit breakers, retries, fallbacks, rate limiters, user authentication, OAuth2, and OpenID Connect. Link: https://github.com/ThomasVitale/spring-cloud-gateway-resilience-security-goto-2021
 
 piomin/sample-spring-cloud-webflux: This project provides a sample Spring Cloud Gateway application that demonstrates the usage of Spring Reactive support with Spring WebFlux. Link: https://github.com/piomin/sample-spring-cloud-webflux
+
+
+tasks.withType(JavaCompile) {
+    options.compilerArgs << "-Xlint:none"
+}
 
 
 
