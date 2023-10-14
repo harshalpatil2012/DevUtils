@@ -3,7 +3,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath "org.springframework.boot:spring-boot-gradle-plugin:3.1.4" // Update to the latest Spring Boot version
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:3.1.4"
     }
 }
 
@@ -16,27 +16,25 @@ allprojects {
 }
 
 ext {
-    springBootVersion = '3.1.4' // Update to the latest Spring Boot version
-    jacksonVersion = '2.13.3' // Update to the latest Jackson version
-    jacocoVersion = '0.8.7' // Update to the latest JaCoCo version
+    springBootVersion = '3.1.4'
+    jacksonVersion = '2.13.3'
+    jacocoVersion = '0.8.7'
 }
 
 subprojects {
-
-    apply plugin: 'jacoco'
     repositories {
         mavenCentral()
     }
 
     dependencies {
-        compileOnly 'org.projectlombok:lombok:1.18.22' // Update to the latest Lombok version
-        annotationProcessor 'org.projectlombok:lombok:1.18.22' // Update to the latest Lombok version
+        compileOnly 'org.projectlombok:lombok:1.18.22'
+        annotationProcessor 'org.projectlombok:lombok:1.18.22'
     }
 
     sourceCompatibility = 17
     targetCompatibility = 17
 
-
+    apply plugin: 'jacoco'
 
     test {
         finalizedBy jacocoTestReport
