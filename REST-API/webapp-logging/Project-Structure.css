@@ -1,0 +1,22 @@
+my-spring-boot-project/
+├── build<span class="hljs-selector-class">.gradle</span>
+├── settings<span class="hljs-selector-class">.gradle</span>
+├── webapp/
+│   ├── build<span class="hljs-selector-class">.gradle</span>
+│   └── <span class="hljs-attribute">src</span>/
+│       └── <span class="hljs-selector-tag">main</span>/
+│           └── java/
+│               └── com/
+│                   └── example/
+│                       └── webapp/
+│                           └── Application<span class="hljs-selector-class">.java</span>
+├── module1/
+│   ├── build<span class="hljs-selector-class">.gradle</span>
+│   └── <span class="hljs-attribute">src</span>/
+│       └── <span class="hljs-selector-tag">main</span>/
+│           └── java/
+│               └── com/
+│                   └── example/
+│                       └── module1/
+│                           └── Module1Application
+....

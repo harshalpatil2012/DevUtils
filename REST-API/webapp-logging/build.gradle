@@ -1,0 +1,70 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:3.1.4" // Update to the latest Spring Boot version
+    }
+}
+
+allprojects {
+    apply plugin: 'java'
+    apply plugin: 'eclipse'
+    apply plugin: 'idea'
+    group = 'com.example'
+    version = '1.0-SNAPSHOT'
+}
+
+ext {
+    springBootVersion = '3.1.4' // Update to the latest Spring Boot version
+    jacksonVersion = '2.13.3' // Update to the latest Jackson version
+    jacocoVersion = '0.8.7' // Update to the latest JaCoCo version
+}
+
+subprojects {
+
+    apply plugin: 'jacoco'
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        compileOnly 'org.projectlombok:lombok:1.18.22' // Update to the latest Lombok version
+        annotationProcessor 'org.projectlombok:lombok:1.18.22' // Update to the latest Lombok version
+    }
+
+    sourceCompatibility = 17
+    targetCompatibility = 17
+
+
+
+    test {
+        finalizedBy jacocoTestReport
+    }
+
+    jacocoTestReport {
+        reports {
+            xml.enabled true
+            html.enabled true
+        }
+        dependsOn test
+        executionData(test)
+    }
+
+    task check(type: JacocoCoverageVerification) {
+        dependsOn test
+        classDirectories = fileTree(dir: project.sourceSets.main.output.classesDirs.singleFile, include: '**')
+        sourceDirectories = project.sourceSets.main.allSource
+        classpath = project.sourceSets.main.runtimeClasspath
+
+        violations {
+            rule {
+                element = 'CLASS'
+                includes = ['**/*'] // Specify packages or classes to include
+                limit {
+                    minimum = 0 // Change to the desired minimum coverage (e.g., 0.80 for 80%)
+                }
+            }
+        }
+    }
+}
