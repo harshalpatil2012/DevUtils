@@ -19,10 +19,10 @@ public class SampleController {
 
     @GetMapping("/invoke-api")
     public ResponseEntity<String> invokeApi() {
-        WebClient webClient = webClientBuilder.baseUrl("https://api.example.com").build();
+        WebClient webClient = webClientBuilder.baseUrl("http://localhost:8080/").build();
 
         String response = webClient.get()
-                .uri("/endpoint")
+                .uri("/getUser1")
                 .retrieve()
                 .bodyToMono(String.class)
                 .block(); // Blocking for simplicity; consider using reactive code in production

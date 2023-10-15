@@ -1,5 +1,6 @@
-package com.logging;
+package com.logging.config;
 
+import com.logging.PerformanceLoggingInterceptor;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.apache.logging.log4j.ThreadContext;
 import jakarta.servlet.http.HttpServletRequest;
