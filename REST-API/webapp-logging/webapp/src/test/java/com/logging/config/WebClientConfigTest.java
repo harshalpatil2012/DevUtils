@@ -1,4 +1,4 @@
-package com.logging;
+package com.logging.config;
 
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;

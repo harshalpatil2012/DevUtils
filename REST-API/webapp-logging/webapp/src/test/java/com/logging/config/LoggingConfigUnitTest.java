@@ -1,4 +1,6 @@
-package com.logging;
+package com.logging.config;
+import com.logging.LoggingInterceptor;
+import com.logging.RequestResponseLoggingFilter;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.context.SpringBootTest;

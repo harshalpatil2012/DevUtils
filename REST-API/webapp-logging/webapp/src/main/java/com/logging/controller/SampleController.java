@@ -19,7 +19,7 @@ public class SampleController {
 
     @GetMapping("/invoke-api")
     public ResponseEntity<String> invokeApi() {
-        WebClient webClient = webClientBuilder.baseUrl("http://localhost:8080/").build();
+        WebClient webClient = webClientBuilder.baseUrl("http://localhost:3000/").build();
 
         String response = webClient.get()
                 .uri("/getUser1")

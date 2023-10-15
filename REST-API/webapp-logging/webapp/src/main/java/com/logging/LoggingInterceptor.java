@@ -9,11 +9,11 @@ public class LoggingInterceptor implements HandlerInterceptor {
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
-		String customerNumber = request.getHeader("Customer-Number");
-		String type = request.getHeader("Type");
-		String correlationId = request.getHeader("Correlation-Id");
-		String jSessionId = request.getSession().getId();
-		String sessionId = request.getRequestedSessionId();
+		String customerNumber = "12388";
+		String type = "REST";
+		String correlationId = "w234-3223-2323-2323";
+		String jSessionId = "J-99889889";
+		String sessionId = "S-12133333";
 
 		if (customerNumber != null) {
 			ThreadContext.put("CustomerNumber", customerNumber);

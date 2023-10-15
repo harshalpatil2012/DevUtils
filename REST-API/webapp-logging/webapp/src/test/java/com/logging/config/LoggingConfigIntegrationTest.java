@@ -1,5 +1,7 @@
-package com.logging;
+package com.logging.config;
 
+import com.logging.LoggingInterceptor;
+import com.logging.RequestResponseLoggingFilter;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -2,7 +2,7 @@
 
 <Configuration>
 
-    <Root level="error" appenderRef="activityAppender">
+    <Root level="debug" appenderRef="activityAppender">
     </Root>
 
     <Appenders>
@@ -53,15 +53,15 @@
 
     <Loggers>
 
-        <Logger name="activity" level="info" additivity="false" appenderRef="activityAppender">
+        <Logger name="activity" level="debug" additivity="false" appenderRef="activityAppender">
             <AppenderRef ref="activityAppender" async="true" />
         </Logger>
 
-        <Logger name="application" level="info" additivity="false" appenderRef="applicationAppender">
+        <Logger name="application" level="debug" additivity="false" appenderRef="applicationAppender">
             <AppenderRef ref="applicationAppender" async="true" />
         </Logger>
 
-        <Logger name="performance" level="info" additivity="false" appenderRef="performanceAppender">
+        <Logger name="performance" level="debug" additivity="false" appenderRef="performanceAppender">
             <AppenderRef ref="performanceAppender" async="true" />
         </Logger>
 
