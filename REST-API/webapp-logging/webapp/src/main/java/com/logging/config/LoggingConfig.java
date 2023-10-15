@@ -1,7 +1,5 @@
 package com.logging.config;
 
-
-
 import com.logging.LoggingInterceptor;
 import com.logging.RequestResponseLoggingFilter;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
