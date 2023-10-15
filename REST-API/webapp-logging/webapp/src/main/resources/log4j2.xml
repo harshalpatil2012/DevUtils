@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Configuration>
+
+    <Root level="error" appenderRef="activityAppender">
+    </Root>
+
+    <Appenders>
+
+        <Appender name="activityAppender" type="RollingFile">
+            <File fileName="${logDir}/activity.log" filePattern="${logDir}/activity-%d{yyyy-MM-dd}-%i.log" />
+            <Layout type="PatternLayout">
+                <Pattern>%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n</Pattern>
+            </Layout>
+            <Policies type="Policies">
+                <TimeBasedTriggeringPolicy interval="1" modulate="true" />
+                <SizeBasedTriggeringPolicy size="10MB" />
+            </Policies>
+            <Strategy type="DefaultRolloverStrategy">
+                <Max>10</Max>
+            </Strategy>
+        </Appender>
+
+        <Appender name="applicationAppender" type="RollingFile">
+            <File fileName="${logDir}/app.log" filePattern="${logDir}/app-%d{yyyy-MM-dd}-%i.log" />
+            <Layout type="PatternLayout">
+                <Pattern>%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n</Pattern>
+            </Layout>
+            <Policies type="Policies">
+                <TimeBasedTriggeringPolicy interval="1" modulate="true" />
+                <SizeBasedTriggeringPolicy size="10MB" />
+            </Policies>
+            <Strategy type="DefaultRolloverStrategy">
+                <Max>10</Max>
+            </Strategy>
+        </Appender>
+
+        <Appender name="performanceAppender" type="RollingFile">
+            <File fileName="${logDir}/perf.log" filePattern="${logDir}/perf-%d{yyyy-MM-dd}-%i.log" />
+            <Layout type="PatternLayout">
+                <Pattern>%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n</Pattern>
+            </Layout>
+            <Policies type="Policies">
+                <TimeBasedTriggeringPolicy interval="1" modulate="true" />
+                <SizeBasedTriggeringPolicy size="10MB" />
+            </Policies>
+            <Strategy type="DefaultRolloverStrategy">
+                <Max>10</Max>
+            </Strategy>
+        </Appender>
+
+    </Appenders>
+
+    <Loggers>
+
+        <Logger name="activity" level="info" additivity="false" appenderRef="activityAppender">
+            <AppenderRef ref="activityAppender" async="true" />
+        </Logger>
+
+        <Logger name="application" level="info" additivity="false" appenderRef="applicationAppender">
+            <AppenderRef ref="applicationAppender" async="true" />
+        </Logger>
+
+        <Logger name="performance" level="info" additivity="false" appenderRef="performanceAppender">
+            <AppenderRef ref="performanceAppender" async="true" />
+        </Logger>
+
+    </Loggers>
+
+</Configuration>

@@ -1,8 +1,8 @@
 package com.logging;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.apache.logging.log4j.ThreadContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -12,8 +12,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.reactive.function.client.ExchangeFilterFunction;
 import org.springframework.web.reactive.function.client.WebClient;
 
-import org.junit.Before;
-import org.junit.Test;
+
 import org.mockito.Mockito;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
@@ -74,7 +73,7 @@ class LoggingInterceptorTest {
     }
 
     @Test
-    void testAfterCompletion() {
+    void testAfterCompletion() throws Exception {
         request.addHeader("Customer-Number", "12345");
         request.addHeader("Type", "Type-A");
         request.addHeader("Correlation-Id", "corr-123");

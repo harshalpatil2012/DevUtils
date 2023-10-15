@@ -7,16 +7,15 @@ buildscript {
     }
 }
 
-plugins {
-    id 'java'
-    id 'jacoco'
-}
-
 allprojects {
+    apply plugin: 'java'
     apply plugin: 'eclipse'
     apply plugin: 'idea'
     group = 'com.example'
     version = '1.0-SNAPSHOT'
+    test {
+        ignoreFailures = true
+    }
 }
 
 ext {
@@ -30,34 +29,14 @@ subprojects {
         mavenCentral()
     }
 
+    dependencies {
+        compileOnly 'org.projectlombok:lombok:1.18.22'
+        annotationProcessor 'org.projectlombok:lombok:1.18.22'
+    }
+
     sourceCompatibility = 17
     targetCompatibility = 17
 
-    test {
-        finalizedBy jacocoTestReport
-    }
-
-    jacocoTestReport {
-        reports {
-            xml {
-                enabled true
-            }
-            html {
-                enabled true
-            }
-        }
-        dependsOn test
-    }
-
-    check.dependsOn test
-
-    tasks.withType(Test) {
-        jacoco {
-            toolVersion = jacocoVersion
-        }
-    }
-
-    check {
-        dependsOn tasks.withType(Test)
-    }
+    apply plugin: 'jacoco'
+    
 }

@@ -1,11 +1,11 @@
 package com.logging;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.web.client.TestRestTemplate;
-import org.springframework.web.filter.OncePerRequestFilter;
+
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
