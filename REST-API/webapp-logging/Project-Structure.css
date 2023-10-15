@@ -1,22 +1,21 @@
-my-spring-boot-project/
-├── build<span class="hljs-selector-class">.gradle</span>
-├── settings<span class="hljs-selector-class">.gradle</span>
+my-spring-boot-webapplication-project/
+├── build.gradle
+├── settings.gradle
 ├── webapp/
-│   ├── build<span class="hljs-selector-class">.gradle</span>
-│   └── <span class="hljs-attribute">src</span>/
-│       └── <span class="hljs-selector-tag">main</span>/
+│   ├── build.gradle
+│   └── src/
+│       └── main/
+│           └── java/
+│               └── com/
+│                   └── example/│
+│                           └── Application.java
+├── filters/
+│   ├── build.gradle
+│   └── src/
+│       └── main/
 │           └── java/
 │               └── com/
 │                   └── example/
-│                       └── webapp/
-│                           └── Application<span class="hljs-selector-class">.java</span>
-├── module1/
-│   ├── build<span class="hljs-selector-class">.gradle</span>
-│   └── <span class="hljs-attribute">src</span>/
-│       └── <span class="hljs-selector-tag">main</span>/
-│           └── java/
-│               └── com/
-│                   └── example/
-│                       └── module1/
-│                           └── Module1Application
-....
+│
+│ and 2nd and 3rd jar gradle submodule so on  ....
+

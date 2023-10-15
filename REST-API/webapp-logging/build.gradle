@@ -7,8 +7,12 @@ buildscript {
     }
 }
 
+plugins {
+    id 'java'
+    id 'jacoco'
+}
+
 allprojects {
-    apply plugin: 'java'
     apply plugin: 'eclipse'
     apply plugin: 'idea'
     group = 'com.example'
@@ -26,15 +30,8 @@ subprojects {
         mavenCentral()
     }
 
-    dependencies {
-        compileOnly 'org.projectlombok:lombok:1.18.22'
-        annotationProcessor 'org.projectlombok:lombok:1.18.22'
-    }
-
     sourceCompatibility = 17
     targetCompatibility = 17
-
-    apply plugin: 'jacoco'
 
     test {
         finalizedBy jacocoTestReport
@@ -42,27 +39,25 @@ subprojects {
 
     jacocoTestReport {
         reports {
-            xml.enabled true
-            html.enabled true
-        }
-        dependsOn test
-        executionData(test)
-    }
-
-    task check(type: JacocoCoverageVerification) {
-        dependsOn test
-        classDirectories = fileTree(dir: project.sourceSets.main.output.classesDirs.singleFile, include: '**')
-        sourceDirectories = project.sourceSets.main.allSource
-        classpath = project.sourceSets.main.runtimeClasspath
-
-        violations {
-            rule {
-                element = 'CLASS'
-                includes = ['**/*'] // Specify packages or classes to include
-                limit {
-                    minimum = 0 // Change to the desired minimum coverage (e.g., 0.80 for 80%)
-                }
+            xml {
+                enabled true
+            }
+            html {
+                enabled true
             }
         }
+        dependsOn test
+    }
+
+    check.dependsOn test
+
+    tasks.withType(Test) {
+        jacoco {
+            toolVersion = jacocoVersion
+        }
+    }
+
+    check {
+        dependsOn tasks.withType(Test)
     }
 }

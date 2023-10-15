@@ -1,1 +1,4 @@
-rootProject.name = 'webapp'
+rootProject.name = 'webapp-logging'
+include 'webapp'
+//include 'filters'
+//include 'other-module'

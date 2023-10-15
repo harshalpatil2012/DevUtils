@@ -1,5 +1,11 @@
 package com.logging;
 
+import org.springframework.web.reactive.function.client.ClientRequest;
+import org.springframework.web.reactive.function.client.ClientResponse;
+import org.springframework.web.reactive.function.client.ExchangeFilterFunction;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class PerformanceLoggingInterceptor implements ExchangeFilterFunction {
 	private static final Logger logger = LoggerFactory.getLogger(PerformanceLoggingInterceptor.class);
 

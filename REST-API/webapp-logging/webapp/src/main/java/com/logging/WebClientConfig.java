@@ -2,8 +2,8 @@ package com.logging;
 
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.apache.logging.log4j.ThreadContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
