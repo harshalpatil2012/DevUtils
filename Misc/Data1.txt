@@ -1,0 +1,202 @@
+import org.ehcache.Cache;
+import org.ehcache.CacheManager;
+import org.ehcache.config.CacheConfiguration;
+import org.ehcache.config.builders.CacheConfigurationBuilder;
+import org.ehcache.config.builders.ResourcePoolsBuilder;
+import org.springframework.stereotype.Service;
+
+import java.util.Map;
+
+@Service
+public class EhcacheService {
+    private final CacheManager cacheManager;
+
+    public EhcacheService() {
+        // Initialize Ehcache CacheManager
+        this.cacheManager = CacheManager.newCacheManager();
+        cacheManager.init();
+    }
+
+    public <T> void fetchAndCache(String cacheName, String cacheKey, Class<T> responseType, Consumer<T> onSuccess) {
+        // Check if data is present in the cache
+        Cache<String, T> cache = cacheManager.getCache(cacheName, String.class, responseType);
+        T cachedData = cache.get(cacheKey);
+
+        if (cachedData != null) {
+            onSuccess.accept(cachedData);
+        } else {
+            // If data is not in the cache, fetch it from the API and update the cache
+            // Assuming you have a WebClient to fetch the data, add it here.
+            // Example: Mono<T> responseMono = webClient.get().uri(apiEndpoint).retrieve().bodyToMono(responseType);
+
+            // For the sake of this example, we'll simulate a data fetch.
+            T fetchedData = fetchDataFromApi();
+
+            if (fetchedData != null) {
+                cache.put(cacheKey, fetchedData);
+                onSuccess.accept(fetchedData);
+            }
+        }
+    }
+
+    public <T> void updateCache(String cacheName, String cacheKey, T data) {
+        Cache<String, T> cache = cacheManager.getCache(cacheName, String.class, data.getClass());
+        cache.put(cacheKey, data);
+    }
+
+    public <T> Map<String, T> getCachedData(String cacheName, Class<T> responseType) {
+        Cache<String, T> cache = cacheManager.getCache(cacheName, String.class, responseType);
+
+        Map<String, T> cachedData = new ConcurrentHashMap<>();
+        cache.forEach(entry -> cachedData.put(entry.getKey(), entry.getValue()));
+        
+        return cachedData;
+    }
+
+    // Simulate fetching data from the API
+    private <T> T fetchDataFromApi() {
+        // Replace this with actual API call
+        return null;
+    }
+}
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
+
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
+@Service
+public class ApiService {
+    private static final Logger LOGGER = LoggerFactory.getLogger(ApiService.class);
+    private final WebClient webClient;
+    private final EhcacheService ehcacheService;
+
+    public ApiService(WebClient.Builder webClientBuilder, EhcacheService ehcacheService) {
+        this.webClient = webClientBuilder.baseUrl("https://your-api-url.com").build();
+        this.ehcacheService = ehcacheService;
+    }
+
+    @Scheduled(fixedDelay = 3600000) // Run every hour
+    public void fetchAndCacheApplicationMap() {
+        LOGGER.info("Fetching and caching Application Map data...");
+        ehcacheService.fetchAndCache(
+            "applicationMapCache", 
+            "/path/to/application-map-get/endpoint", 
+            ApplicationMapResponse.class,
+            this::updateApplicationMapCache
+        );
+    }
+
+    @Scheduled(fixedDelay = 3600000) // Run every hour
+    public void fetchAndCacheJourneyResponse() {
+        LOGGER.info("Fetching and caching Journey Response data...");
+        ehcacheService.fetchAndCache(
+            "journeyResponseCache",
+            "/path/to/journey-response/endpoint",
+            JourneyResponse.class,
+            this::updateJourneyResponseCache
+        );
+    }
+
+    private void updateApplicationMapCache(String key, ApplicationMapResponse response) {
+        // Update the cache with the fetched data
+        ehcacheService.updateCache("applicationMapCache", key, response);
+    }
+
+    private void updateJourneyResponseCache(String key, JourneyResponse response) {
+        // Update the cache with the fetched data
+        ehcacheService.updateCache("journeyResponseCache", key, response);
+    }
+    
+    // Other methods for different endpoints can follow a similar pattern.
+    
+    public Map<String, ApiEntry> getCachedApiData() {
+        return ehcacheService.getCachedData("apiDataCache", ApiEntry.class);
+    }
+
+    public Map<String, ApiAlias> getCachedApplicationMap() {
+        return ehcacheService.getCachedData("applicationMapCache", ApiAlias.class);
+    }
+
+    public Map<String, JourneyResponse.JourneyConfig[]> getCachedJourneyConfigs() {
+        return ehcacheService.getCachedData("journeyResponseCache", JourneyResponse.JourneyConfig[].class);
+    }
+}
+
+
+@FunctionalInterface
+public interface DataFetcher<T> {
+    T fetchData();
+}
+
+import org.ehcache.Cache;
+import org.ehcache.CacheManager;
+import org.ehcache.config.CacheConfiguration;
+import org.ehcache.config.builders.CacheConfigurationBuilder;
+import org.ehcache.config.builders.ResourcePoolsBuilder;
+import org.springframework.stereotype.Service;
+
+import java.util.Map;
+import java.util.function.Consumer;
+
+@Service
+public class EhcacheService {
+    private final CacheManager cacheManager;
+
+    public EhcacheService() {
+        // Initialize Ehcache CacheManager
+        this.cacheManager = CacheManager.newCacheManager();
+        cacheManager.init();
+    }
+
+    public <T> void fetchAndCache(String cacheName, String cacheKey, Class<T> responseType, Consumer<T> onSuccess, DataFetcher<T> dataFetcher) {
+        // Check if data is present in the cache
+        Cache<String, T> cache = getOrCreateCache(cacheName, responseType);
+        T cachedData = cache.get(cacheKey);
+
+        if (cachedData != null) {
+            onSuccess.accept(cachedData);
+        } else {
+            // If data is not in the cache, fetch it from the API
+            T fetchedData = dataFetcher.fetchData();
+
+            if (fetchedData != null) {
+                cache.put(cacheKey, fetchedData);
+                onSuccess.accept(fetchedData);
+            }
+        }
+    }
+
+    public <T> void updateCache(String cacheName, String cacheKey, T data) {
+        Cache<String, T> cache = getOrCreateCache(cacheName, data.getClass());
+        cache.put(cacheKey, data);
+    }
+
+    public <T> Map<String, T> getCachedData(String cacheName, Class<T> responseType) {
+        Cache<String, T> cache = getOrCreateCache(cacheName, responseType);
+
+        Map<String, T> cachedData = new ConcurrentHashMap<>();
+        cache.forEach(entry -> cachedData.put(entry.getKey(), entry.getValue()));
+
+        return cachedData;
+    }
+
+    private <T> Cache<String, T> getOrCreateCache(String cacheName, Class<T> valueType) {
+        Cache<String, T> cache = cacheManager.getCache(cacheName, String.class, valueType);
+
+        if (cache == null) {
+            CacheConfiguration<String, T> cacheConfig = CacheConfigurationBuilder
+                .newCacheConfigurationBuilder(String.class, valueType, ResourcePoolsBuilder.heap(100))
+                .build();
+
+            cache = cacheManager.createCache(cacheName, cacheConfig);
+        }
+
+        return cache;
+    }
+}
