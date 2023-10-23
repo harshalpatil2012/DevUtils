@@ -100,25 +100,22 @@ public class ReactiveRequestInterceptor implements HandlerFilterFunction<ServerR
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ReactiveRequestInterceptor.class);
 
-    @Override
-    public Mono<ServerResponse> filter(ServerRequest request, HandlerFilterFunction<ServerRequest, ServerResponse> next) {
-        // Update the request URL path
+    // Update the request URL path
         String newPath = request.uri() + "/updated";
-        request = request.mutate().path(newPath).build();
+        ServerRequest updatedRequest = ServerRequest.create(request.exchange(), newPath);
 
         // Update the request parameters
-        request = request.mutate().queryParam("updatedParam", "updatedValue").build();
+        updatedRequest = updatedRequest.queryParam("updatedParam", "updatedValue");
 
         // Update the request payload
         Mono<String> requestBody = request.bodyToMono(String.class);
         requestBody = requestBody.map(body -> body.replace("old", "new"));
 
         // Wrap the request object
-        ServerRequest updatedRequest = request.mutate().body(requestBody).build();
+        updatedRequest = updatedRequest.body(requestBody);
 
         // Continue processing the request
         return next.filter(updatedRequest);
-    }
 }
 
 public class ReactiveResponseInterceptor implements HandlerFilterFunction<ServerRequest, ServerResponse> {
@@ -136,21 +133,50 @@ public class ReactiveResponseInterceptor implements HandlerFilterFunction<Server
             responseBody = responseBody.map(body -> body.replace("old", "new"));
 
             // Wrap the response object
-            ServerResponse updatedResponse = response.mutate().body(responseBody).build();
+            ServerResponse updatedResponse = ServerResponse.create(response.statusCode(), response.headers(), responseBody);
 
             return updatedResponse;
         });
     }
 }
 
+import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.web.server.ServerWebExchange;
+
+public class RequestResponseFilter extends OncePerRequestFilter {
+
+    private final ReactiveRequestInterceptor requestInterceptor;
+    private final ReactiveResponseInterceptor responseInterceptor;
+
+    public RequestResponseFilter(ReactiveRequestInterceptor requestInterceptor, ReactiveResponseInterceptor responseInterceptor) {
+        this.requestInterceptor = requestInterceptor;
+        this.responseInterceptor = responseInterceptor;
+    }
+
+    @Override
+    protected Mono<Void> filterInternal(ServerWebExchange exchange, Chain chain) {
+        return requestInterceptor.filter(exchange, chain)
+                .then(responseInterceptor.filter(exchange, chain));
+    }
+}
+
+import org.springframework.boot.web.reactive.filter.WebFilterChain;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.reactive.config.WebFluxConfigurer;
 
 @Configuration
-public class WebReactiveConfig implements WebReactiveConfigurer {
+public class WebFluxConfig implements WebFluxConfigurer {
+
+    private final ReactiveRequestInterceptor requestInterceptor;
+    private final ReactiveResponseInterceptor responseInterceptor;
+
+    public WebFluxConfig(ReactiveRequestInterceptor requestInterceptor, ReactiveResponseInterceptor responseInterceptor) {
+        this.requestInterceptor = requestInterceptor;
+        this.responseInterceptor = responseInterceptor;
+    }
 
     @Override
     public void addFilters(WebFilterRegistry registry) {
-        // Add the interceptors to the registry
-        registry.addFilter(new ReactiveRequestInterceptor());
-        registry.addFilter(new ReactiveResponseInterceptor());
+        registry.addFilterFirst(new RequestResponseFilter(requestInterceptor, responseInterceptor));
     }
 }
