@@ -164,6 +164,7 @@ import org.springframework.boot.web.reactive.filter.WebFilterChain;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.reactive.config.WebFluxConfigurer;
 
+//Once we registered the RequestResponseFilter, it will be executed before all other filters, ensuring that the request and response interceptors are        // executed before everything else.
 @Configuration
 public class WebFluxConfig implements WebFluxConfigurer {
 
