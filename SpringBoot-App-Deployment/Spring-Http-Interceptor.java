@@ -261,6 +261,88 @@ public class SimpleReactiveResponseInterceptorTest {
         // Assert
         assertThat(updatedResponse).isSameAs(exchange);
     }
+	@Test
+    public void testFilter_with200StatusCode_shouldUpdateResponse() {
+        // Arrange
+        ServerWebExchange exchange = mock(ServerWebExchange.class);
+        when(exchange.getResponse().getStatusCode()).thenReturn(HttpStatus.OK);
+        when(exchange.getResponse().getBodyToMono().block()).isEqualTo("{\"name\": \"John Doe\", \"age\": 30}");
+
+        // Act
+        ServerWebExchange updatedResponse = interceptor.filter(exchange, mock(WebFilterChain.class)).block();
+
+        // Assert
+        assertThat(updatedResponse.getResponse().getBodyToMono().block()).isEqualTo("{\"name\": \"John Doe\", \"age\": 30, \"updated\": true}");
+    }
+
+    @Test
+    public void testFilter_with201StatusCode_shouldUpdateResponse() {
+        // Arrange
+        ServerWebExchange exchange = mock(ServerWebExchange.class);
+        when(exchange.getResponse().getStatusCode()).thenReturn(HttpStatus.CREATED);
+        when(exchange.getResponse().getBodyToMono().block()).isEqualTo("{\"name\": \"John Doe\", \"age\": 30}");
+
+        // Act
+        ServerWebExchange updatedResponse = interceptor.filter(exchange, mock(WebFilterChain.class)).block();
+
+        // Assert
+        assertThat(updatedResponse.getResponse().getBodyToMono().block()).isEqualTo("{\"name\": \"John Doe\", \"age\": 30, \"updated\": true}");
+    }
+
+    @Test
+    public void testFilter_with400StatusCode_shouldUpdateResponse() {
+        // Arrange
+        ServerWebExchange exchange = mock(ServerWebExchange.class);
+        when(exchange.getResponse().getStatusCode()).thenReturn(HttpStatus.BAD_REQUEST);
+        when(exchange.getResponse().getBodyToMono().block()).isEqualTo("{\"error\": \"Invalid request\"}");
+
+        // Act
+        ServerWebExchange updatedResponse = interceptor.filter(exchange, mock(WebFilterChain.class)).block();
+
+        // Assert
+        assertThat(updatedResponse.getResponse().getBodyToMono().block()).isEqualTo("{\"error\": \"Invalid request\", \"updated\": true}");
+    }
+
+    @Test
+    public void testFilter_with500StatusCode_shouldUpdateResponse() {
+        // Arrange
+        ServerWebExchange exchange = mock(ServerWebExchange.class);
+        when(exchange.getResponse().getStatusCode()).thenReturn(HttpStatus.INTERNAL_SERVER_ERROR);
+        when(exchange.getResponse().getBodyToMono().block()).isEqualTo("An error occurred");
+
+        // Act
+        ServerWebExchange updatedResponse = interceptor.filter(exchange, mock(WebFilterChain.class)).block();
+
+        // Assert
+        assertThat(updatedResponse.getResponse().getBodyToMono().block()).isEqualTo("An error occurred");
+    }
+
+    @Test
+    public void testFilter_withResponseHeader_shouldUpdateResponseHeader() {
+        // Arrange
+        ServerWebExchange exchange = mock(ServerWebExchange.class);
+        when(exchange.getResponse().getHeaders().getFirst("Location")).thenReturn("/api/v1/users/1");
+
+        // Act
+        ServerWebExchange updatedResponse = interceptor.filter(exchange, mock(WebFilterChain.class)).block();
+
+        // Assert
+        assertThat(updatedResponse.getResponse().getHeaders().getFirst("Location")).isEqualTo("/api/v1/users/1/updated");
+    }
+
+    @Test
+    public void testFilter_withResponseBody_shouldUpdateResponseBody() {
+        // Arrange
+        ServerWebExchange exchange = mock(ServerWebExchange.class);
+        when(exchange.getResponse().getBodyToMono().block()).isEqualTo("{\"name\": \"John Doe\", \"age\": 30}");
+
+        // Act
+        ServerWebExchange updatedResponse = interceptor.filter(exchange, mock(WebFilterChain.class)).block();
+
+        // Assert
+        assertThat(updatedResponse.getResponse().getBodyToMono().block()).isEqualTo("{\"name\": \"John Doe\", \"age\": 30, \"updated\": true}");
+    }
+
 }
 
 
@@ -304,6 +386,93 @@ public class WebFluxIntegrationTests {
                 .uri("/invalid/uri")
                 .exchange()
                 .expectStatus().isNotFound();
+    }
+	
+	 @Test
+    public void testRequestResponseFilter_withJsonContentType_shouldUpdateRequestAndResponse() {
+        // Act
+        BodySpec<String> response = webTestClient
+                .get()
+                .uri("/api/v1/users/1")
+                .header("Content-Type", "application/json")
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(String.class);
+
+        // Assert
+        assertThat(response.extract().body().block()).contains("John Doe").contains("30").contains("updated");
+    }
+
+    @Test
+    public void testRequestResponseFilter_withXmlContentType_shouldUpdateRequestAndResponse() {
+        // Act
+        BodySpec<String> response = webTestClient
+                .get()
+                .uri("/api/v1/users/1")
+                .header("Content-Type", "application/xml")
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(String.class);
+
+        // Assert
+        assertThat(response.extract().body().block()).contains("John Doe").contains("30").contains("updated");
+    }
+
+    @Test
+    public void testRequestResponseFilter_withLargeContent_shouldUpdateRequestAndResponse() {
+        // Create a large request body
+        String largeRequestBody = "This is a large request body.";
+
+        // Act
+        BodySpec<String> response = webTestClient
+                .post()
+                .uri("/api/v1/users")
+                .header("Content-Type", "application/json")
+                .bodyValue(largeRequestBody)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(String.class);
+
+        // Assert
+        assertThat(response.extract().body().block()).contains(largeRequestBody);
+    }
+
+    @Test
+    public void testRequestResponseFilter_withConcurrentRequests_shouldUpdateRequestAndResponse() {
+        // Create multiple concurrent requests
+        Mono<BodySpec<String>>[] responses = new Mono[10];
+        for (int i = 0; i < 10; i++) {
+            responses[i] = webTestClient
+                    .get()
+                    .uri("/api/v1/users/1")
+                    .exchange()
+                    .expectStatus().isOk()
+                    .expectBody(String.class);
+        }
+
+        // Wait for all requests to complete
+        Mono.when(responses).block();
+
+        // Assert that all responses were updated correctly
+        for (BodySpec<String> response : responses) {
+            assertThat(response.extract().body().block()).contains("John Doe").contains("30").contains("updated");
+        }
+    }
+
+    @Test
+    public void testRequestResponseFilter_withErrorCondition_shouldLogAndReturn500() {
+        // Arrange
+        // Introduce an error condition in the interceptor
+
+        // Act
+        BodySpec<String> response = webTestClient
+                .get()
+                .uri("/api/v1/users/1")
+                .exchange()
+                .expectStatus().is500();
+
+        // Assert
+        assertThat(response.extract().body().block()).contains("An error occurred");
     }
 }
 
