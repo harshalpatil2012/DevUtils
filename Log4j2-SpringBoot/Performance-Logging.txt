@@ -91,3 +91,58 @@ webClientBuilder.filter(new ExchangeFilterFunction() {
 
 
 Make sure to customize the interceptor as needed, including handling and formatting of request and response data according to your specific requirements.
+
+import java.util.HashMap;
+import java.util.Map;
+
+
+public class ThreadLocalContext {
+    private static ThreadLocal<Map<String, String>> context = ThreadLocal.withInitial(HashMap::new);
+
+    public static void setContextValue(String key, String value) {
+        context.get().put(key, value);
+    }
+
+    public static String getContextValue(String key) {
+        return context.get().get(key);
+    }
+
+    public static void clearContextValue(String key) {
+        context.get().remove(key);
+    }
+
+    public static void clearAllContextValues() {
+        context.get().clear();
+    }
+}
+
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+@Configuration
+public class WebConfig implements WebMvcConfigurer {
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(new LoggingContextInterceptor());
+    }
+}
+
+import org.springframework.web.servlet.HandlerInterceptor;
+import org.springframework.web.servlet.ModelAndView;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+public class LoggingContextInterceptor implements HandlerInterceptor {
+    @Override
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {       
+
+        return true;
+    }
+
+    @Override
+    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
+        // Clear context values after the controller method completes
+        ThreadLocalContext.clearAllContextValues;
+    }
+}
