@@ -309,4 +309,82 @@ public class ServletInitializer extends SpringBootServletInitializer {
     }
 }
 
+import org.apache.logging.log4j.core.Filter;
+import org.apache.logging.log4j.core.Layout;
+import org.apache.logging.log4j.core.LogEvent;
+import org.apache.logging.log4j.core.appender.AbstractAppender;
+import org.apache.logging.log4j.core.config.Property;
 
+public class MetricsLoggerAppender extends AbstractAppender {
+    private MetricsLogger metricsLogger; // You should replace this with your Metrics-Logger implementation
+
+    protected MetricsLoggerAppender(
+            String name, Filter filter, Layout<? extends Serializable> layout, boolean ignoreExceptions, Property[] properties) {
+        super(name, filter, layout, ignoreExceptions, properties);
+        // Initialize your Metrics-Logger here (e.g., MetricsLogger.getInstance())
+        this.metricsLogger = MetricsLogger.getInstance();
+    }
+
+    @Override
+    public void append(LogEvent event) {
+        // Get the log message and send it to your Metrics-Logger
+        String logMessage = new String(getLayout().toByteArray(event));
+        metricsLogger.log(logMessage);
+    }
+}
+
+
+# Define the custom appender
+appender.custom.type = your.package.MetricsLoggerAppender
+appender.custom.name = MetricsLoggerAppender
+appender.custom.layout.type = PatternLayout
+appender.custom.layout.pattern = %d %p %C{1.} [%t] %m%n
+
+# Define a logger for your RestApiLoggingInterceptor
+logger.custom.name = your.package.RestApiLoggingInterceptor
+logger.custom.level = info
+logger.custom.additivity = false
+logger.custom.appenderRef.custom.ref = MetricsLoggerAppender
+
+# Root logger configuration
+rootLogger.level = info
+rootLogger.appenderRef.custom.ref = MetricsLoggerAppender
+
+
+# Define the custom appender for the RequestResponseLoggingFilter
+appender.custom.type = your.package.RequestResponseLoggerAppender
+appender.custom.name = RequestResponseLoggerAppender
+appender.custom.layout.type = PatternLayout
+appender.custom.layout.pattern = %m%n
+
+# Define a logger for your RequestResponseLoggingFilter
+logger.custom.name = your.package.RequestResponseLoggingFilter
+logger.custom.level = info
+logger.custom.additivity = false
+logger.custom.appenderRef.custom.ref = RequestResponseLoggerAppender
+
+# Root logger configuration
+rootLogger.level = info
+rootLogger.appenderRef.custom.ref = RequestResponseLoggerAppender
+
+import org.apache.logging.log4j.core.Filter;
+import org.apache.logging.log4j.core.Layout;
+import org.apache.logging.log4j.core.LogEvent;
+import org.apache.logging.log4j.core.appender.AbstractAppender;
+import org.apache.logging.log4j.core.config.Property;
+
+public class RequestResponseLoggerAppender extends AbstractAppender {
+    private static final RequestResponseLoggingFilter filter = new RequestResponseLoggingFilter();
+
+    protected RequestResponseLoggerAppender(
+            String name, Filter filter, Layout<? extends Serializable> layout, boolean ignoreExceptions, Property[] properties) {
+        super(name, filter, layout, ignoreExceptions, properties);
+    }
+
+    @Override
+    public void append(LogEvent event) {
+        // Extract and log the message from the event
+        String logMessage = new String(getLayout().toByteArray(event));
+        filter.logToCustomAppender(logMessage);
+    }
+}
