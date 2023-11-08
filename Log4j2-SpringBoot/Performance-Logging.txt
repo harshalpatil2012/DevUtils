@@ -247,3 +247,55 @@ public class RequestResponseLoggingFilter implements Filter {
 }
 
 
+import org.springframework.core.annotation.Order;
+import org.springframework.stereotype.Component;
+
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import java.io.IOException;
+
+@Component
+@Order(1) // Set a low order value to run this filter before other filters
+public class LoggingContextFilter implements Filter {
+    @Override
+    public void init(FilterConfig filterConfig) throws ServletException {
+        // Initialization code (if needed)
+    }
+
+    @Override
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+            throws IOException, ServletException {
+        try {
+            // Set context values here using ThreadLocal or any other method
+            String sessionId = "12345";
+            String appenderName = "myAppender";
+            String customerNumber = "123";
+            String customerType = "VIP";
+
+            // Set context values in ThreadLocalContext
+            ThreadLocalContext.setContextValue("sessionId", sessionId);
+            ThreadLocalContext.setContextValue("appenderName", appenderName);
+            ThreadLocalContext.setContextValue("customerNumber", customerNumber);
+            ThreadLocalContext.setContextValue("customerType", customerType);
+
+            // Continue the filter chain
+            chain.doFilter(request, response);
+        } finally {
+            // Clear context values after the filter chain completes
+            ThreadLocalContext.clearContextValue("sessionId");
+            ThreadLocalContext.clearContextValue("appenderName");
+            ThreadLocalContext.clearContextValue("customerNumber");
+            ThreadLocalContext.clearContextValue("customerType");
+        }
+    }
+
+    @Override
+    public void destroy() {
+        // Cleanup code (if needed)
+    }
+}
+
