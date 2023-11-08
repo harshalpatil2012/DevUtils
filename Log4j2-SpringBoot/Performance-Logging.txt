@@ -1,0 +1,93 @@
+To create a generic interceptor to log REST API call details, including performance or execution time, you can use Spring's ClientHttpRequestInterceptor interface. Here's a sample interceptor that you can use to log API call details:
+
+
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpRequest;
+import org.springframework.http.HttpResponse;
+import org.springframework.http.client.ClientHttpRequestExecution;
+import org.springframework.http.client.ClientHttpRequestInterceptor;
+import org.springframework.http.client.ClientHttpResponse;
+import java.io.IOException;
+
+public class RestApiLoggingInterceptor implements ClientHttpRequestInterceptor {
+
+    private static final Logger logger = LoggerFactory.getLogger(RestApiLoggingInterceptor.class);
+
+    @Override
+    public ClientHttpResponse intercept(HttpRequest request, byte[] body, ClientHttpRequestExecution execution) throws IOException {
+        long startTime = System.currentTimeMillis();
+        ClientHttpResponse response = null;
+        try {
+            // Log the request details
+            logRequest(request, body);
+
+            // Execute the request
+            response = execution.execute(request, body);
+
+            // Log the response details
+            logResponse(response);
+
+            return response;
+        } finally {
+            if (response != null) {
+                long endTime = System.currentTimeMillis();
+                long executionTime = endTime - startTime;
+
+                // Log the execution time
+                logger.info("Request execution time: {} ms", executionTime);
+            }
+        }
+    }
+
+    private void logRequest(HttpRequest request, byte[] body) {
+        logger.info("Request method: {}", request.getMethod());
+        logger.info("Request URI: {}", request.getURI());
+        logger.info("Request headers: {}", request.getHeaders());
+        logger.info("Request body: {}", new String(body));
+    }
+
+    private void logResponse(ClientHttpResponse response) throws IOException {
+        logger.info("Response status code: {}", response.getRawStatusCode());
+        logger.info("Response status text: {}", response.getStatusText());
+        logger.info("Response headers: {}", response.getHeaders());
+        // If you want to log the response body, you can read it here, but be cautious with large responses
+        // logger.info("Response body: {}", StreamUtils.copyToString(response.getBody(), StandardCharsets.UTF_8));
+    }
+}
+
+
+This interceptor logs the request and response details, including method, URI, headers, and body. It also calculates and logs the execution time in milliseconds. You can configure the log level and appender in your logging framework (e.g., Logback or Log4j) to specify where the log messages should be written (e.g., to a file, console, etc.).
+
+### 4. Integrate with RestTemplate
+To use this interceptor with RestTemplate or WebClient, you can add it to the respective HTTP clients like this:
+
+For RestTemplate:
+
+
+RestTemplate restTemplate = new RestTemplate();
+restTemplate.setInterceptors(Collections.singletonList(new RestApiLoggingInterceptor()));
+
+
+For WebClient:
+
+java
+Copy code
+WebClient.Builder webClientBuilder = WebClient.builder();
+webClientBuilder.filter(new ExchangeFilterFunction() {
+    @Override
+    public Mono<ClientResponse> filter(ClientRequest request, ExchangeFunction next) {
+        return next.exchange(request)
+                .doOnNext(clientResponse -> {
+                    try {
+                        new RestApiLoggingInterceptor().logResponse(clientResponse);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                });
+    }
+});
+
+
+Make sure to customize the interceptor as needed, including handling and formatting of request and response data according to your specific requirements.
