@@ -146,3 +146,104 @@ public class LoggingContextInterceptor implements HandlerInterceptor {
         ThreadLocalContext.clearAllContextValues;
     }
 }
+
+
+To make the above code more efficient, you can optimize the iteration over request headers and reduce unnecessary string concatenation. Here's an improved version of the RequestResponseLoggingFilter:
+
+java
+
+import org.springframework.core.annotation.Order;
+import org.springframework.stereotype.Component;
+import org.springframework.web.util.ContentCachingRequestWrapper;
+import org.springframework.web.util.ContentCachingResponseWrapper;
+
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.Collections;
+import java.util.Enumeration;
+
+@Component
+@Order(1)
+public class RequestResponseLoggingFilter implements Filter {
+
+    @Override
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+            throws IOException, ServletException {
+        // Wrap the request and response to capture the payloads
+        ContentCachingRequestWrapper requestWrapper = new ContentCachingRequestWrapper((HttpServletRequest) request);
+        ContentCachingResponseWrapper responseWrapper = new ContentCachingResponseWrapper((HttpServletResponse) response);
+
+        // Log request information
+        logRequest(requestWrapper);
+
+        // Continue with the filter chain
+        chain.doFilter(requestWrapper, responseWrapper);
+
+        // Log response information
+        logResponse(responseWrapper);
+
+        // Forward the response to the original response
+        responseWrapper.copyBodyToResponse();
+    }
+
+    private void logRequest(ContentCachingRequestWrapper request) {
+        System.out.println("Request received: ");
+        System.out.println("URI: " + request.getRequestURI());
+        System.out.println("Method: " + request.getMethod());
+
+        // Log request headers
+        Enumeration<String> requestHeaders = request.getHeaderNames();
+        while (requestHeaders.hasMoreElements()) {
+            String headerName = requestHeaders.nextElement();
+            Enumeration<String> headerValues = request.getHeaders(headerName);
+            StringBuilder headerValueBuilder = new StringBuilder();
+            while (headerValues.hasMoreElements()) {
+                headerValueBuilder.append(headerValues.nextElement()).append(", ");
+            }
+            String headerValue = headerValueBuilder.toString();
+            headerValue = headerValue.isEmpty() ? "" : headerValue.substring(0, headerValue.length() - 2);
+            System.out.println(headerName + ": " + headerValue);
+        }
+
+        // Log request payload (body)
+        byte[] requestBody = request.getContentAsByteArray();
+        if (requestBody.length > 0) {
+            System.out.println("Request Body: " + new String(requestBody));
+        }
+    }
+
+    private void logResponse(ContentCachingResponseWrapper response) {
+        System.out.println("Response sent with status: " + response.getStatus());
+
+        // Log response headers
+        response.getHeaderNames().forEach(headerName -> {
+            String headerValue = String.join(", ", response.getHeaders(headerName));
+            System.out.println(headerName + ": " + headerValue);
+        });
+
+        // Log response payload (body)
+        byte[] responseBody = response.getContentAsByteArray();
+        if (responseBody.length > 0) {
+            System.out.println("Response Body: " + new String(responseBody));
+        }
+    }
+
+    @Override
+    public void init(FilterConfig filterConfig) throws ServletException {
+        // Initialization code (if needed)
+    }
+
+    @Override
+    public void destroy() {
+        // Cleanup code (if needed)
+    }
+}
+
+
