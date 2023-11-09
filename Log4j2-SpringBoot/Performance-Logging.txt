@@ -367,24 +367,29 @@ logger.custom.appenderRef.custom.ref = RequestResponseLoggerAppender
 rootLogger.level = info
 rootLogger.appenderRef.custom.ref = RequestResponseLoggerAppender
 
-public class RequestResponseLoggerAppender extends AbstractAppender {
-    private final RequestResponseLoggingFilter filter;
 
-    // Use constructor injection to pass the filter
+import org.apache.logging.log4j.core.Filter;
+import org.apache.logging.log4j.core.Layout;
+import org.apache.logging.log4j.core.LogEvent;
+import org.apache.logging.log4j.core.appender.AbstractAppender;
+import org.apache.logging.log4j.core.config.Property;
+
+import java.io.Serializable;
+
+public class RequestResponseLoggerAppender extends AbstractAppender {
+
     protected RequestResponseLoggerAppender(
-            String name, RequestResponseLoggingFilter filter, Layout<? extends Serializable> layout,
+            String name, Filter filter, Layout<? extends Serializable> layout,
             boolean ignoreExceptions, Property[] properties) {
-        super(name, null, layout, ignoreExceptions, properties);
-        this.filter = filter;
-        // Set the filter for the appender
-        super.setFilter(this.filter);
+        super(name, filter, layout, ignoreExceptions, properties);
     }
 
     @Override
     public void append(LogEvent event) {
         // Extract and log the message from the event
         String logMessage = new String(getLayout().toByteArray(event));
-        filter.logToCustomAppender(logMessage);
+        // Log the message directly or perform any other necessary actions
+        System.out.println(logMessage);
     }
 }
 
