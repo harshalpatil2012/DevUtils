@@ -367,18 +367,17 @@ logger.custom.appenderRef.custom.ref = RequestResponseLoggerAppender
 rootLogger.level = info
 rootLogger.appenderRef.custom.ref = RequestResponseLoggerAppender
 
-import org.apache.logging.log4j.core.Filter;
-import org.apache.logging.log4j.core.Layout;
-import org.apache.logging.log4j.core.LogEvent;
-import org.apache.logging.log4j.core.appender.AbstractAppender;
-import org.apache.logging.log4j.core.config.Property;
-
 public class RequestResponseLoggerAppender extends AbstractAppender {
-    private static final RequestResponseLoggingFilter filter = new RequestResponseLoggingFilter();
+    private final RequestResponseLoggingFilter filter;
 
+    // Use constructor injection to pass the filter
     protected RequestResponseLoggerAppender(
-            String name, Filter filter, Layout<? extends Serializable> layout, boolean ignoreExceptions, Property[] properties) {
-        super(name, filter, layout, ignoreExceptions, properties);
+            String name, RequestResponseLoggingFilter filter, Layout<? extends Serializable> layout,
+            boolean ignoreExceptions, Property[] properties) {
+        super(name, null, layout, ignoreExceptions, properties);
+        this.filter = filter;
+        // Set the filter for the appender
+        super.setFilter(this.filter);
     }
 
     @Override
@@ -386,5 +385,100 @@ public class RequestResponseLoggerAppender extends AbstractAppender {
         // Extract and log the message from the event
         String logMessage = new String(getLayout().toByteArray(event));
         filter.logToCustomAppender(logMessage);
+    }
+}
+
+
+
+import org.springframework.core.annotation.Order;
+import org.springframework.stereotype.Component;
+import org.springframework.web.util.ContentCachingRequestWrapper;
+import org.springframework.web.util.ContentCachingResponseWrapper;
+
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.Collections;
+import java.util.Enumeration;
+
+
+public class RequestResponseLoggingFilter implements Filter {
+
+    @Override
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+            throws IOException, ServletException {
+        // Wrap the request and response to capture the payloads
+        ContentCachingRequestWrapper requestWrapper = new ContentCachingRequestWrapper((HttpServletRequest) request);
+        ContentCachingResponseWrapper responseWrapper = new ContentCachingResponseWrapper((HttpServletResponse) response);
+
+        // Log request information
+        logRequest(requestWrapper);
+
+        // Continue with the filter chain
+        chain.doFilter(requestWrapper, responseWrapper);
+
+        // Log response information
+        logResponse(responseWrapper);
+
+        // Forward the response to the original response
+        responseWrapper.copyBodyToResponse();
+    }
+
+    private void logRequest(ContentCachingRequestWrapper request) {
+        System.out.println("Request received: ");
+        System.out.println("URI: " + request.getRequestURI());
+        System.out.println("Method: " + request.getMethod());
+
+        // Log request headers
+        Enumeration<String> requestHeaders = request.getHeaderNames();
+        while (requestHeaders.hasMoreElements()) {
+            String headerName = requestHeaders.nextElement();
+            Enumeration<String> headerValues = request.getHeaders(headerName);
+            StringBuilder headerValueBuilder = new StringBuilder();
+            while (headerValues.hasMoreElements()) {
+                headerValueBuilder.append(headerValues.nextElement()).append(", ");
+            }
+            String headerValue = headerValueBuilder.toString();
+            headerValue = headerValue.isEmpty() ? "" : headerValue.substring(0, headerValue.length() - 2);
+            System.out.println(headerName + ": " + headerValue);
+        }
+
+        // Log request payload (body)
+        byte[] requestBody = request.getContentAsByteArray();
+        if (requestBody.length > 0) {
+            System.out.println("Request Body: " + new String(requestBody));
+        }
+    }
+
+    private void logResponse(ContentCachingResponseWrapper response) {
+        System.out.println("Response sent with status: " + response.getStatus());
+
+        // Log response headers
+        response.getHeaderNames().forEach(headerName -> {
+            String headerValue = String.join(", ", response.getHeaders(headerName));
+            System.out.println(headerName + ": " + headerValue);
+        });
+
+        // Log response payload (body)
+        byte[] responseBody = response.getContentAsByteArray();
+        if (responseBody.length > 0) {
+            System.out.println("Response Body: " + new String(responseBody));
+        }
+    }
+
+    @Override
+    public void init(FilterConfig filterConfig) throws ServletException {
+        // Initialization code (if needed)
+    }
+
+    @Override
+    public void destroy() {
+        // Cleanup code (if needed)
     }
 }
