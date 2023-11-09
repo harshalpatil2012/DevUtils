@@ -530,3 +530,56 @@ appender.console.name = Console
 appender.console.layout.type = PatternLayout
 appender.console.layout.pattern = %d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n
 
+
+
+rootLogger.level=INFO
+rootLogger.appenderRefs=consoleAppender
+
+appender.console.type=Console
+appender.console.name=Console
+appender.console.layout.type=PatternLayout
+appender.console.layout.pattern=(dd-e-yyyy HH:mm:ss.800) X(hostName) SUPPORT \EX processId) x (code) AX(cuntID) [Xapparsion)] [id] [xthoutp)] [x(Correlationid) EX30ssionidi) nagin
+
+appender.access.type=com.filter.RequestResponseLoggingFilter
+appender.access.name=RequestResponseLoggerAppender
+appender.access.layout.type=PatternLayout
+appender.access.layout.pattern=(dd-MM-yyyy HH:mm:ss.586) X(hostNam=) ACTIVITY \X(processId)X(code)X(euro) [appVersion] [XsionId)] [xp1] [x(CorrelationId)) (XEUSession1011 megin
+
+logger.access.name=com.filter.RequestResponseLoggingFilter
+logger.access.level=TYPO
+logger.access.additivity=false
+logger.access.appenderRef=consoleAppender
+
+appender.performance.type=com.interceptor.RestapiLoggingInterceptor
+appender.performance.name=RostapiloggingAppender
+appender.performance.layout.type=PatternLayout
+appender.performance.layout.pattern=(dd-MM-yyyy :mm:ss.588) X(hostName) ^METRIX"\t\X{process)X(code)X(cant) [X(appVersion] [xtension141] [Xthoot p [X(CorrelationId)] [xJSessionId)) Amagn
+
+logger.performance.name=com.interceptor.RestApiLogginginterceptor
+logger.performance.level=INFO
+logger.performance.additivity=false
+logger.performance.appenderRef=consoleAppender
+logger.performance.appenderRef.perforamance.ref=CustomLoggerAppander
+logger.performance.appenderRef.Console.async=true
+
+# Additional loggers
+logger.error.name=org.apache
+logger.error.level=ERROR
+
+logger.springframework.name=org.springframework
+logger.springframework.level=ERROR
+
+logger.redisson.name=org.redisson
+logger.redisson.level=ERROR
+
+logger.netty.name=io.netty
+logger.netty.level=ERROR
+
+logger.zaxxer.name=com.zaxxer
+logger.zaxxer.level=ERROR
+
+# HTTP request/response logging (disabled for non-local dev)
+logger.apachehttp.name=org.apache.http
+logger.apachehttp.level=DEBUG
+logger.apachehttp.wire.name=org.apache.http.wire
+logger.apachehttp.wire.level=DEBUG
