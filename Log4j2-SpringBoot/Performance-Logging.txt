@@ -515,3 +515,18 @@ logger.mycomp.level = DEBUG
 logger.mycomp.additivity = false
 logger.mycomp.appenderRef.console.ref = Console
 
+
+# Set the Log4j2 context selector to enable async logging
+property.log4jContextSelector = org.apache.logging.log4j.core.async.AsyncLoggerContextSelector
+
+# Root logger configuration
+rootLogger.level = INFO
+rootLogger.appenderRefs = console
+rootLogger.appenderRef.console.ref = Console
+
+# Console appender configuration
+appender.console.type = Console
+appender.console.name = Console
+appender.console.layout.type = PatternLayout
+appender.console.layout.pattern = %d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n
+
