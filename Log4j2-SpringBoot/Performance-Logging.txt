@@ -496,3 +496,22 @@ public class RequestResponseLoggingFilter implements Filter {
         // Cleanup code (if needed)
     }
 }
+
+
+# Root logger configuration
+rootLogger.level = INFO
+rootLogger.appenderRefs = console
+rootLogger.appenderRef.console.ref = Console
+
+# Console appender configuration
+appender.console.type = Console
+appender.console.name = Console
+appender.console.layout.type = PatternLayout
+appender.console.layout.pattern = %d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n
+
+# Logger for com.mycomp package
+logger.mycomp.name = com.mycomp
+logger.mycomp.level = DEBUG
+logger.mycomp.additivity = false
+logger.mycomp.appenderRef.console.ref = Console
+
