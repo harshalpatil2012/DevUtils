@@ -15,10 +15,10 @@ public class ApiAccessPermissionService {
 	}
 
 	/**
-	 * Now, you can use the ApiAccessPermissionService in your SecurityConfig to
+	 * Now, you can use the ApiAccessPermissionService in SecurityConfig to
 	 * control access to dynamic /proxy/{api-name}/{api-version} endpoints:
 	 * 
-	 * java Copy code .antMatchers("/proxy/{api-name}/{api-version}/**")
+	 * .antMatchers("/proxy/{api-name}/{api-version}/**")
 	 * .access("@apiAccessPermissionService.hasAccess(authentication, #apiName,
 	 * #apiVersion)") This configuration will dynamically check if the user has
 	 * access to the endpoint based on the values retrieved from the ApiCacheService

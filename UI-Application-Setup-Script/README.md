@@ -1,6 +1,6 @@
 # Local UI Development Environment Setup
 
-This PowerShell script automates the setup of a local UI development environment for your project. It includes Node.js, NPM, Visual Studio Code, and more.
+This PowerShell script automates the setup of a local UI development environment for project. It includes Node.js, NPM, Visual Studio Code, and more.
 
 ## Quick Start
 
@@ -14,7 +14,7 @@ This PowerShell script automates the setup of a local UI development environment
 3. The script will:
    - Install Node.js and NPM.
    - Install Visual Studio Code.
-   - Clone your Git repository.
+   - Clone Git repository.
    - Download UI dependencies.
    - Download artifacts from Nexus (customize URLs).
    - Run the demo application.

@@ -143,7 +143,7 @@ public class SecurityHeadersFilterIntegrationTest {
 }
 ```
 
-These consolidated files provide a complete setup for the `SecurityHeadersFilter`, including unit tests and integration tests. Please adapt the URLs, header values, and test cases as per your specific application requirements.
+These consolidated files provide a complete setup for the `SecurityHeadersFilter`, including unit tests and integration tests. Please adapt the URLs, header values, and test cases as per specific application requirements.
 
 
 build.gradle

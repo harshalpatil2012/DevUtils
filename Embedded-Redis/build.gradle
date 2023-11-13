@@ -1,5 +1,13 @@
 plugins {
     id 'java'
+    
+}
+allprojects {
+    apply plugin: 'java'
+    apply plugin: 'eclipse'
+    apply plugin: 'idea'
+    group = 'com.example'
+    version = '1.0-SNAPSHOT'
 }
 
 group = 'org.example'
@@ -17,4 +25,52 @@ dependencies {
 
 test {
     useJUnitPlatform()
+}
+
+subprojects {
+
+    apply plugin: 'jacoco'
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        compileOnly 'org.projectlombok:lombok:1.18.22' // Update to the latest Lombok version
+        annotationProcessor 'org.projectlombok:lombok:1.18.22' // Update to the latest Lombok version
+    }
+
+    sourceCompatibility = 17
+    targetCompatibility = 17
+
+
+
+    test {
+        finalizedBy jacocoTestReport
+    }
+
+    jacocoTestReport {
+        reports {
+            xml.enabled true
+            html.enabled true
+        }
+        dependsOn test
+        executionData(test)
+    }
+
+    task check(type: JacocoCoverageVerification) {
+        dependsOn test
+        classDirectories = fileTree(dir: project.sourceSets.main.output.classesDirs.singleFile, include: '**')
+        sourceDirectories = project.sourceSets.main.allSource
+        classpath = project.sourceSets.main.runtimeClasspath
+
+        violations {
+            rule {
+                element = 'CLASS'
+                includes = ['**/*'] // Specify packages or classes to include
+                limit {
+                    minimum = 0 // Change to the desired minimum coverage (e.g., 0.80 for 80%)
+                }
+            }
+        }
+    }
 }

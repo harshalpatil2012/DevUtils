@@ -1,7 +1,7 @@
 Spring WebClient logging using Log4j2 in a Spring Boot application:
 
 1. Add Dependencies:
-Ensure you have the necessary dependencies for Spring WebFlux, Log4j2, and Spring Boot in your pom.xml or build.gradle file:
+Ensure you have the necessary dependencies for Spring WebFlux, Log4j2, and Spring Boot in pom.xml or build.gradle file:
 
 xml
 
@@ -33,8 +33,6 @@ appender.console.layout.type = PatternLayout
 appender.console.layout.pattern = %d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n
 3. Create a Logging Filter:
 Create a custom ExchangeFilterFunction called RequestResponseLoggingFilter to log the request and response information using Log4j2. You can use the code from the previous responses for this filter.
-
-java
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -68,9 +66,7 @@ public class RequestResponseLoggingFilter implements ExchangeFilterFunction {
     }
 }
 4. Usage:
-Use your WebClient with the Log4j2-based logging filter as shown below:
-
-java
+Use WebClient with the Log4j2-based logging filter as shown below:
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -93,7 +89,7 @@ public class MyService {
                 .bodyToMono(String.class);
     }
 }
-With this setup, Log4j2 will use the log4j2.properties configuration file for logging, and your WebClient requests and responses will be logged according to the specified log format.
+With this setup, Log4j2 will use the log4j2.properties configuration file for logging, and WebClient requests and responses will be logged according to the specified log format.
 
 
 

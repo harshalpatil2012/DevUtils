@@ -14,7 +14,7 @@ Before you begin, ensure you have the following prerequisites:
 
 ### Dependencies
 
-In your `build.gradle` or `pom.xml`, add the necessary dependencies:
+In `build.gradle` or `pom.xml`, add the necessary dependencies:
 
 ```groovy
 dependencies {
@@ -53,7 +53,7 @@ public class RedissonSessionConfig {
         if (redisEnabled) {
             Config config = new Config();
             config.useSingleServer()
-                  .setAddress("redis://localhost:6379"); // Configure your Redis server address here
+                  .setAddress("redis://localhost:6379"); // Configure Redis server address here
 
             return Redisson.create(config);
         } else {
@@ -61,16 +61,16 @@ public class RedissonSessionConfig {
         }
     }
 }
-Set the active profile in your application.properties or application.yml:
+Set the active profile in application.properties or application.yml:
 properties
 
 # Enable the "redis" profile when Redis is enabled
 spring.profiles.active=redis
 Usage
-Now, you can use Redisson-backed Spring Session for session management. You can inject HttpSession in your controllers as shown in the previous example.
+Now, you can use Redisson-backed Spring Session for session management. You can inject HttpSession in controllers as shown in the previous example.
 
 Run the Application
-Make sure your Redis server is running and accessible.
+Make sure Redis server is running and accessible.
 
 To run the Spring Boot application:
 
@@ -78,6 +78,6 @@ To run the Spring Boot application:
 ./gradlew bootRun
 
 
-This consolidated `README.md` includes all the relevant information in a clear and organized manner. Make sure to customize it with your specific details, versions, and server configurations as needed.
+This consolidated `README.md` includes all the relevant information in a clear and organized manner. Make sure to customize it with specific details, versions, and server configurations as needed.
 
 

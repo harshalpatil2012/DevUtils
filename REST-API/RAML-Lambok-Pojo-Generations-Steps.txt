@@ -2,12 +2,10 @@ step-by-step example of how to achieve this:
 
 Assuming you have the "mulesoft-labs/raml-java-tools" tool downloaded and set up:
 
-Step 1: Prepare Your RAML File
+Step 1: Prepare RAML File
 
-Create a RAML file that defines your API data types. For example, you can create a file named api.raml:
+Create a RAML file that defines API data types. For example, you can create a file named api.raml:
 
-raml
-Copy code
 # My API RAML Specification
 
 types:
@@ -17,7 +15,7 @@ types:
       lastName: string
 Step 2: Generate Java POJOs
 
-Using the tool, generate Java POJOs with Lombok annotations based on your RAML specification. Run the following command in your terminal:
+Using the tool, generate Java POJOs with Lombok annotations based on RAML specification. Run the following command in terminal:
 
 shell
 
@@ -25,19 +23,17 @@ java -jar raml-to-pojo.jar -l lombok -p com.example.generated -d src/main/java /
 -l lombok specifies that you want to use Lombok annotations.
 -p com.example.generated specifies the package name for the generated POJOs.
 -d src/main/java specifies the output directory for the generated Java files.
-/path/to/your/api.raml should be replaced with the actual path to your RAML file.
+/path/to/your/api.raml should be replaced with the actual path to RAML file.
 This command will generate Java POJOs in the specified package and output directory with Lombok annotations applied.
 
-Step 3: Include Generated POJOs in Your Project
+Step 3: Include Generated POJOs in Project
 
-Include the generated POJOs in your Java project. You will need to make sure that the Lombok library is also included as a dependency in your project.
+Include the generated POJOs in Java project. You will need to make sure that the Lombok library is also included as a dependency in project.
 
-Step 4: Use Generated POJOs in Your Code
+Step 4: Use Generated POJOs in Code
 
-You can now use the generated POJOs with Lombok annotations in your Java code to work with data structures defined in your RAML specification. For example:
+You can now use the generated POJOs with Lombok annotations in  Java code to work with data structures defined in RAML specification. For example:
 
-java
-Copy code
 import com.example.generated.Person;
 
 public class Main {
@@ -50,6 +46,6 @@ public class Main {
         System.out.println("Last Name: " + person.getLastName());
     }
 }
-Make sure to adapt the package name and paths to match your project's structure and configuration.
+Make sure to adapt the package name and paths to match project's structure and configuration.
 
 Please consult the documentation of the "mulesoft-labs/raml-java-tools" tool for any specific details or updates related to its usage, as the tool's features may have evolved

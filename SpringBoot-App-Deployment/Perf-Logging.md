@@ -1,14 +1,14 @@
-README markup for your Gradle-based implementation of a Java web application with Spring Boot, SLF4J, and WebClient for making REST API calls and logging performance information to a perf.log file:
+README markup for Gradle-based implementation of a Java web application with Spring Boot, SLF4J, and WebClient for making REST API calls and logging performance information to a perf.log file:
 
 markdown
-Copy code
+
 # Gradle-based Java Web Application with Spring Boot, SLF4J, and WebClient
 
 This is a sample Java web application that demonstrates how to use Spring Boot, SLF4J, and WebClient to make REST API calls and log performance information to a `perf.log` file.
 
-## Set Up Your Gradle Dependencies
+## Set Up Gradle Dependencies
 
-To get started, you need to add the necessary dependencies in your `build.gradle` file. These dependencies include Spring Boot, SLF4J, Logback, and WebClient.
+To get started, you need to add the necessary dependencies in `build.gradle` file. These dependencies include Spring Boot, SLF4J, Logback, and WebClient.
 
 ```gradle
 plugins {
@@ -32,10 +32,9 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 }
 Create a Spring Boot Application Class
-Create a Spring Boot application class that serves as the entry point for your application and configures the WebClient.
+Create a Spring Boot application class that serves as the entry point for application and configures the WebClient.
 
-java
-Copy code
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -56,8 +55,6 @@ public class Application {
 Create a PerformanceLoggingService
 Create a service class to log performance information using SLF4J.
 
-java
-Copy code
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -78,8 +75,6 @@ public class PerformanceLoggingService {
 Create a Controller
 Create a REST controller that uses WebClient to make API calls and logs performance information.
 
-java
-Copy code
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -112,8 +107,7 @@ public class ApiController {
 Configure Logging (logback-spring.xml)
 Create a logback-spring.xml configuration file to specify where the logs should be saved (e.g., perf.log).
 
-xml
-Copy code
+
 <configuration>
     <include resource="org/springframework/boot/logging/logback/base.xml"/>
     <appender name="FILE" class="ch.qos.logback.core.FileAppender">
@@ -128,12 +122,10 @@ Copy code
     </root>
 </configuration>
 Run the Application
-Run your Gradle-based Spring Boot application. When you access the /api/resource endpoint, it will log performance information to the perf.log file.
+Run Gradle-based Spring Boot application. When you access the /api/resource endpoint, it will log performance information to the perf.log file.
 
-Make sure to adjust the code according to your specific requirements, and configure the webClient to match the base URL and endpoints you're working with.
+Make sure to adjust the code according to specific requirements, and configure the webClient to match the base URL and endpoints you're working with.
 
-csharp
-Copy code
 
 You can copy and paste this README markup into your project documentation or `README.md` file.
 

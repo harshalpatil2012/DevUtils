@@ -72,8 +72,7 @@ restTemplate.setInterceptors(Collections.singletonList(new RestApiLoggingInterce
 
 For WebClient:
 
-java
-Copy code
+
 WebClient.Builder webClientBuilder = WebClient.builder();
 webClientBuilder.filter(new ExchangeFilterFunction() {
     @Override
@@ -316,18 +315,18 @@ import org.apache.logging.log4j.core.appender.AbstractAppender;
 import org.apache.logging.log4j.core.config.Property;
 
 public class MetricsLoggerAppender extends AbstractAppender {
-    private MetricsLogger metricsLogger; // You should replace this with your Metrics-Logger implementation
+    private MetricsLogger metricsLogger; // You should replace this with Metrics-Logger implementation
 
     protected MetricsLoggerAppender(
             String name, Filter filter, Layout<? extends Serializable> layout, boolean ignoreExceptions, Property[] properties) {
         super(name, filter, layout, ignoreExceptions, properties);
-        // Initialize your Metrics-Logger here (e.g., MetricsLogger.getInstance())
+        // Initialize Metrics-Logger here (e.g., MetricsLogger.getInstance())
         this.metricsLogger = MetricsLogger.getInstance();
     }
 
     @Override
     public void append(LogEvent event) {
-        // Get the log message and send it to your Metrics-Logger
+        // Get the log message and send it to Metrics-Logger
         String logMessage = new String(getLayout().toByteArray(event));
         metricsLogger.log(logMessage);
     }

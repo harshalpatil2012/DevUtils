@@ -27,13 +27,13 @@ dependencies {
     // H2 Database Dependency (for local dev profile)
     runtimeOnly 'com.h2database:h2'
 }
-2. Create Your SQL Script (your-script.sql):
+2. Create SQL Script (your-script.sql):
 
-Place your SQL script in the project root folder, specifically in database/localDB with the name your-script.sql.
+Place SQL script in the project root folder, specifically in database/localDB with the name your-script.sql.
 
 3. Configure application.properties (or application.yml):
 
-Configure your application.properties or application.yml to set the script location property:
+Configure application.properties or application.yml to set the script location property:
 
 Using application.properties:
 
@@ -89,6 +89,6 @@ public class DatabaseConfig {
         return initializer;
     }
 }
-5. Run Your Spring Boot Application with the Local Dev Profile:
+5. Run Spring Boot Application with the Local Dev Profile:
 
-When you run your Spring Boot application with the local-dev profile (by setting spring.profiles.active=local-dev in your application.properties or application.yml), the H2 database will be initialized, and your SQL script will be executed during application startup. You can access the H2 console at http://localhost:8080/h2-console to interact with the database if needed.
+When you run Spring Boot application with the local-dev profile (by setting spring.profiles.active=local-dev in application.properties or application.yml), the H2 database will be initialized, and SQL script will be executed during application startup. You can access the H2 console at http://localhost:8080/h2-console to interact with the database if needed.

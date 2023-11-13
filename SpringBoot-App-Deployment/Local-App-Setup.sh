@@ -30,7 +30,7 @@ rm jdk.zip
 log "Step 3: Copying Certificates to the Application Directory..."
 cd "$APP_DIRECTORY"
 
-# Assuming your certificates are stored in the "certs" folder within your repository
+# Assuming certificates are stored in the "certs" folder within your repository
 CERTS_DIR="certs"
 cp "$CERTS_DIR"/* ./
 

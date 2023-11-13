@@ -13,7 +13,7 @@ The performance disparity among these OJDBC versions can be attributed to variou
 New features and optimizations added to the driver over time.
 Improved support for newer versions of Java and JDBC.
 Bug fixes and enhancements made to the driver.
-To enhance the performance of your applications, it is recommended to upgrade to a newer version of OJDBC.
+To enhance the performance of applications, it is recommended to upgrade to a newer version of OJDBC.
 
 Here are some performance optimization tips:
 
@@ -22,7 +22,7 @@ Employ prepared statements to avoid string concatenation.
 Use batch updates for bulk operations.
 Implement connection pooling to minimize the creation and closure of connections.
 Utilize a database connection pool for connection management.
-Optimize your database for better performance.
+Optimize database for better performance.
 OJDBC 19.1.0.0 Version and Compatibility Details
 OJDBC 19.1.0.0 is compatible with the following JDK versions: 8, 11, and 17. It also maintains compatibility with Oracle Database 19c.
 
@@ -40,7 +40,7 @@ OJDBC 19.1.0.0 is not compatible with earlier versions of Java or Oracle Databas
 If you are uncertain about which OJDBC version to use, it is advisable to consult the Oracle documentation or reach out to Oracle support for guidance.
 
 Using OJDBC 8
-If your application currently uses OJDBC 8, it is strongly recommended to consider upgrading to OJDBC 19.1.0.0 for the following reasons:
+If application currently uses OJDBC 8, it is strongly recommended to consider upgrading to OJDBC 19.1.0.0 for the following reasons:
 
 OJDBC 19.1.0.0 offers significantly improved performance compared to OJDBC 8.
 OJDBC 19.1.0.0 includes new features and optimizations that can enhance application performance and reliability.
@@ -52,7 +52,7 @@ Up to 50% lower latency.
 Support for JDBC 4.6 and Java 17.
 New features such as dynamic statement caching and connection pooling improvements.
 Bug fixes and security enhancements.
-To upgrade to OJDBC 19.1.0.0, you can download the latest version from the Oracle website and replace your existing OJDBC 8 driver files. Ensure that any third-party libraries dependent on OJDBC 8 are compatible with OJDBC 19.1.0.0 by referring to their documentation for compatibility information.
+To upgrade to OJDBC 19.1.0.0, you can download the latest version from the Oracle website and replace existing OJDBC 8 driver files. Ensure that any third-party libraries dependent on OJDBC 8 are compatible with OJDBC 19.1.0.0 by referring to their documentation for compatibility information.
 
 In conclusion, upgrading to OJDBC 19.1.0.0 is highly recommended for the significant performance and reliability improvements it offers over OJDBC 8.
 

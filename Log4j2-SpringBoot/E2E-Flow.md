@@ -266,7 +266,7 @@ class LoggingInterceptorIntegrationTest {
 
 
 
-Step 3: Configure the Filter and Interceptor in Your Spring Boot Application
+Step 3: Configure the Filter and Interceptor in Spring Boot Application
 
 java
 
@@ -618,7 +618,7 @@ public class WebClientConfigIntegrationTest {
     }
 }
 
-With these steps, you have implemented request and response logging using the RequestResponseLoggingFilter, context information logging using the LoggingInterceptor, and performance logging for WebClient calls using the PerformanceLoggingInterceptor. The logs will be written to the appropriate log files, and the interceptors are configured in your Spring Boot application.
+With these steps, you have implemented request and response logging using the RequestResponseLoggingFilter, context information logging using the LoggingInterceptor, and performance logging for WebClient calls using the PerformanceLoggingInterceptor. The logs will be written to the appropriate log files, and the interceptors are configured in Spring Boot application.
 
 
 ===============================================

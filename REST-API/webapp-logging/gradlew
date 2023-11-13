@@ -22,7 +22,7 @@
 #
 #   Important for running:
 #
-#   (1) You need a POSIX-compliant shell to run this script. If your /bin/sh is
+#   (1) You need a POSIX-compliant shell to run this script. If /bin/sh is
 #       noncompliant, but you have some other compliant shell such as ksh or
 #       bash, then to run this script, type that shell name before the whole
 #       command line, like:
@@ -126,17 +126,17 @@ if [ -n "$JAVA_HOME" ] ; then
     if [ ! -x "$JAVACMD" ] ; then
         die "ERROR: JAVA_HOME is set to an invalid directory: $JAVA_HOME
 
-Please set the JAVA_HOME variable in your environment to match the
-location of your Java installation."
+Please set the JAVA_HOME variable in environment to match the
+location of Java installation."
     fi
 else
     JAVACMD=java
     if ! command -v java >/dev/null 2>&1
     then
-        die "ERROR: JAVA_HOME is not set and no 'java' command could be found in your PATH.
+        die "ERROR: JAVA_HOME is not set and no 'java' command could be found in PATH.
 
-Please set the JAVA_HOME variable in your environment to match the
-location of your Java installation."
+Please set the JAVA_HOME variable in environment to match the
+location of Java installation."
     fi
 fi
 
