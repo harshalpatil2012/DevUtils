@@ -1,0 +1,20 @@
+<Server>
+  ...
+  <Connector port="8080" />
+  <Engine defaultHost="localhost">
+    <Host name="localhost" appBase="webapps" unpackWARs="true">
+      ...
+    </Host>
+  </Engine>
+  <Service name="Catalina">
+    <Connector port="8009" redirectPort="8443" />
+    <Engine name="Catalina" defaultHost="localhost">
+      ...
+    </Engine>
+    <Executor name="catalina-thread-pool" maxThreads="150" minSpareThreads="10" maxSpareThreads="50" />
+    <Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs" prefix="localhost_access_log" suffix=".txt"
+           pattern="%h %l %u %t \"%r\" %s %b" />
+    <Listener className="org.apache.catalina.startup.Catalina" startupThreads="10" startAppsInParallel="true" />
+  </Service>
+  ...
+</Server>
