@@ -3,21 +3,21 @@ To run the RAML API Designer from MuleSoft in daemon mode using Node.js, you can
 Here are the steps to run the RAML API Designer in daemon mode:
 
 Install Node.js:
-Ensure you have Node.js and npm (Node Package Manager) installed on your system. You can download and install them from the official Node.js website if you haven't already.
+Ensure you have Node.js and npm (Node Package Manager) installed on system. You can download and install them from the official Node.js website if you haven't already.
 
 Install the "apikit" Package:
-Open your terminal or command prompt and run the following command to install the "apikit" package globally:
+Open terminal or command prompt and run the following command to install the "apikit" package globally:
 
 bash
 
 npm install -g apikit
 This command installs the "apikit" CLI tool, which you can use to run the API Designer in daemon mode.
 
-Initialize Your API Project:
-Before running the API Designer, you need to have an API project directory with a RAML specification file. If you don't have one, create a directory for your project, navigate to it in your terminal, and create a RAML file (e.g., api.raml) with your API definition.
+Initialize API Project:
+Before running the API Designer, you need to have an API project directory with a RAML specification file. If you don't have one, create a directory for project, navigate to it in terminal, and create a RAML file (e.g., api.raml) with API definition.
 
 Start the API Designer Daemon:
-To start the API Designer in daemon mode, run the following command within your project directory:
+To start the API Designer in daemon mode, run the following command within project directory:
 
 bash
 
@@ -25,7 +25,7 @@ apikit start
 This command will start the API Designer as a background process and provide you with a URL (e.g., http://localhost:3000) to access the API Designer web interface.
 
 Access the API Designer:
-Open a web browser and navigate to the URL provided by the "apikit" tool (e.g., http://localhost:3000). You can use the API Designer web interface to edit and manage your RAML API specifications.
+Open a web browser and navigate to the URL provided by the "apikit" tool (e.g., http://localhost:3000). You can use the API Designer web interface to edit and manage RAML API specifications.
 
 Stop the API Designer Daemon:
 To stop the API Designer daemon, you can run the following command:
@@ -35,7 +35,7 @@ bash
 apikit stop
 This command will gracefully stop the API Designer process.
 
-Now you can use the RAML API Designer in daemon mode on your local machine. You can start, stop, and manage the API Designer using the "apikit" CLI tool as described above.
+Now you can use the RAML API Designer in daemon mode on local machine. You can start, stop, and manage the API Designer using the "apikit" CLI tool as described above.
 
-Make sure to replace api.raml with the actual name of your RAML specification file and adjust the port number and URL as needed.
+Make sure to replace api.raml with the actual name of RAML specification file and adjust the port number and URL as needed.
 

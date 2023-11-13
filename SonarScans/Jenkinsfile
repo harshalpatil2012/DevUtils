@@ -10,7 +10,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                // Checkout your code from your version control system (e.g., Git)
+                // Checkout code from version control system (e.g., Git)
                 script {
                     checkout scm
                 }

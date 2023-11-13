@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 
 public class CustomCsrfTokenRepository implements CsrfTokenRepository {
 
-    // We may need to inject a repository or service to interact with your database
+    // We may need to inject a repository or service to interact with database
     private final CustomSessionRepository customSessionRepository;
 
     public CustomCsrfTokenRepository(CustomSessionRepository customSessionRepository) {
@@ -21,13 +21,13 @@ public class CustomCsrfTokenRepository implements CsrfTokenRepository {
 
     @Override
     public void saveToken(CsrfToken token, HttpServletRequest request, HttpServletResponse response) {
-        // Save the CSRF token in your custom session table
+        // Save the CSRF token in custom session table
         customSessionRepository.saveCsrfToken(token.getToken());
     }
 
     @Override
     public CsrfToken loadToken(HttpServletRequest request) {
-        // Load the CSRF token from your custom session table
+        // Load the CSRF token from custom session table
         String tokenValue = customSessionRepository.loadCsrfToken();
         return new DefaultCsrfToken("X-CSRF-TOKEN", "_csrf", tokenValue);
     }

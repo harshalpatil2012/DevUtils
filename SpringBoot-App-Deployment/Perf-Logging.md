@@ -127,7 +127,7 @@ Run Gradle-based Spring Boot application. When you access the /api/resource endp
 Make sure to adjust the code according to specific requirements, and configure the webClient to match the base URL and endpoints you're working with.
 
 
-You can copy and paste this README markup into your project documentation or `README.md` file.
+You can copy and paste this README markup into project documentation or `README.md` file.
 
 
 

@@ -55,8 +55,8 @@ public class LoggingFilter extends ZuulFilter {
 
 This filter will capture the request and response JSON and print it to the console. Make sure to configure the filter order and type appropriately based on when you want this filter to run.
 
-2. Register this filter in your Zuul Gateway application, as mentioned in the previous response.
+2. Register this filter in Zuul Gateway application, as mentioned in the previous response.
 
-3. When a request passes through your Zuul Gateway, this filter will log the request and response JSON to the console.
+3. When a request passes through  Zuul Gateway, this filter will log the request and response JSON to the console.
 
-Make sure you have the necessary dependencies for Spring Cloud and Zuul configured in your project. Additionally, you should configure a logging framework like Log4j or SLF4J to control where the logs are written.
+Make sure you have the necessary dependencies for Spring Cloud and Zuul configured in project. Additionally, you should configure a logging framework like Log4j or SLF4J to control where the logs are written.

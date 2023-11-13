@@ -1,6 +1,6 @@
 # Library Name
 
-A short description of your Java library.
+A short description of Java library.
 
 ## Table of Contents
 
@@ -22,11 +22,11 @@ A short description of your Java library.
 
 ## Installation
 
-You can include this library in your Java project using [Maven](https://maven.apache.org/) or [Gradle](https://gradle.org/).
+You can include this library in Java project using [Maven](https://maven.apache.org/) or [Gradle](https://gradle.org/).
 
 ### Maven
 
-Add the following dependency to your `pom.xml`:
+Add the following dependency to `pom.xml`:
 
 ```xml
 <dependency>
@@ -38,11 +38,11 @@ Add the following dependency to your `pom.xml`:
 
 
 ### Gradle
-Add the following dependency to your build.gradle:
+Add the following dependency to  build.gradle:
 
 implementation 'com.example:library-name:1.0.0' // Replace with the library version
 Usage
-Here's how you can use this library in your Java project:
+Here's how you can use this library in Java project:
 
 import com.example.library.LibraryClass;
 
@@ -55,7 +55,7 @@ public class Main {
 
 ## Examples
 
-You can include this library in your Java project using [Maven](https://maven.apache.org/) or [Gradle](https://gradle.org/).
+You can include this library in Java project using [Maven](https://maven.apache.org/) or [Gradle](https://gradle.org/).
 
 
 You can find more examples in the examples directory.
@@ -71,7 +71,7 @@ We welcome contributions! If you'd like to contribute to this project, please fo
 
 Fork the repository.
 Create a new branch.
-Make your changes.
+Make changes.
 Submit a pull request.
 Please make sure to adhere to the code of conduct and coding standards.
 

@@ -86,7 +86,7 @@ public class SecurityHeadersFilterTest {
         MockFilterChain filterChain = new MockFilterChain();
         
         // Simulate a scenario where the filter is supposed to block access (e.g., due to a security condition)
-        // Insert your negative scenario logic here, and ensure the filter behaves as expected.
+        // Insert negative scenario logic here, and ensure the filter behaves as expected.
 
         // Verify that the filter chain is not called
         Mockito.verify(filterChain, Mockito.never()).doFilter(request, response);
@@ -98,7 +98,7 @@ public class SecurityHeadersFilterTest {
         MockFilterChain filterChain = new MockFilterChain();
         
         // Simulate a scenario where you customize the Cache-Control header
-        // Set up your request and response objects accordingly.
+        // Set up request and response objects accordingly.
 
         filter.doFilter(request, response, filterChain);
 
@@ -139,8 +139,8 @@ public class SecurityHeadersFilterIntegrationTest {
 
     @Test
     public void testNegativeScenario() {
-        // Send an HTTP request to your application and verify the behavior in a negative scenario (e.g., access blocked)
-        // Insert your negative scenario logic here, and ensure the filter behaves as expected.
+        // Send an HTTP request to application and verify the behavior in a negative scenario (e.g., access blocked)
+        // Insert negative scenario logic here, and ensure the filter behaves as expected.
     }
 
     @Test

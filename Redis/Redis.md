@@ -26,7 +26,7 @@ public class CommonApiContract {
         return builder;
     }
 }
-In your application.properties or application.yml, define the properties:
+In application.properties or application.yml, define the properties:
 yaml
 
 common.api.contract.header1: ValueForHeader1
@@ -74,9 +74,9 @@ We define a WebClientHeaderService that provides a method webClientBuilderWithHe
 
 We use an ExchangeFilterFunction to add the specified header to the request. This function is applied to the WebClient's request processing pipeline.
 
-You can call this service method with the header name and value you want to add to your WebClient.
+You can call this service method with the header name and value you want to add to WebClient.
 
-Here's how you can use this service in your code:
+Here's how you can use this service in code:
 
 java
 
@@ -104,9 +104,9 @@ This approach provides a generic way to add headers to WebClient instances and a
 
 
 
-Create a new Spring Boot project using your preferred development environment.
+Create a new Spring Boot project using preferred development environment.
 
-Add the following dependencies in your pom.xml:
+Add the following dependencies in pom.xml:
 
 xml
 
@@ -179,16 +179,16 @@ public class LoggingDemoApplication {
         logger.error("Error log message");
     }
 }
-Run your Spring Boot application. You'll see log messages in the console and a log file created in the logs directory of your project.
-This example demonstrates a complete Spring Boot application with Log4j2 configured for asynchronous logging using a log4j2.properties file. You can customize the logging configuration as needed for your application.
+Run Spring Boot application. You'll see log messages in the console and a log file created in the logs directory of project.
+This example demonstrates a complete Spring Boot application with Log4j2 configured for asynchronous logging using a log4j2.properties file. You can customize the logging configuration as needed for application.
 
 
 LOGGGING
 
-log4j2.properties file for configuring Log4j2 with LMAX Disruptor for asynchronous logging in your Spring Boot application, here's the complete solution:
+log4j2.properties file for configuring Log4j2 with LMAX Disruptor for asynchronous logging in Spring Boot application, here's the complete solution:
 
 Add Dependencies:
-Add the necessary dependencies to your pom.xml file:
+Add the necessary dependencies to pom.xml file:
 
 xml
 
@@ -248,7 +248,7 @@ rootLogger.appenderRef.async.ref = Async
 This configuration sets up Log4j2 with asynchronous logging using the LMAX Disruptor.
 
 Spring Boot Configuration:
-In your application.properties or application.yml, specify Log4j2 as the logging system:
+In application.properties or application.yml, specify Log4j2 as the logging system:
 
 For application.properties:
 
@@ -261,10 +261,10 @@ yaml
 
 logging:
   config: classpath:log4j2.properties
-Run your Spring Boot Application:
-Now, your Spring Boot application should use Log4j2 with LMAX Disruptor for asynchronous logging, which is optimized for high throughput and low latency.
+Run Spring Boot Application:
+Now, Spring Boot application should use Log4j2 with LMAX Disruptor for asynchronous logging, which is optimized for high throughput and low latency.
 
-This setup provides a complete solution for configuring Log4j2 with LMAX Disruptor using a log4j2.properties file in your Spring Boot web application. Customize the logging levels, file paths, and other properties as needed for your specific application.
+This setup provides a complete solution for configuring Log4j2 with LMAX Disruptor using a log4j2.properties file in Spring Boot web application. Customize the logging levels, file paths, and other properties as needed for specific application.
 ==============
 
 
@@ -289,7 +289,7 @@ Before you begin, ensure you have the following prerequisites:
 
 ### Dependencies
 
-In your `build.gradle` or `pom.xml`, add the necessary dependencies:
+In `build.gradle` or `pom.xml`, add the necessary dependencies:
 
 ```groovy
 dependencies {
@@ -326,7 +326,7 @@ public class RedissonSessionConfig {
         if (redisEnabled) {
             Config config = new Config();
             config.useSingleServer()
-                  .setAddress("redis://localhost:6379"); // Configure your Redis server address here
+                  .setAddress("redis://localhost:6379"); // Configure Redis server address here
 
             return Redisson.create(config);
         } else {
@@ -334,16 +334,16 @@ public class RedissonSessionConfig {
         }
     }
 }
-Set the active profile in your application.properties or application.yml:
+Set the active profile in application.properties or application.yml:
 properties
 
 # Enable the "redis" profile when Redis is enabled
 spring.profiles.active=redis
 Usage
-Now, you can use Redisson-backed Spring Session for session management. You can inject HttpSession in your controllers as shown in the previous example.
+Now, you can use Redisson-backed Spring Session for session management. You can inject HttpSession in controllers as shown in the previous example.
 
 Run the Application
-Make sure your Redis server is running and accessible.
+Make sure Redis server is running and accessible.
 
 To run the Spring Boot application:
 
@@ -356,7 +356,7 @@ This project is licensed under the MIT License. See the LICENSE file for details
 css
 
 
-This consolidated `README.md` includes all the relevant information in a clear and organized manner. Make sure to customize it with your specific details, versions, and server configurations as needed.
+This consolidated `README.md` includes all the relevant information in a clear and organized manner. Make sure to customize it with specific details, versions, and server configurations as needed.
 
 
 
@@ -455,7 +455,7 @@ public class RedissonSessionConfig {
         }
     }
 }
-With these changes, you can control whether Redis is enabled, and if enabled, whether it runs in embedded mode for local development. Make sure to adjust the Redis configuration according to your requirements.
+With these changes, you can control whether Redis is enabled, and if enabled, whether it runs in embedded mode for local development. Make sure to adjust the Redis configuration according to requirements.
 
 
 
@@ -463,19 +463,19 @@ With these changes, you can control whether Redis is enabled, and if enabled, wh
 User
 or provide crisp readmefile
 
-Certainly, here's a more concise README file for your Spring Boot web application with Redis configuration options:
+Certainly, here's a more concise README file for Spring Boot web application with Redis configuration options:
 
 markdown
 
 # Spring Boot with Redisson and Spring Session
 
-This repository demonstrates how to configure Redis usage for your Spring Boot application based on different scenarios.
+This repository demonstrates how to configure Redis usage for Spring Boot application based on different scenarios.
 
 ## Configuration Options
 
 ### 1. Enable or Disable Redis
 
-You can easily enable or disable Redis usage in your application. By default, Redis is enabled.
+You can easily enable or disable Redis usage in application. By default, Redis is enabled.
 
 **To Enable Redis**:
 ```properties
@@ -499,7 +499,7 @@ properties
 
 myapp.redis.mode=false
 Dependencies
-In your build.gradle, include the following dependencies:
+In build.gradle, include the following dependencies:
 
 groovy
 
@@ -550,7 +550,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 }
 Create the Health Check Controller:
 
-Create a controller with a health check endpoint that returns a simple response. You can customize this based on your requirements.
+Create a controller with a health check endpoint that returns a simple response. You can customize this based on requirements.
 
 java
 
@@ -567,17 +567,17 @@ public class HealthCheckController {
 }
 Configure Actuator Properties:
 
-In your application.properties or application.yml, you can configure Spring Boot Actuator properties to specify the roles and permissions needed for other actuator endpoints, if required. For the health endpoint, no additional configuration is needed to allow unauthenticated access.
+In application.properties or application.yml, you can configure Spring Boot Actuator properties to specify the roles and permissions needed for other actuator endpoints, if required. For the health endpoint, no additional configuration is needed to allow unauthenticated access.
 
 application.properties:
 
 properties
 
 management.endpoint.health.show-details=always
-Run Your Application:
-Start your Spring Boot application, and you can access the health check URL at http://localhost:8080/actuator/health. It will not require authentication and bypass all security checks.
+Run Application:
+Start Spring Boot application, and you can access the health check URL at http://localhost:8080/actuator/health. It will not require authentication and bypass all security checks.
 
-Remember that this example uses simple HTTP Basic Authentication for simplicity. Depending on your specific security requirements, you might use different authentication methods and configure more fine-grained security settings.
+Remember that this example uses simple HTTP Basic Authentication for simplicity. Depending on specific security requirements, you might use different authentication methods and configure more fine-grained security settings.
 
 
 
@@ -622,8 +622,8 @@ dependencyManagement {
 }
 
 // Source and target compatibility
-sourceCompatibility = 11 // Replace with your desired version
-targetCompatibility = 11 // Replace with your desired version
+sourceCompatibility = 11 // Replace with desired version
+targetCompatibility = 11 // Replace with desired version
 
 subprojects {
     apply plugin: 'java'
@@ -664,7 +664,7 @@ systemProp.javax.net.ssl.trustStorePassword=truststore_password
 Spring boot project
 
 
-here's the consolidated Gradle code for your multi-module Spring Boot project, including an in-house repository, common plugins, and a Bill of Materials (BOM) for common dependencies:
+here's the consolidated Gradle code for multi-module Spring Boot project, including an in-house repository, common plugins, and a Bill of Materials (BOM) for common dependencies:
 
 **Root `settings.gradle`:**
 
@@ -706,7 +706,7 @@ apply plugin: 'java'
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    // Add other dependencies from your in-house repository
+    // Add other dependencies from in-house repository
 }
 
 bootJar {
@@ -724,7 +724,7 @@ war {
 apply plugin: 'java'
 
 dependencies {
-    // Add common dependencies from your in-house repository
+    // Add common dependencies from in-house repository
 }
 ```
 
@@ -732,7 +732,7 @@ With this consolidated code, you have a multi-module Spring Boot project that in
 
 
 
-To integrate JaCoCo for code coverage in your Gradle project with the latest JaCoCo version, you can follow these steps. You'll need to apply the JaCoCo plugin and configure it in your project. Make sure to replace 'your.group.id' with your actual project's group ID:In your root build.gradle (the same one used in your previous exercises), apply the JaCoCo plugin at the top of the file and configure it:buildscript {
+To integrate JaCoCo for code coverage in Gradle project with the latest JaCoCo version, you can follow these steps. You'll need to apply the JaCoCo plugin and configure it in your project. Make sure to replace 'your.group.id' with your actual project's group ID:In your root build.gradle (the same one used in your previous exercises), apply the JaCoCo plugin at the top of the file and configure it:buildscript {
     repositories {
         jcenter()
     }
@@ -745,7 +745,7 @@ apply plugin: 'java'
 apply plugin: 'jacoco'
 
 allprojects {
-    // Your existing configurations here
+    // existing configurations here
 
     jacoco {
         toolVersion = '0.8.7' // Use the latest JaCoCo version
@@ -760,7 +760,7 @@ jacocoTestReport {
 }In this configuration:The buildscript block fetches the JaCoCo dependency (replace the version with the latest available).The jacoco block inside the allprojects block sets the JaCoCo version.In the "MySpringBootWebApp" module's build.gradle, add the following to apply the JaCoCo plugin and define a dependency on the test task:apply plugin: 'jacoco'
 
 dependencies {
-    // Your existing dependencies here
+    // existing dependencies here
 }
 
 test {
@@ -772,4 +772,4 @@ jacocoTestReport {
         xml.enabled true
         html.enabled true
     }
-}This configuration applies the JaCoCo plugin to the specific module and ensures that the code coverage report is generated after running tests.You can now generate code coverage reports for your project by running the following command from the root project directory:./gradlew clean build jacocoTestReportThis command will build your project, run tests, and generate JaCoCo code coverage reports in both XML and HTML formats. You can find the HTML report in the build/reports/jacoco/test/html directory for each module.Please note that you may need to adapt the paths or configurations based on your project's specific structure and requirements.
+}This configuration applies the JaCoCo plugin to the specific module and ensures that the code coverage report is generated after running tests.You can now generate code coverage reports for project by running the following command from the root project directory:./gradlew clean build jacocoTestReportThis command will build your project, run tests, and generate JaCoCo code coverage reports in both XML and HTML formats. You can find the HTML report in the build/reports/jacoco/test/html directory for each module.Please note that you may need to adapt the paths or configurations based on your project's specific structure and requirements.

@@ -1,5 +1,5 @@
 @echo off
-set app_url=http://localhost:8080/actuator/health # Replace with your application's health check URL
+set app_url=http://localhost:8080/actuator/health # Replace with application's health check URL
 set retry_count=20
 
 :retry

@@ -13,7 +13,7 @@ This script is designed to simplify the process of setting up and checking the h
 
 Before using this script, make sure you have the following:
 
-- Git installed on your system.
+- Git installed on system.
 - The application's Git repository URL.
 - Access to a Nexus repository with the JDK package you need.
 - Gradle Wrapper (`gradlew`) or Gradle installed for building the Spring Boot application.
@@ -21,11 +21,11 @@ Before using this script, make sure you have the following:
 
 ## Usage
 
-1. **Clone the Repository**: Replace `GIT_REPO_URL` with the URL of your Git repository.
+1. **Clone the Repository**: Replace `GIT_REPO_URL` with the URL of Git repository.
 
-2. **Copy JDK from Nexus**: Replace `NEXUS_JDK_URL` with the URL of the JDK package in your Nexus repository.
+2. **Copy JDK from Nexus**: Replace `NEXUS_JDK_URL` with the URL of the JDK package in Nexus repository.
 
-3. **Build and Run the Application**: Customize `BUILD_COMMAND` and `RUN_COMMAND` as needed for your project.
+3. **Build and Run the Application**: Customize `BUILD_COMMAND` and `RUN_COMMAND` as needed for project.
 
 4. **Health Check**: The script continuously checks the health of the application using the `HEALTHCHECK_URL`. Customize this URL to match your application's health check endpoint.
 
@@ -62,6 +62,6 @@ Before using this script, make sure you have the following:
 ## Note
 
 - This script is intended for development and testing purposes.
-- Customize the script as needed to match your project's specific requirements.
+- Customize the script as needed to match project's specific requirements.
 
 Feel free to reach out if you encounter any issues or have questions about using this script.

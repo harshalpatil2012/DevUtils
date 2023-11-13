@@ -8,7 +8,7 @@ This Python script allows you to fetch repository information and the number of 
 
 Before running the script, ensure that you have the following:
 
-- Python installed on your computer. You can download it from [python.org](https://www.python.org/downloads/).
+- Python installed on  computer. You can download it from [python.org](https://www.python.org/downloads/).
 - The `requests` library installed. You can install it using `pip` by running:
 
 
@@ -17,7 +17,7 @@ Before running the script, ensure that you have the following:
 
 ### 1. Clone or Download the Script
 
-- Clone this Git repository or download the script (`bitbucket_repo_branch_counts.py`) to your computer.
+- Clone this Git repository or download the script (`bitbucket_repo_branch_counts.py`) to computer.
 
 ### 2. Edit the Script
 
@@ -25,11 +25,11 @@ Before running the script, ensure that you have the following:
 
 ### 3. Configure Script Settings
 
-- Replace the following placeholders in the script with your Bitbucket project and API credentials:
-- `BITBUCKET_BASE_URL`: The base URL of your Bitbucket server.
+- Replace the following placeholders in the script with Bitbucket project and API credentials:
+- `BITBUCKET_BASE_URL`: The base URL of Bitbucket server.
 - `PROJECT_KEY`: The key of the Bitbucket project you want to retrieve repositories from.
-- `USERNAME`: Your Bitbucket username or API token.
-- `PASSWORD`: Your Bitbucket password or API token.
+- `USERNAME`: Bitbucket username or API token.
+- `PASSWORD`: Bitbucket password or API token.
 
 ### 4. Run the Script
 - pip install requests
@@ -54,7 +54,7 @@ Before running the script, ensure that you have the following:
 ## Note
 
 - This script is intended for informational purposes and allows you to quickly retrieve branch counts for repositories within a Bitbucket project.
-- Keep your Bitbucket project and API credentials secure.
-- Use this script responsibly in your development environment.
+- Keep Bitbucket project and API credentials secure.
+- Use this script responsibly in development environment.
 
 Feel free to reach out if you encounter any issues or have questions about using this script.

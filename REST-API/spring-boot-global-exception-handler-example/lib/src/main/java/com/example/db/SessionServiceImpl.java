@@ -11,7 +11,7 @@ public class SessionServiceImpl implements SessionService {
 
     @Override
     public List<Session> getAllSessions() {
-        String sql = "SELECT * FROM session"; // Replace with your actual SQL query.
+        String sql = "SELECT * FROM session"; // Replace with actual SQL query.
 
         try {
             return jdbcService.query(sql, resultSet -> {
