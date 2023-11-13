@@ -1,12 +1,18 @@
 # Define the custom appender
-appender.HttpRequestResponseAppender.type = HttpRequestResponseAppender
-appender.HttpRequestResponseAppender.name = HttpRequestResponseAppender
-appender.HttpRequestResponseAppender.layout.type = PatternLayout
-appender.HttpRequestResponseAppender.layout.pattern = %d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n
+appender.HttpRequestResponseAppender.type = Async
+appender.HttpRequestResponseAppender.name = AsyncHttpRequestResponseAppender
+appender.HttpRequestResponseAppender.appenderRef.HttpRequestResponseAppender.ref = HttpRequestResponseAppender
+
+# Configure the HttpRequestResponseAppender
+appender.HttpRequestResponseAppender.appender.HttpRequestResponseAppender.type = HttpRequestResponseAppender
+appender.HttpRequestResponseAppender.appender.HttpRequestResponseAppender.name = HttpRequestResponseAppender
+appender.HttpRequestResponseAppender.appender.HttpRequestResponseAppender.layout.type = PatternLayout
+appender.HttpRequestResponseAppender.appender.HttpRequestResponseAppender.layout.pattern = %d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n
 
 # Root logger configuration
 rootLogger.level = debug
-rootLogger.appenderRef.HttpRequestResponseAppender.ref = HttpRequestResponseAppender
+rootLogger.appenderRef.HttpRequestResponseAppender.ref = AsyncHttpRequestResponseAppender
+
 
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.core.Appender;
@@ -21,8 +27,6 @@ import org.apache.logging.log4j.core.layout.PatternLayout;
 
 @Plugin(name = "HttpRequestResponseAppender", category = "Core", elementType = Appender.ELEMENT_TYPE)
 public class HttpRequestResponseAppender extends AbstractAppender {
-
-    private static final HttpRequestResponseAppender LOGGER = createAppender("HttpRequestResponseAppender", null);
 
     private HttpRequestResponseAppender(String name, Layout<?> layout) {
         super(name, null, layout, true);
@@ -59,12 +63,8 @@ public class HttpRequestResponseAppender extends AbstractAppender {
         }
         return new HttpRequestResponseAppender(name, layout);
     }
-
-    public static void logPayload(String logMessage) {
-        // Log the payload using the custom Log4j2 appender
-        LOGGER.logPayload(logMessage);
-    }
 }
+
 
 
 import org.springframework.core.annotation.Order;
