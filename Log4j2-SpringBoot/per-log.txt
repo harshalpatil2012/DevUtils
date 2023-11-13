@@ -1,0 +1,130 @@
+# Define the custom appender
+appender.HttpRequestResponseAppender.type = HttpRequestResponseAppender
+appender.HttpRequestResponseAppender.name = HttpRequestResponseAppender
+appender.HttpRequestResponseAppender.layout.type = PatternLayout
+appender.HttpRequestResponseAppender.layout.pattern = %d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n
+
+# Root logger configuration
+rootLogger.level = debug
+rootLogger.appenderRef.HttpRequestResponseAppender.ref = HttpRequestResponseAppender
+
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.core.Appender;
+import org.apache.logging.log4j.core.Layout;
+import org.apache.logging.log4j.core.LogEvent;
+import org.apache.logging.log4j.core.appender.AbstractAppender;
+import org.apache.logging.log4j.core.config.plugins.Plugin;
+import org.apache.logging.log4j.core.config.plugins.PluginAttribute;
+import org.apache.logging.log4j.core.config.plugins.PluginElement;
+import org.apache.logging.log4j.core.config.plugins.PluginFactory;
+import org.apache.logging.log4j.core.layout.PatternLayout;
+
+@Plugin(name = "HttpRequestResponseAppender", category = "Core", elementType = Appender.ELEMENT_TYPE)
+public class HttpRequestResponseAppender extends AbstractAppender {
+
+    private static final HttpRequestResponseAppender LOGGER = createAppender("HttpRequestResponseAppender", null);
+
+    private HttpRequestResponseAppender(String name, Layout<?> layout) {
+        super(name, null, layout, true);
+    }
+
+    @Override
+    public void append(LogEvent event) {
+        if (event.getMessage().getFormattedMessage().contains("HTTP request")) {
+            // Extract and log HTTP request payload
+            String requestPayload = event.getMessage().getFormattedMessage();
+            logPayload(requestPayload);
+        } else if (event.getMessage().getFormattedMessage().contains("HTTP response")) {
+            // Extract and log HTTP response payload
+            String responsePayload = event.getMessage().getFormattedMessage();
+            logPayload(responsePayload);
+        }
+    }
+
+    private void logPayload(String payload) {
+        // Use the Log4j2 logger to log the payload
+        getLogger().log(Level.INFO, payload);
+    }
+
+    @PluginFactory
+    public static HttpRequestResponseAppender createAppender(
+            @PluginAttribute("name") String name,
+            @PluginElement("Layout") Layout<?> layout) {
+        if (name == null) {
+            getLogger().error("No name provided for HttpRequestResponseAppender");
+            return null;
+        }
+        if (layout == null) {
+            layout = PatternLayout.createDefaultLayout();
+        }
+        return new HttpRequestResponseAppender(name, layout);
+    }
+
+    public static void logPayload(String logMessage) {
+        // Log the payload using the custom Log4j2 appender
+        LOGGER.logPayload(logMessage);
+    }
+}
+
+
+import org.springframework.core.annotation.Order;
+import org.springframework.stereotype.Component;
+import org.springframework.web.util.ContentCachingRequestWrapper;
+import org.springframework.web.util.ContentCachingResponseWrapper;
+
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
+@Component
+@Order(1)
+public class RequestResponseLoggingFilter implements Filter {
+
+    @Override
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+            throws IOException, ServletException {
+        // Wrap the request and response to capture the payloads
+        ContentCachingRequestWrapper requestWrapper = new ContentCachingRequestWrapper((HttpServletRequest) request);
+        ContentCachingResponseWrapper responseWrapper = new ContentCachingResponseWrapper((HttpServletResponse) response);
+
+        // Log request information
+        logRequest(requestWrapper);
+
+        // Continue with the filter chain
+        chain.doFilter(requestWrapper, responseWrapper);
+
+        // Log response information
+        logResponse(responseWrapper);
+
+        // Forward the response to the original response
+        responseWrapper.copyBodyToResponse();
+    }
+
+    private void logRequest(ContentCachingRequestWrapper request) {
+        // Log request information using the custom Log4j2 appender
+        String logMessage = "HTTP request received: URI=" + request.getRequestURI() + ", Method=" + request.getMethod();
+        HttpRequestResponseAppender.logPayload(logMessage);
+    }
+
+    private void logResponse(ContentCachingResponseWrapper response) {
+        // Log response information using the custom Log4j2 appender
+        String logMessage = "HTTP response sent with status: " + response.getStatus();
+        HttpRequestResponseAppender.logPayload(logMessage);
+    }
+
+    @Override
+    public void init(FilterConfig filterConfig) throws ServletException {
+        // Initialization code (if needed)
+    }
+
+    @Override
+    public void destroy() {
+        // Cleanup code (if needed)
+    }
+}
