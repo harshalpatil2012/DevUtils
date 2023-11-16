@@ -20,7 +20,29 @@ appender.Console.layout.pattern = %d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %
 rootLogger.level = debug
 rootLogger.appenderRef.HttpRequestResponseAppender.ref = HttpRequestResponseAppender
 
+====
 
+# Define the custom appender
+appender.HttpRequestResponseAppender.type = org.apache.logging.log4j.core.appender.AsyncAppender
+appender.HttpRequestResponseAppender.name = Async
+appender.HttpRequestResponseAppender.appenderRef.HttpRequestResponseAppender.ref = HttpRequestResponseAppender
+appender.HttpRequestResponseAppender.bufferSize = 1024
+# Define the custom layout for HttpRequestResponseAppender
+appender.HttpRequestResponseAppender.layout.type = PatternLayout
+appender.HttpRequestResponseAppender.layout.pattern = %d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n
+
+# Console appender configuration
+appender.Console.type = Console
+appender.Console.name = CONSOLE
+appender.Console.layout.type = PatternLayout
+appender.Console.layout.pattern = %d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n
+
+
+
+# Root logger configuration
+rootLogger.level = debug
+rootLogger.appenderRef.HttpRequestResponseAppender.ref = Async
+===
 
 
 
