@@ -1,0 +1,45 @@
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service
+public class MyService {
+
+    private final VaultConfig vaultConfig;
+
+    @Autowired
+    public MyService(VaultConfig vaultConfig) {
+        this.vaultConfig = vaultConfig;
+    }
+
+    public void someMethod() {
+        String password = vaultConfig.getPassword();
+        // Use the password as needed
+    }
+}
+
+
+url.password=VAULT::MyPass:Key::
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.vault.annotation.VaultPropertySource;
+
+@Configuration
+@VaultPropertySource(value = "${vault.keystore.location}", propertyNamePrefix = "myapp")
+public class VaultConfig {
+
+    @Value("${myapp.MyPass:Key}")
+    private String password;
+
+    // Configuration beans or other settings if needed
+
+    public String getPassword() {
+        return password;
+    }
+}
+
+implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.picketbox:picketbox:5.0.3.Final'
+    implementation 'commons-codec:commons-codec:1.15'
+
+-Dvault.keystore.location=/path/to/vault.keystore
