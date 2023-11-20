@@ -1,45 +1,79 @@
+java -Dvault.keystore.location=/path/to/vault.keystore -jar your-application.jar
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class MyService {
+public class YourService {
 
     private final VaultConfig vaultConfig;
+    private final VaultService vaultService;
 
     @Autowired
-    public MyService(VaultConfig vaultConfig) {
+    public YourService(VaultConfig vaultConfig, VaultService vaultService) {
         this.vaultConfig = vaultConfig;
+        this.vaultService = vaultService;
     }
 
-    public void someMethod() {
-        String password = vaultConfig.getPassword();
-        // Use the password as needed
+    public void yourMethod() {
+        String keystoreLocation = vaultConfig.getKeystoreLocation();
+        String passwordKey = vaultConfig.getPasswordKey();
+
+        // Use the VaultService to retrieve values from the vault
+        String password = vaultService.getValue(passwordKey);
+
+        // Use keystoreLocation and password as needed
     }
 }
 
-
-url.password=VAULT::MyPass:Key::
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.vault.annotation.VaultPropertySource;
 
 @Configuration
-@VaultPropertySource(value = "${vault.keystore.location}", propertyNamePrefix = "myapp")
 public class VaultConfig {
 
-    @Value("${myapp.MyPass:Key}")
-    private String password;
+    @Value("${vault.keystore.location}")
+    private String keystoreLocation;
 
-    // Configuration beans or other settings if needed
+    @Value("${vault.password.key}")
+    private String passwordKey;
 
-    public String getPassword() {
-        return password;
+    // Add other properties as needed
+
+    // Getter and setter methods
+    public String getKeystoreLocation() {
+        return keystoreLocation;
+    }
+
+    public void setKeystoreLocation(String keystoreLocation) {
+        this.keystoreLocation = keystoreLocation;
+    }
+
+    public String getPasswordKey() {
+        return passwordKey;
+    }
+
+    public void setPasswordKey(String passwordKey) {
+        this.passwordKey = passwordKey;
     }
 }
 
-implementation 'org.springframework.boot:spring-boot-starter-security'
-    implementation 'org.picketbox:picketbox:5.0.3.Final'
-    implementation 'commons-codec:commons-codec:1.15'
 
--Dvault.keystore.location=/path/to/vault.keystore
+import org.springframework.stereotype.Service;
+
+@Service
+public class VaultServiceImpl implements VaultService {
+
+    @Override
+    public String getValue(String key) {
+        // Implement the logic to retrieve the value from the vault based on the key
+        // This could involve interacting with a vault service or using a vault client library
+        // For simplicity, return a dummy value
+        return "dummyValue";
+    }
+}
+
+public interface VaultService {
+    String getValue(String key);
+}
+
