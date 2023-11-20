@@ -1,0 +1,52 @@
+Final Job Description: Tech Lead - UI Micro-Frontend Development
+
+Position Overview:
+We are seeking a highly skilled and experienced Tech Lead - UI Micro-Frontend Development to take charge of the design and development of enterprise web applications. As a pivotal member of our team, you will leverage your expertise in React JS and Micro Frontend architecture to architect scalable, modular, and maintainable UI solutions. This role will play a crucial part in upholding the highest standards of code quality, performance, and user experience.
+
+Work Location: WFH or Bangalore / Hyderabad
+Total Experience: 7 to 15 Years
+
+Key Responsibilities:
+
+Architectural Design:
+
+Lead the architectural design of robust, modular, and reusable UI components using React JS.
+Implement Micro Frontend architecture to enhance flexibility and scalability within the frontend ecosystem.
+
+Continuous Improvement:
+
+Drive continuous improvement initiatives in UI development processes and methodologies.
+Champion the adoption of best practices to ensure efficiency and effectiveness in the development lifecycle.
+
+Collaboration:
+
+Collaborate with cross-functional teams to understand requirements and align UI development with overall project objectives.
+Work closely with UX/UI designers to translate design concepts into seamless and visually appealing user interfaces.
+
+Mandatory Skills:
+
+Demonstrate a strong understanding of designing and implementing Micro Frontend architecture or microservices concepts in UI development.
+Showcase expertise in UI development with a focus on React JS.
+Familiarity with RESTful APIs and integration with backend services.
+Experience with state management libraries such as Redux or Mobx.
+Proficiency in modern frontend technologies, including JavaScript (ES6+), HTML5, and CSS3.
+Possess a solid understanding of UI Design architecture.
+Exhibit strong problem-solving skills and the ability to troubleshoot complex issues.
+
+Additional Skills:
+
+Familiarity with backend technologies, including Spring Boot and Spring MVC.
+Understanding of backend/frontend integration and communication protocols.
+Knowledge of secure coding practices and the ability to implement them.
+
+Preferred Qualifications:
+
+Master's degree in Computer Science, Engineering, or a related field.
+Certifications in React JS or Micro Frontend development.
+Experience with AWS services and infrastructure.
+Proficient in CI/CD pipelines and related tools.
+Familiarity with containerization and orchestration tools such as Docker and Kubernetes.
+Familiarity with server-side rendering (SSR) and progressive web application (PWA) concepts.
+Contribution to open-source projects related to UI development.
+
+If you are passionate about leading the charge in UI Micro-Frontend Development, driving architectural excellence, ensuring secure coding practices, and delivering top-notch user experiences, we invite you to apply. Join us in shaping the future of our enterprise web applications in a dynamic and innovative work environment.
