@@ -1,0 +1,77 @@
+
+
+Strengths:
+
+Demonstrated willingness to adapt to changing priorities and new tasks, highlighting ability to navigate dynamic environments.
+Displayed positive attitude towards training and professional development.
+Areas for Improvement:
+
+Learning Pace:
+
+Improvement needed in learning pace. Actively seek additional resources like learning hubs and clarification to accelerate understanding.
+Meeting Deadlines:
+
+In several instances, deadlines not met, and additional time taken. Prioritizing tasks and managing time effectively will ensure timely completion of projects. For example, API implementation task not completed, and unit testing tasks took longer than anticipated.
+Technical Skills:
+
+API Development: Focus on practicing REST design principles, implementation techniques, and best practices.
+Unit Testing: Invest time in understanding frameworks, test case design, and effective code coverage strategies.
+Java/Spring/Spring Boot: Enhance knowledge through practice, coding challenges, and collaboration with experienced developers.
+Proactiveness: Show initiative by proposing improvements, seeking new challenges, and volunteering for relevant projects.
+Agile & JIRA Usage:
+
+Deepen understanding and application of Agile methodologies. Regularly update JIRA tickets with clear progress reports to demonstrate transparency and collaboration.
+Recommendations:
+
+Seek Additional Learning Resources:
+
+Don't hesitate to ask questions, request training, and actively seek resources.
+Develop Time Management Skills:
+
+Utilize techniques to prioritize tasks, allocate time effectively, and ensure deadlines are met.
+Practice & Collaborate:
+
+Enhance technical skills through personal projects, coding challenges, and collaborative opportunities.
+Seek Feedback & Evaluate Progress:
+
+Regularly seek feedback from colleagues and mentors to identify areas for improvement and track progress.
+Be Proactive & Take Initiative:
+
+Go beyond assigned tasks, propose improvements, and seek out new challenges that align with your goals.
+Master Agile & JIRA:
+
+Actively participate in Agile projects and maintain clear, concise JIRA updates to demonstrate efficiency and collaboration.
+
+
+
+
+Timeliness of Assignments:
+
+Demonstrated diligence and hard work; strive to refine time management skills for consistently meeting project deadlines.
+Attention to Details:
+
+Proven reliability in completing tasks; aim to strengthen attention to details for enhancing work quality.
+Collaboration Approach:
+
+Exhibited flexibility and adaptability within the team; consistent application of these qualities to follow the agreed collaboration approach will enhance overall teamwork and communication.
+Follow-up and Ownership:
+
+Noteworthy reliability and a capacity to go above and beyond; taking even greater ownership of tasks and proactive follow-up will contribute to a more independent workflow.
+Understanding of Business Functionality:
+
+Demonstrated dedication as a fast learner; channel this strength towards deepening understanding of business functionality to align technical contributions seamlessly with broader business objectives.
+Independence and Issue Resolution:
+
+Demonstrated flexibility and an ability to go above and beyond; strengthening independence in issue resolution will further showcase capability to tackle challenges autonomously.
+Technical Stack Proficiency:
+
+Exhibited commitment to learning; channel this strength towards developing an in-depth understanding of the technical stack, staying updated with the latest technologies, and contributing to the team's technical expertise.
+Project Understanding:
+
+Admirable dedication to going above and beyond to complete tasks; apply this dedication to gaining a comprehensive understanding of the entire project, enhancing the ability to contribute to its success.
+Initiative and Learning:
+
+Evident enthusiasm as a fast learner; take the initiative to further expand knowledge and skill set, seeking opportunities for continuous learning and professional development.
+Feedback Incorporation:
+
+Strong points include reliability and flexibility; continue to incorporate feedback received from peers and senior team members, demonstrating commitment to continuous improvement and personal growth.
