@@ -5,15 +5,17 @@ DESTINATION_DIR="/path/to/destination"
 
 # Define branches and Bitbucket URLs as static constants
 branches=("master" "develop" "feature-branch")
-bitbucket_urls=("https://bitbucket.org/user/repo1.git" "https://bitbucket.org/user/repo2.git" "https://bitbucket.org/user/repo3.git")
+bitbucket_urls=("https://bitbucket.org/user/repo1.git,https://bitbucket.org/user/repo2.git,https://bitbucket.org/user/repo3.git")
+
+IFS=',' read -ra url_array <<< "$bitbucket_urls"
 
 # Loop through each branch and Bitbucket URL
 for ((i=0; i<${#branches[@]}; i++)); do
     branch="${branches[i]}"
-    bitbucket_url="${bitbucket_urls[i]}"
+    bitbucket_url="${url_array[i]}"
 
     # Extract repository name from the Bitbucket URL
-    repo_name=$(basename "$bitbucket_url" | sed -n 's/^repo\([0-9]\+\).git/\1/p')
+    repo_name=$(basename "$bitbucket_url" | sed 's/\.git$//')
 
     # Construct the full path to the repository
     repo_path="$DESTINATION_DIR/$repo_name"
