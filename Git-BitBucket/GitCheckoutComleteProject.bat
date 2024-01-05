@@ -1,48 +1,28 @@
 #!/bin/bash
 
-#Checkout all repos with masrter branch
-# Set your Stash/Bitbucket Server URL and project key
-STASH_URL="https://your-stash-url.com"
-PROJECT_KEY="your-project-key"
-
 # Set the destination directory where repositories will be cloned
 DESTINATION_DIR="/path/to/destination"
 
-# Loop through repositories in the specified project
-curl -s $STASH_URL/rest/api/1.0/projects/$PROJECT_KEY/repos?limit=1000 | \
-    jq -r '.values[] | .links.clone[] | select(.name == "ssh") | .href' | \
-    while read -r REPO_URL; do
-        # Extract repository name from the URL
-        REPO_NAME=$(basename "$REPO_URL" | sed 's/\.git$//')
-
-        # Clone the repository using SSH key authentication
-        git clone $REPO_URL $DESTINATION_DIR/$REPO_NAME
-
-        # Change into the cloned repository directory
-        cd $DESTINATION_DIR/$REPO_NAME
-
-        # Checkout the master branch
-        git checkout master
-
-        # Go back to the original directory
-        cd -
-    done
-
-echo "Cloning and checking out master branch complete."
-
-
-#Checkout individual repo with given branches
-# Define repositories and branches as static constants
-repos=("repo1" "repo2" "repo3")
+# Define branches and Bitbucket URLs as static constants
 branches=("master" "develop" "feature-branch")
+bitbucket_urls=("https://bitbucket.org/user/repo1.git" "https://bitbucket.org/user/repo2.git" "https://bitbucket.org/user/repo3.git")
 
-# Loop through each repository and branch
-for ((i=0; i<${#repos[@]}; i++)); do
-    repo="${repos[i]}"
+# Loop through each branch and Bitbucket URL
+for ((i=0; i<${#branches[@]}; i++)); do
     branch="${branches[i]}"
+    bitbucket_url="${bitbucket_urls[i]}"
+
+    # Extract repository name from the Bitbucket URL
+    repo_name=$(basename "$bitbucket_url" | sed -n 's/^repo\([0-9]\+\).git/\1/p')
 
     # Construct the full path to the repository
-    repo_path="$DESTINATION_DIR/$repo"
+    repo_path="$DESTINATION_DIR/$repo_name"
+
+    # Clone the repository if it doesn't exist
+    if [ ! -d "$repo_path" ]; then
+        git clone "$bitbucket_url" "$repo_path" || { echo "Error: Unable to clone $bitbucket_url"; exit 1; }
+        echo "Cloned $bitbucket_url to $repo_path"
+    fi
 
     # Navigate to the repository folder
     cd "$repo_path" || { echo "Error: Unable to navigate to $repo_path folder"; exit 1; }
