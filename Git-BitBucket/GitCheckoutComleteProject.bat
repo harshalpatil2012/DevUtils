@@ -3,15 +3,21 @@
 # Set the destination directory where repositories will be cloned
 DESTINATION_DIR="/path/to/destination"
 
-# Define branches and Bitbucket URLs as static constants
-branches=("master" "develop" "feature-branch")
-bitbucket_urls=("https://bitbucket.org/user/repo1.git,https://bitbucket.org/user/repo2.git,https://bitbucket.org/user/repo3.git")
+# Define a map for repositories and branches
+declare -A repo_branch_map=(
+    ["repo1"]="master"
+    ["repo2"]="develop"
+    ["repo3"]="feature-branch"
+)
+
+# Define Bitbucket URLs
+bitbucket_urls=("https://bitbucket.org/user/repo1.git" "https://bitbucket.org/user/repo2.git" "https://bitbucket.org/user/repo3.git")
 
 IFS=',' read -ra url_array <<< "$bitbucket_urls"
 
-# Loop through each branch and Bitbucket URL
-for ((i=0; i<${#branches[@]}; i++)); do
-    branch="${branches[i]}"
+# Loop through each repository in the map
+for repo in "${!repo_branch_map[@]}"; do
+    branch="${repo_branch_map[$repo]}"
     bitbucket_url="${url_array[i]}"
 
     # Extract repository name from the Bitbucket URL
