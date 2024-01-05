@@ -20,26 +20,21 @@ for bitbucket_url in "${!bitbucket_url_branch_map[@]}"; do
     # Construct the full path to the repository
     repo_path="$DESTINATION_DIR/$repo_name"
 
-    # Clone the repository if it doesn't exist
-    if [ ! -d "$repo_path" ]; then
-        git clone "$bitbucket_url" "$repo_path" || { echo "Error: Unable to clone $bitbucket_url"; exit 1; }
+    # Clone the repository or pull the latest changes if it already exists
+    if [ -d "$repo_path" ]; then
+        cd "$repo_path" || { echo "Error: Unable to navigate to $repo_path folder"; exit 1; }
+        git pull origin "$branch" || { echo "Error: Unable to pull latest changes in $repo_path"; exit 1; }
+    else
+        git clone --branch "$branch" --depth 1 "$bitbucket_url" "$repo_path" || { echo "Error: Unable to clone $bitbucket_url"; exit 1; }
         echo "Cloned $bitbucket_url to $repo_path"
     fi
 
-    # Navigate to the repository folder
-    cd "$repo_path" || { echo "Error: Unable to navigate to $repo_path folder"; exit 1; }
-
-    # Checkout the specified branch
-    git checkout "$branch" || { echo "Error: Unable to checkout $branch in $repo_path"; exit 1; }
-
-    # Print a message indicating successful checkout
-    echo "Checked out $branch in $repo_path"
-
-    # Move back to the original directory
-    cd - || { echo "Error: Unable to navigate back to the original directory"; exit 1; }
+    # Print a message indicating successful checkout or pull
+    echo "Checked out/pulled $branch in $repo_path"
 done
 
 
+#Windows:
 
 @echo off
 
@@ -56,16 +51,15 @@ for /F "tokens=1,2 delims==" %%a in ('set bitbucket_url_branch_map[') do (
     for %%p in ("%bitbucket_url%") do set "repo_name=%%~np"
     set "repo_path=%DESTINATION_DIR%\%repo_name%"
 
-    if not exist "%repo_path%" (
-        git clone "%bitbucket_url%" "%repo_path%" || ( echo Error: Unable to clone %bitbucket_url% & exit /B 1 )
+    if exist "%repo_path%" (
+        cd "%repo_path%" || ( echo Error: Unable to navigate to %repo_path% folder & exit /B 1 )
+        git pull origin "%branch%" || ( echo Error: Unable to pull latest changes in %repo_path% & exit /B 1 )
+    ) else (
+        git clone --branch "%branch%" --depth 1 "%bitbucket_url%" "%repo_path%" || ( echo Error: Unable to clone %bitbucket_url% & exit /B 1 )
         echo Cloned %bitbucket_url% to %repo_path%
     )
 
-    cd "%repo_path%" || ( echo Error: Unable to navigate to %repo_path% folder & exit /B 1 )
-
-    git checkout "%branch%" || ( echo Error: Unable to checkout %branch% in %repo_path% & exit /B 1 )
-
-    echo Checked out %branch% in %repo_path%
+    echo Checked out/pulled %branch% in %repo_path%
 
     cd .. || ( echo Error: Unable to navigate back to the original directory & exit /B 1 )
 )
