@@ -1,4 +1,4 @@
-# Define the log file path
+no# Define the log file path
 $logFilePath = "C:\Path\To\Install_Log.txt"
 
 # Function to log messages with timestamp and context
@@ -20,3 +20,7 @@ $softwareList | ForEach-Object { LogWrite $_.LocalizedDisplayName }
 LogWrite "Checking existing installations..."
 
 # ... (rest of the installation logic)
+
+
+Get-WmiObject -Namespace "root\ccm\ClientSDK" -Class CCM_Application -Filter "Name <> ''"
+
