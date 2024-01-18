@@ -1,0 +1,22 @@
+# Define the log file path
+$logFilePath = "C:\Path\To\Install_Log.txt"
+
+# Function to log messages with timestamp and context
+function LogWrite {
+    param([string]$message, [string]$context = "")
+    $timestamp = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
+    $logEntry = "$timestamp - $context - $message"
+    Write-Host $logEntry
+    $logEntry | Out-File -Append -FilePath $logFilePath
+}
+
+# Fetch available software names from Software Center and log them
+LogWrite "Retrieving available software from Software Center..."
+$softwareList = Get-WmiObject -Namespace "root\ccm\ClientSDK" -Class CCM_Application | Select-Object LocalizedDisplayName
+LogWrite "Available software in Software Center:"
+$softwareList | ForEach-Object { LogWrite $_.LocalizedDisplayName }
+
+# Proceed with the installation process (rest of the script remains the same)
+LogWrite "Checking existing installations..."
+
+# ... (rest of the installation logic)
