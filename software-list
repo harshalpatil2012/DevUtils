@@ -1,27 +1,42 @@
 # Define the log file path
-$logFilePath = "C:\Path\To\ApplicationNames_Log.txt"
+$logFilePath = "C:\Path\To\SoftwareList.csv"
 
 try {
-    # Registry path for installed applications
-    $registryPath = "HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall"
+    # Attempt to retrieve software list from registry
+    $applicationNames = Get-ItemProperty -Path "HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall\*" -ErrorAction Stop |
+                         Where-Object { $_.DisplayName -ne $null } |
+                         Select-Object DisplayName, DisplayVersion, Publisher, InstallDate
 
-    # Get all application names from the registry
-    $applicationNames = Get-Item -LiteralPath $registryPath |
-                        Get-ItemProperty |
-                        Where-Object { $_.DisplayName -ne $null } |
-                        Select-Object -ExpandProperty DisplayName
+    # If registry method fails, try alternative approaches
+    if (!$applicationNames) {
+        Write-Warning "Registry method did not retrieve any software. Attempting alternative methods."
 
-    # Log application names to the file
-    $applicationNames | ForEach-Object {
-        $_ | Out-File -Append -FilePath $logFilePath
+        try {
+            # Try using WMI
+            $applicationNames = Get-WmiObject -Class Win32_Product -ErrorAction Stop |
+                                 Select-Object Name, Version, Vendor, InstallDate
+        }
+        catch {
+            Write-Warning "WMI method failed. Attempting Get-Package."
+
+            try {
+                # Try using Get-Package (PowerShell 5.1 or later)
+                $applicationNames = Get-Package -ProviderName Programs -ErrorAction Stop |
+                                     Select-Object Name, Version, ProviderName, DateInstalled
+            }
+            catch {
+                Write-Error "All methods failed to retrieve software list. Please consult your IT administrator."
+            }
+        }
     }
 
-    Write-Host "Application names logged to $logFilePath."
+    # Export software information to a CSV file
+    $applicationNames | Export-Csv -Path $logFilePath -NoTypeInformation
+
+    Write-Host "Software list exported to $logFilePath."
 }
 catch {
-    # Log errors to the file
     $errorMessage = "Error: $($_.Exception.Message)"
-    $errorMessage | Out-File -Append -FilePath $logFilePath
-
+    $errorMessage | Out-File -FilePath $logFilePath
     Write-Host $errorMessage
 }
