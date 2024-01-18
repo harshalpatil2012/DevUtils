@@ -1,8 +1,8 @@
 # Define the log file path
-$logFilePath = "C:\Path\To\Application_Names_Log.txt"
+$logFilePath = "C:\Path\To\ApplicationNames_Log.txt"
 
 # Get all application names from Software Center
-$applicationNames = Get-WmiObject -Namespace "Root\ccm\ClientSDK" -Class CCM_Application | Select-Object -ExpandProperty LocalizedDisplayName
+$applicationNames = Get-WmiObject -Namespace "Root\ccm\ClientSDK" -Class CCM_Application | Select-Object -ExpandProperty DisplayName
 
 # Log application names to the file
 $applicationNames | ForEach-Object {
