@@ -1,0 +1,48 @@
+# Define the list of software to be installed
+$softwareList = @("Software1", "Software2", "Software3")
+
+# Define the log file path
+$logFilePath = "C:\Path\To\Install_Log.txt"
+
+# Cumulative check for already installed software
+Write-Host "Checking existing installations..."
+
+foreach ($software in $softwareList) {
+    $isInstalled = Get-WmiObject -Query "SELECT * FROM Win32_Product WHERE Name = '$software'" -ErrorAction SilentlyContinue
+    
+    if ($isInstalled) {
+        Write-Host "$software - Already installed"
+        "$software - Already installed" | Out-File -Append -FilePath $logFilePath
+    }
+}
+
+Write-Host "Installation in progress..."
+
+# Loop through each software and check/install
+foreach ($software in $softwareList) {
+    $isInstalled = Get-WmiObject -Query "SELECT * FROM Win32_Product WHERE Name = '$software'" -ErrorAction SilentlyContinue
+    
+    if (!$isInstalled) {
+        Write-Host "Installing $software..."
+        
+        # Install software using Windows Software Center command
+        $installResult = Start-Process -FilePath "C:\Windows\CCM\ClientUX\SCClient.exe" -ArgumentList "/Install:SoftwareName=$software" -Wait -PassThru
+        
+        # Check the installation result and log to the file
+        if ($installResult.ExitCode -eq 0) {
+            $status = "$software - Installed successfully"
+            Write-Host $status
+        } else {
+            $status = "$software - Installation failed with exit code $($installResult.ExitCode)"
+            Write-Host $status
+        }
+
+        $status | Out-File -Append -FilePath $logFilePath
+    }
+}
+
+Write-Host "Installation process completed. Check $logFilePath for details."
+
+# Cumulative summary
+Write-Host "Cumulative Summary:"
+Get-Content $logFilePath
