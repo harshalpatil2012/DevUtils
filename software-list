@@ -1,18 +1,27 @@
 # Define the log file path
 $logFilePath = "C:\Path\To\ApplicationNames_Log.txt"
 
-# Registry path for installed applications
-$registryPath = "HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall"
+try {
+    # Registry path for installed applications
+    $registryPath = "HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall"
 
-# Get all application names from the registry
-$applicationNames = Get-Item -LiteralPath $registryPath |
-                    Get-ItemProperty |
-                    Where-Object { $_.DisplayName -ne $null } |
-                    Select-Object -ExpandProperty DisplayName
+    # Get all application names from the registry
+    $applicationNames = Get-Item -LiteralPath $registryPath |
+                        Get-ItemProperty |
+                        Where-Object { $_.DisplayName -ne $null } |
+                        Select-Object -ExpandProperty DisplayName
 
-# Log application names to the file
-$applicationNames | ForEach-Object {
-    $_ | Out-File -Append -FilePath $logFilePath
+    # Log application names to the file
+    $applicationNames | ForEach-Object {
+        $_ | Out-File -Append -FilePath $logFilePath
+    }
+
+    Write-Host "Application names logged to $logFilePath."
 }
+catch {
+    # Log errors to the file
+    $errorMessage = "Error: $($_.Exception.Message)"
+    $errorMessage | Out-File -Append -FilePath $logFilePath
 
-Write-Host "Application names logged to $logFilePath."
+    Write-Host $errorMessage
+}
