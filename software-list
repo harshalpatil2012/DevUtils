@@ -1,8 +1,14 @@
 # Define the log file path
 $logFilePath = "C:\Path\To\ApplicationNames_Log.txt"
 
-# Get all application names from Software Center
-$applicationNames = Get-WmiObject -Namespace "Root\ccm\ClientSDK" -Class CCM_Application | Select-Object -ExpandProperty DisplayName
+# Registry path for installed applications
+$registryPath = "HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall"
+
+# Get all application names from the registry
+$applicationNames = Get-Item -LiteralPath $registryPath |
+                    Get-ItemProperty |
+                    Where-Object { $_.DisplayName -ne $null } |
+                    Select-Object -ExpandProperty DisplayName
 
 # Log application names to the file
 $applicationNames | ForEach-Object {
