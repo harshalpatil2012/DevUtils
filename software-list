@@ -6,15 +6,23 @@ $installedSoftware = @()
 $skippedSoftware = @()
 $failedSoftware = @()
 
-# Display and write to log file
-foreach ($deployment in $allDeployments) {
-    try {
-        $message = "Software: $($deployment.PackageID), Deployment ID: $($deployment.DeploymentID)"
+try {
+    # Query Configuration Manager client for available deployments
+    $allDeployments = Get-WmiObject -Namespace "Root\ccm\SoftwareUpdates\DeploymentAgent" -Class CCM_Application | Select-Object DisplayName, DeploymentID
+
+    # Display and write to log file
+    foreach ($deployment in $allDeployments) {
+        $message = "Software: $($deployment.DisplayName), Deployment ID: $($deployment.DeploymentID)"
         Write-Host $message
         Add-Content -Path $logFilePath -Value $message -ErrorAction Stop
-    } catch {
-        $errorMessage = "Error logging deployment information: $_"
-        Write-Host $errorMessage
-        Add-Content -Path $logFilePath -Value $errorMessage -ErrorAction SilentlyContinue
     }
+
+    # ... rest of the script for deployment ...
+
+} catch {
+    $errorMessage = "Error fetching available software deployments: $_"
+    Write-Host $errorMessage
+    Add-Content -Path $logFilePath -Value $errorMessage -ErrorAction SilentlyContinue
 }
+
+# ... rest of the script for deployment ...
