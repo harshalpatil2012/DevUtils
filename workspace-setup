@@ -1,49 +1,58 @@
-# Define the list of software to be installed
-$softwareList = @("Software1", "Software2", "Software3")
+# Specify the path for the log file
+$logFilePath = "C:\Path\To\Your\Log\File.log"
 
-# Define the log file path
-$logFilePath = "C:\Path\To\Install_Log.txt"
+# Get all Deployment IDs for available software
+$allDeployments = Get-CMDeployment | Select-Object DeploymentID, PackageID
 
-# Function to log messages with timestamp and context
-function LogWrite {
-    param([string]$message, [string]$context = "")
-    $timestamp = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
-    $logEntry = "$timestamp - $context - $message"
-    Write-Host $logEntry
-    $logEntry | Out-File -Append -FilePath $logFilePath
+# Initialize variables for tracking installation status
+$installedSoftware = @()
+$skippedSoftware = @()
+$failedSoftware = @()
+
+# Display and write to log file
+foreach ($deployment in $allDeployments) {
+    $message = "Software: $($deployment.PackageID), Deployment ID: $($deployment.DeploymentID)"
+    Write-Host $message
+    Add-Content -Path $logFilePath -Value $message
 }
 
-# Check for existing installations and log results
-LogWrite "Checking existing installations..."
+# Specify the list of software for deployment
+$softwareToDeploy = @("Software1", "Software2", "Software3")
 
-foreach ($software in $softwareList) {
-    $isInstalled = Get-WmiObject -Query "SELECT * FROM Win32_Product WHERE Name = '$software'" -ErrorAction SilentlyContinue
-    if ($isInstalled) {
-        LogWrite "$software - Already installed"
-    }
-}
+# Start deployment for the specified software
+foreach ($softwareName in $softwareToDeploy) {
+    $deploymentID = $allDeployments | Where-Object {$_.PackageID -eq $softwareName} | Select-Object -ExpandProperty DeploymentID
 
-LogWrite "Installation in progress..."
-
-# Install software and log results
-foreach ($software in $softwareList) {
-    $isInstalled = Get-WmiObject -Query "SELECT * FROM Win32_Product WHERE Name = '$software'" -ErrorAction SilentlyContinue
-
-    if (!$isInstalled) {
-        LogWrite "Installing $software..."
-
-        $installResult = Start-Process -FilePath "C:\Windows\CCM\ClientUX\SCClient.exe" -ArgumentList "/Install:SoftwareName=$software" -Wait -PassThru
-
-        if ($installResult.ExitCode -eq 0) {
-            LogWrite "$software - Installed successfully"
-        } else {
-            LogWrite "$software - Installation failed with exit code $($installResult.ExitCode)"
+    # Check if software is already installed
+    if (Get-Command $softwareName -ErrorAction SilentlyContinue) {
+        $message = "Software $softwareName is already installed. Skipping deployment."
+        Write-Host $message
+        Add-Content -Path $logFilePath -Value $message
+        $skippedSoftware += $softwareName
+    } else {
+        try {
+            Write-Host "Starting deployment for $softwareName with Deployment ID $deploymentID"
+            Start-Process -FilePath "msiexec.exe" -ArgumentList "/i", "$($deploymentID)", "/qn" -Wait
+            $installedSoftware += $softwareName
+        } catch {
+            $message = "Failed to deploy $softwareName. Error: $_"
+            Write-Host $message
+            Add-Content -Path $logFilePath -Value $message
+            $failedSoftware += $softwareName
         }
     }
 }
 
-LogWrite "Installation process completed. Check $logFilePath for details."
+# Display final summary in the console
+Write-Host "----- Deployment Summary -----"
+Write-Host "Installed Software: $($installedSoftware -join ', ')"
+Write-Host "Skipped Software (Already Installed): $($skippedSoftware -join ', ')"
+Write-Host "Failed Software: $($failedSoftware -join ', ')"
+Write-Host "-----------------------------"
 
-# Display cumulative summary
-LogWrite "Cumulative Summary:"
-Get-Content $logFilePath
+# Log final summary to the log file
+Add-Content -Path $logFilePath -Value "----- Deployment Summary -----"
+Add-Content -Path $logFilePath -Value "Installed Software: $($installedSoftware -join ', ')"
+Add-Content -Path $logFilePath -Value "Skipped Software (Already Installed): $($skippedSoftware -join ', ')"
+Add-Content -Path $logFilePath -Value "Failed Software: $($failedSoftware -join ', ')"
+Add-Content -Path $logFilePath -Value "-----------------------------"
