@@ -1,8 +1,5 @@
 # Specify the path for the log file
-$logFilePath = "C:\Path\To\Your\Log\File.log"
-
-# Get all Deployment IDs for available software
-$allDeployments = Get-CMDeployment | Select-Object DeploymentID, PackageID
+$logFilePath = "C:\logs\install.log"
 
 # Initialize variables for tracking installation status
 $installedSoftware = @()
@@ -11,9 +8,15 @@ $failedSoftware = @()
 
 # Display and write to log file
 foreach ($deployment in $allDeployments) {
-    $message = "Software: $($deployment.PackageID), Deployment ID: $($deployment.DeploymentID)"
-    Write-Host $message
-    Add-Content -Path $logFilePath -Value $message
+    try {
+        $message = "Software: $($deployment.PackageID), Deployment ID: $($deployment.DeploymentID)"
+        Write-Host $message
+        Add-Content -Path $logFilePath -Value $message
+    } catch {
+        $errorMessage = "Error logging deployment information: $_"
+        Write-Host $errorMessage
+        Add-Content -Path $logFilePath -Value $errorMessage
+    }
 }
 
 # Specify the list of software for deployment
