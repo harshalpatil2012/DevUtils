@@ -1,0 +1,42 @@
+# Define the log file path
+$logFilePath = "C:\Path\To\SoftwareList.csv"
+
+try {
+    # Attempt to retrieve software list from registry
+    $applicationNames = Get-ItemProperty -Path "HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall\*" -ErrorAction Stop |
+                         Where-Object { $_.DisplayName -ne $null } |
+                         Select-Object DisplayName, DisplayVersion, Publisher, InstallDate
+
+    # If registry method fails, try alternative approaches
+    if (!$applicationNames) {
+        Write-Warning "Registry method did not retrieve any software. Attempting alternative methods."
+
+        try {
+            # Try using WMI
+            $applicationNames = Get-WmiObject -Class Win32_Product -ErrorAction Stop |
+                                 Select-Object Name, Version, Vendor, InstallDate
+        }
+        catch {
+            Write-Warning "WMI method failed. Attempting Get-Package."
+
+            try {
+                # Try using Get-Package (PowerShell 5.1 or later)
+                $applicationNames = Get-Package -ProviderName Programs -ErrorAction Stop |
+                                     Select-Object Name, Version, ProviderName, DateInstalled
+            }
+            catch {
+                Write-Error "All methods failed to retrieve software list. Please consult your IT administrator."
+            }
+        }
+    }
+
+    # Export software information to a CSV file
+    $applicationNames | Export-Csv -Path $logFilePath -NoTypeInformation
+
+    Write-Host "Software list exported to $logFilePath."
+}
+catch {
+    $errorMessage = "Error: $($_.Exception.Message)"
+    $errorMessage | Out-File -FilePath $logFilePath
+    Write-Host $errorMessage
+}

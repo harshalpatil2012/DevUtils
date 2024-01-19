@@ -1,0 +1,49 @@
+# Define the list of software to be installed
+$softwareList = @("Software1", "Software2", "Software3")
+
+# Define the log file path
+$logFilePath = "C:\Path\To\Install_Log.txt"
+
+# Function to log messages with timestamp and context
+function LogWrite {
+    param([string]$message, [string]$context = "")
+    $timestamp = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
+    $logEntry = "$timestamp - $context - $message"
+    Write-Host $logEntry
+    $logEntry | Out-File -Append -FilePath $logFilePath
+}
+
+# Check for existing installations and log results
+LogWrite "Checking existing installations..."
+
+foreach ($software in $softwareList) {
+    $isInstalled = Get-WmiObject -Query "SELECT * FROM Win32_Product WHERE Name = '$software'" -ErrorAction SilentlyContinue
+    if ($isInstalled) {
+        LogWrite "$software - Already installed"
+    }
+}
+
+LogWrite "Installation in progress..."
+
+# Install software and log results
+foreach ($software in $softwareList) {
+    $isInstalled = Get-WmiObject -Query "SELECT * FROM Win32_Product WHERE Name = '$software'" -ErrorAction SilentlyContinue
+
+    if (!$isInstalled) {
+        LogWrite "Installing $software..."
+
+        $installResult = Start-Process -FilePath "C:\Windows\CCM\ClientUX\SCClient.exe" -ArgumentList "/Install:SoftwareName=$software" -Wait -PassThru
+
+        if ($installResult.ExitCode -eq 0) {
+            LogWrite "$software - Installed successfully"
+        } else {
+            LogWrite "$software - Installation failed with exit code $($installResult.ExitCode)"
+        }
+    }
+}
+
+LogWrite "Installation process completed. Check $logFilePath for details."
+
+# Display cumulative summary
+LogWrite "Cumulative Summary:"
+Get-Content $logFilePath

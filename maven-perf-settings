@@ -1,0 +1,25 @@
+<settings>
+    <!-- Global properties -->
+    <profiles>
+        <profile>
+            <id>local-build</id>
+            <properties>
+                <!-- Memory settings -->
+                <maven.compiler.fork>true</maven.compiler.fork>
+                <maven.compiler.fork.jvmArgs>-Xms2g -Xmx8g</maven.compiler.fork.jvmArgs>
+                
+                <!-- Parallel builds -->
+                <maven.cpu.threads>24</maven.cpu.threads>
+                <maven.thread.daemon>true</maven.thread.daemon>
+                
+                <!-- Optimize download -->
+                <maven.artifact.threads>16</maven.artifact.threads>
+            </properties>
+        </profile>
+    </profiles>
+
+    <!-- Set the active profile -->
+    <activeProfiles>
+        <activeProfile>local-build</activeProfile>
+    </activeProfiles>
+</settings>
