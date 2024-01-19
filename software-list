@@ -16,8 +16,17 @@ try {
     # Query available software deployments
     $allDeployments = Get-CMApplication
 
+    # Check if deployments are available
+    if ($null -eq $allDeployments) {
+        throw "No software deployments found."
+    }
+
     # Display and write to log file
     foreach ($deployment in $allDeployments) {
+        if ($null -eq $deployment.LocalizedDisplayName -or $null -eq $deployment.PackageID) {
+            throw "Null values encountered while fetching deployment information."
+        }
+
         $message = "Software: $($deployment.LocalizedDisplayName), Deployment ID: $($deployment.PackageID)"
         Write-Host $message
         Add-Content -Path $logFilePath -Value $message -ErrorAction Stop
@@ -26,7 +35,7 @@ try {
     # ... rest of the script for deployment ...
 
 } catch {
-    $errorMessage = "Error fetching available software deployments: $_"
+    $errorMessage = "Error: $_"
     Write-Host $errorMessage
     Add-Content -Path $logFilePath -Value $errorMessage -ErrorAction SilentlyContinue
 }
