@@ -1,0 +1,12 @@
+@echo off
+set SQLCL_PATH=C:\path\to\sqlcl\bin\sql.exe
+set OUTPUT_DIR=C:\path\to\output\directory
+
+for /f "tokens=*" %%a in ('%SQLCL_PATH% -S username/password@database -script "SELECT USERNAME FROM USER_OBJECTS WHERE OBJECT_TYPE='DATABASE CONNECTION'"') do (
+    %SQLCL_PATH% username/password@database -script "SET SQLFORMAT XML" -script "SCRIPT C:\path\to\exportConnections.sql %OUTPUT_DIR%\%%a.xml"
+)
+
+
+Create a SQL script named exportConnections.sql with the following content:
+
+SHOW CONNECTION %1
