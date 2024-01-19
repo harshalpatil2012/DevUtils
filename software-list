@@ -7,12 +7,18 @@ $skippedSoftware = @()
 $failedSoftware = @()
 
 try {
-    # Query Configuration Manager client for available deployments
-    $allDeployments = Get-WmiObject -Namespace "Root\ccm\SoftwareUpdates\DeploymentAgent" -Class CCM_Application | Select-Object DisplayName, DeploymentID
+    # Import the SCCM PowerShell module
+    Import-Module ($Env:SMS_ADMIN_UI_PATH.Substring(0,$Env:SMS_ADMIN_UI_PATH.Length-5) + '\ConfigurationManager.psd1')
+
+    # Connect to the SCCM site
+    cd "X:\"
+
+    # Query available software deployments
+    $allDeployments = Get-CMApplication
 
     # Display and write to log file
     foreach ($deployment in $allDeployments) {
-        $message = "Software: $($deployment.DisplayName), Deployment ID: $($deployment.DeploymentID)"
+        $message = "Software: $($deployment.LocalizedDisplayName), Deployment ID: $($deployment.PackageID)"
         Write-Host $message
         Add-Content -Path $logFilePath -Value $message -ErrorAction Stop
     }
