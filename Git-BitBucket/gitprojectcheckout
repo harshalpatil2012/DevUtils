@@ -1,0 +1,18 @@
+@echo off
+setlocal enabledelayedexpansion
+
+rem Set your Stash project URL
+set "stash_project_url=https://your-stash-server.com/projects/your-project/repos/"
+
+rem Get the current script directory
+set "script_dir=%~dp0"
+
+rem Clone all repositories in the Stash project
+for /f "delims=" %%a in ('curl -s %stash_project_url%') do (
+    set "repo_url=!stash_project_url!%%~a.git"
+    git clone !repo_url! "%script_dir%%%~a"
+)
+
+echo All repositories cloned successfully.
+
+endlocal
