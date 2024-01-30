@@ -1,0 +1,39 @@
+import sqlite3
+import random
+import string
+
+# Function to generate random string
+def generate_random_string(length=10):
+    letters = string.ascii_letters
+    return ''.join(random.choice(letters) for _ in range(length))
+
+# Connect to SQLite database (replace 'your_database.db' with your database name)
+conn = sqlite3.connect('your_database.db')
+cursor = conn.cursor()
+
+# Create a table if it doesn't exist
+cursor.execute('''
+    CREATE TABLE IF NOT EXISTS your_table (
+        id INTEGER PRIMARY KEY,
+        name TEXT,
+        age INTEGER,
+        email TEXT
+    )
+''')
+
+# Insert 50,000 records
+for i in range(50000):
+    name = generate_random_string()
+    age = random.randint(18, 99)
+    email = f'{generate_random_string()}@example.com'
+
+    cursor.execute('''
+        INSERT INTO your_table (name, age, email)
+        VALUES (?, ?, ?)
+    ''', (name, age, email))
+
+# Commit the changes and close the connection
+conn.commit()
+conn.close()
+
+print("Data insertion complete.")
