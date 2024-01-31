@@ -8,7 +8,8 @@ WHERE cons.constraint_type = 'P' AND cols.table_name = 'your_table_name';
 Query to get records for a specific day based on timestamp:
 SELECT COUNT(*)
 FROM your_table
-WHERE TRUNC(TO_DATE(your_timestamp_column, 'DD-MM-RR HH12:MI:SS.FF9')) = TO_DATE('31-01-24', 'DD-MM-RR');
+WHERE TRUNC(TO_DATE(your_timestamp_column, 'DD-MM-RR HH12:MI:SS.FF3')) = TO_DATE('31-01-24', 'DD-MM-RR');
+
 
 
 Query to get records for the last 7 days based on timestamp:
