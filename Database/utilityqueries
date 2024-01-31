@@ -8,25 +8,27 @@ WHERE cons.constraint_type = 'P' AND cols.table_name = 'your_table_name';
 Query to get records for a specific day based on timestamp:
 SELECT COUNT(*)
 FROM your_table
-WHERE TRUNC(TO_DATE(your_timestamp_column, 'DD-MM-RR HH12:MI:SS.FF AM')) = TO_DATE('31-01-24', 'DD-MM-RR');
+WHERE TRUNC(TO_DATE(your_timestamp_column, 'DD-MM-RR HH12:MI:SS.FF9')) = TO_DATE('31-01-24', 'DD-MM-RR');
+
 
 Query to get records for the last 7 days based on timestamp:
 sql
-Copy code
-SELECT TO_CHAR(TRUNC(TO_DATE(your_timestamp_column, 'DD-MM-RR HH12:MI:SS.FF')), 'DD-MM-RR') AS day,
+SELECT TO_CHAR(TRUNC(TO_DATE(your_timestamp_column, 'DD-MM-RR HH12:MI:SS.FF9')), 'DD-MM-RR') AS day,
        COUNT(*)
 FROM your_table
 WHERE your_timestamp_column >= SYSDATE - 7
-GROUP BY TO_CHAR(TRUNC(TO_DATE(your_timestamp_column, 'DD-MM-RR HH12:MI:SS.FF')), 'DD-MM-RR')
-ORDER BY TO_CHAR(TRUNC(TO_DATE(your_timestamp_column, 'DD-MM-RR HH12:MI:SS.FF')), 'DD-MM-RR');
+GROUP BY TO_CHAR(TRUNC(TO_DATE(your_timestamp_column, 'DD-MM-RR HH12:MI:SS.FF9')), 'DD-MM-RR')
+ORDER BY TO_CHAR(TRUNC(TO_DATE(your_timestamp_column, 'DD-MM-RR HH12:MI:SS.FF9')), 'DD-MM-RR');
+
 
 
 Query to get records for specific day based on timestamp but on hourly basis
-SELECT TO_CHAR(TRUNC(TO_DATE(your_timestamp_column, 'DD-MM-RR HH12:MI:SS.FF')), 'DD-MM-RR HH24') AS hour,
+SELECT TO_CHAR(TRUNC(TO_DATE(your_timestamp_column, 'DD-MM-RR HH12:MI:SS.FF9')), 'DD-MM-RR HH24') AS hour,
        COUNT(*) as hour_count
 FROM your_table
-WHERE TRUNC(TO_DATE(your_timestamp_column, 'DD-MM-RR HH12:MI:SS.FF AM')) = TO_DATE('31-01-24', 'DD-MM-RR')
-GROUP BY TO_CHAR(TRUNC(TO_DATE(your_timestamp_column, 'DD-MM-RR HH12:MI:SS.FF')), 'DD-MM-RR HH24')
-ORDER BY TO_CHAR(TRUNC(TO_DATE(your_timestamp_column, 'DD-MM-RR HH12:MI:SS.FF')), 'DD-MM-RR HH24');
+WHERE TRUNC(TO_DATE(your_timestamp_column, 'DD-MM-RR HH12:MI:SS.FF9')) = TO_DATE('31-01-24', 'DD-MM-RR')
+GROUP BY TO_CHAR(TRUNC(TO_DATE(your_timestamp_column, 'DD-MM-RR HH12:MI:SS.FF9')), 'DD-MM-RR HH24')
+ORDER BY TO_CHAR(TRUNC(TO_DATE(your_timestamp_column, 'DD-MM-RR HH12:MI:SS.FF9')), 'DD-MM-RR HH24');
+
 
 
