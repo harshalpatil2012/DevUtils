@@ -26,6 +26,12 @@ WHERE your_timestamp_column >= SYSDATE - 7
 GROUP BY TO_CHAR(TRUNC(TO_DATE(your_timestamp_column, 'DD-MM-RR HH12:MI:SS.FF9')), 'DD-MM-RR')
 ORDER BY TO_CHAR(TRUNC(TO_DATE(your_timestamp_column, 'DD-MM-RR HH12:MI:SS.FF9')), 'DD-MM-RR');
 
+SELECT TO_CHAR(your_timestamp_column, 'DD-MM-RR') AS day,
+       COUNT(*)
+FROM your_table
+WHERE your_timestamp_column >= SYSDATE - 7
+GROUP BY TO_CHAR(your_timestamp_column, 'DD-MM-RR')
+ORDER BY TO_CHAR(your_timestamp_column, 'DD-MM-RR');
 
 
 Query to get records for specific day based on timestamp but on hourly basis
@@ -38,3 +44,9 @@ ORDER BY TO_CHAR(TRUNC(TO_DATE(your_timestamp_column, 'DD-MM-RR HH12:MI:SS.FF9')
 
 
 
+SELECT TO_CHAR(your_timestamp_column, 'DD-MM-RR HH24') AS hour,
+       COUNT(*) as hour_count
+FROM your_table
+WHERE TO_CHAR(your_timestamp_column, 'DD-MM-RR') LIKE '31-01-24'
+GROUP BY TO_CHAR(your_timestamp_column, 'DD-MM-RR HH24')
+ORDER BY TO_CHAR(your_timestamp_column, 'DD-MM-RR HH24');
