@@ -1,0 +1,5 @@
+SELECT cols.column_name
+FROM all_tab_columns cols
+JOIN all_cons_columns cons_cols ON cols.column_name = cons_cols.column_name AND cols.table_name = cons_cols.table_name
+JOIN all_constraints cons ON cons_cols.constraint_name = cons.constraint_name AND cons_cols.table_name = cons.table_name
+WHERE cons.constraint_type = 'P' AND cols.table_name = 'your_table_name';
