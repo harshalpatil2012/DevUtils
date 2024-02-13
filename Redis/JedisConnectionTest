@@ -1,0 +1,25 @@
+import redis.clients.jedis.Jedis;
+
+public class JedisConnectionTest {
+
+    public static void main(String[] args) {
+        // Replace these with your actual Redis server information
+        String redisHost = "your_redis_host";
+        int redisPort = 6379;
+        String redisPassword = "your_redis_password";
+
+        // Create a new Jedis instance
+        try (Jedis jedis = new Jedis(redisHost, redisPort)) {
+            // Authenticate if a password is set
+            if (redisPassword != null && !redisPassword.isEmpty()) {
+                jedis.auth(redisPassword);
+            }
+
+            // Test the connection
+            String response = jedis.ping();
+            System.out.println("Ping Response: " + response);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
