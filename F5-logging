@@ -1,1 +1,27 @@
-To enable SSL debug logging on an F5 device, you can use the following steps:Access the F5 Configuration Utility:Open a web browser and enter the management IP address of your F5 device.Log in with your credentials.Navigate to System Logs:In the Configuration utility, go to "System" and then "Logs."Create or Modify a Logging Profile:Create a new logging profile or modify an existing one. You can do this by selecting "Create" or choosing an existing profile.Configure Logging Parameters:Within the logging profile, configure the following parameters related to SSL debugging:Facility: Choose "Local0" or another appropriate facility.Log Level: Set the log level to "Debug."Apply the Logging Profile:Once configured, apply the logging profile to the appropriate components. In the case of SSL debugging, it may be applied to the Virtual Server or specific components related to SSL.Save Configuration:After making changes, ensure to save the configuration.View Debug Logs:Once the logging profile is applied, you can view the SSL debug logs either through the Configuration utility or by accessing the logs directly on the F5 device.
+1. **Access the F5 Configuration Utility:**
+   - Open a web browser and enter the management IP address of your F5 device.
+   - Log in with your credentials.
+
+2. **Navigate to System Logs:**
+   - In the Configuration utility, go to "System" and then "Logs."
+
+3. **Create or Modify a Logging Profile:**
+   - Create a new logging profile or modify an existing one. You can do this by selecting "Create" or choosing an existing profile.
+
+4. **Configure Logging Parameters:**
+   - Within the logging profile, configure the following parameters related to SSL debugging:
+     - **Facility:** Choose "Local0" or another appropriate facility.
+     - **Log Level:** Set the log level to "Debug."
+
+5. **Apply the Logging Profile:**
+   - Once configured, apply the logging profile to the appropriate components. In the case of SSL debugging, it may be applied to the Virtual Server or specific components related to SSL.
+
+6. **Save Configuration:**
+   - After making changes, ensure to save the configuration.
+
+7. **View Debug Logs:**
+   - Once the logging profile is applied, you can view the SSL debug logs either through the Configuration utility or by accessing the logs directly on the F5 device.
+
+Keep in mind that enabling SSL debug logging can generate a significant amount of log data, impacting system performance. Therefore, use it judiciously and disable it when not needed.
+
+For more detailed and device-specific instructions, refer to the F5 documentation corresponding to your F5 device model and software version. If you're not familiar with these configurations, it may be advisable to consult with your network or security team to ensure proper setup and interpretation of the debug logs.
