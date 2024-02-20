@@ -21,3 +21,10 @@ EXPDP username/password@database DIRECTORY=DATA_PUMP_DIR DUMPFILE=ddl_backup.dmp
 -- Run Data Pump Export for DML
 -- Replace 'table_name' with the desired table
 EXPDP username/password@database DIRECTORY=DATA_PUMP_DIR DUMPFILE=dml_backup.dmp LOGFILE=dml_backup.log TABLES=table_name CONTENT=DATA_ONLY;
+
+
+-- Run Data Pump Export for DDL
+EXPDP DIRECTORY=DATA_PUMP_DIR DUMPFILE=ddl_backup.dmp LOGFILE=ddl_backup.log SCHEMAS=your_current_username CONTENT=METADATA_ONLY;
+
+-- Run Data Pump Export for DML
+EXPDP DIRECTORY=DATA_PUMP_DIR DUMPFILE=dml_backup.dmp LOGFILE=dml_backup.log CONTENT=DATA_ONLY;
