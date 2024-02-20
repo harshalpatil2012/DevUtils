@@ -1,0 +1,14 @@
+-- Connect to Oracle Database
+sqlplus username/password@database
+
+-- Create a Directory Object
+CREATE DIRECTORY backup_dir AS '/path/to/backup/directory';
+
+-- Grant Necessary Privileges
+GRANT READ, WRITE ON DIRECTORY backup_dir TO username;
+
+-- Run Data Pump Export for DDL
+expdp username/password@database DIRECTORY=backup_dir DUMPFILE=ddl_backup.dmp LOGFILE=ddl_backup.log SCHEMAS=schema_name CONTENT=METADATA_ONLY
+
+-- Run Data Pump Export for DML
+expdp username/password@database DIRECTORY=backup_dir DUMPFILE=dml_backup.dmp LOGFILE=dml_backup.log TABLES=table_name CONTENT=DATA_ONLY
