@@ -36,6 +36,12 @@ foreach ($repoFolder in $repoFolders) {
     # Extract repository name from the folder
     $repoName = $repoFolder.Name
 
+    # Check if the folder is a Git repository
+    if (-not (Test-Path (Join-Path $REPO_PATH ".git"))) {
+        Write-Host "Skipping non-Git repository: $repoName"
+        continue
+    }
+
     # Get latest updates for the repository
     Write-Host "Updating repository $repoName..."
     git pull
