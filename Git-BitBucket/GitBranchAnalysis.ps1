@@ -24,7 +24,8 @@ function GetBranchesWithNoCommits() {
 function GetMergedFeatureBranches() {
     git branch -r --merged release/ | Select-String -Pattern '^  origin/(.*)$' | ForEach-Object {
         $branch = $_.Matches[0].Groups[1].Value
-        if ((git log -n 1 --format="%at" $branch 2>$null) -lt (Get-Date).AddMonths(-3).ToString("yyyy-MM-ddTHH:mm:ss")) {
+        $lastCommitDate = git log -n 1 --format="%at" $branch 2>$null
+        if ($lastCommitDate -and ($lastCommitDate -lt (Get-Date).AddDays(-90))) {
             $branch | Out-File -Append -FilePath $mergedFeatureBranchLog
         }
     }
@@ -52,9 +53,9 @@ Write-Host "Getting branches with no commits..."
 GetBranchesWithNoCommits
 Write-Host "Branches with no commits logged to: $branchNoCommitLog"
 
-# Get merged feature branches older than 3 months
-Write-Host "Getting merged feature branches older than 3 months..."
+# Get merged feature branches older than 90 days
+Write-Host "Getting merged feature branches older than 90 days..."
 GetMergedFeatureBranches
-Write-Host "Merged feature branches older than 3 months logged to: $mergedFeatureBranchLog"
+Write-Host "Merged feature branches older than 90 days logged to: $mergedFeatureBranchLog"
 
 Write-Host "Process completed. Check $branchNoCommitLog and $mergedFeatureBranchLog for the results."
