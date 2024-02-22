@@ -4,16 +4,28 @@ param (
 )
 
 function GetBranchesWithNoCommits($repoName) {
-    git for-each-ref --format '%(refname:short)' refs/heads/ | ForEach-Object {
-        if (git rev-list --count $_ 2>$null -eq 0) {
-            $_ | Out-File -Append -FilePath "$branchNoCommitLog-$repoName"
+    $branches = git for-each-ref --format '%(refname:short)' refs/heads/
+    if ($branches -eq $null) {
+        Write-Host "No branches found in $repoName."
+        return
+    }
+
+    foreach ($branch in $branches) {
+        if (git rev-list --count $branch 2>$null -eq 0) {
+            $branch | Out-File -Append -FilePath "$branchNoCommitLog-$repoName"
         }
     }
 }
 
 function GetMergedFeatureBranches($repoName) {
-    git branch -r --merged release/ | Select-String -Pattern '^  origin/(.*)$' | ForEach-Object {
-        $branch = $_.Matches[0].Groups[1].Value
+    $mergedBranches = git branch -r --merged release/ | Select-String -Pattern '^  origin/(.*)$'
+    if ($mergedBranches -eq $null) {
+        Write-Host "No merged branches found in $repoName."
+        return
+    }
+
+    foreach ($branchMatch in $mergedBranches.Matches) {
+        $branch = $branchMatch.Groups[1].Value
         $lastCommitDate = git log -n 1 --format="%at" $branch 2>$null
         if ($lastCommitDate -and ($lastCommitDate -lt (Get-Date).AddDays(-90))) {
             $branch | Out-File -Append -FilePath "$mergedFeatureBranchLog-$repoName"
@@ -33,14 +45,14 @@ foreach ($repoFolder in $repoFolders) {
     $REPO_PATH = Join-Path $ROOT_PATH $repoFolder.Name
     Set-Location $REPO_PATH
 
-    # Extract repository name from the folder
-    $repoName = $repoFolder.Name
-
-    # Check if the folder is a Git repository
+    # Check if it's a Git repository
     if (-not (Test-Path (Join-Path $REPO_PATH ".git"))) {
-        Write-Host "Skipping non-Git repository: $repoName"
+        Write-Host "Skipping $repoFolder.Name - Not a Git repository."
         continue
     }
+
+    # Extract repository name from the folder
+    $repoName = $repoFolder.Name
 
     # Get latest updates for the repository
     Write-Host "Updating repository $repoName..."
