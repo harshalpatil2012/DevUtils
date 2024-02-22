@@ -1,17 +1,7 @@
 param (
-    [string[]]$REPO_URLS = @("https://bitbucket.org/yourusername/repo1.git", "https://bitbucket.org/yourusername/repo2.git"),
+    [string]$ROOT_PATH = "C:\path\to\root\folder",
     [string]$LOG_PATH = "C:\logs"
 )
-
-function CloneRepository($repoUrl, $repoPath) {
-    try {
-        git clone $repoUrl $repoPath
-        return $true
-    } catch {
-        Write-Host "Error cloning repository: $_"
-        return $false
-    }
-}
 
 function GetBranchesWithNoCommits($repoName) {
     git for-each-ref --format '%(refname:short)' refs/heads/ | ForEach-Object {
@@ -31,26 +21,24 @@ function GetMergedFeatureBranches($repoName) {
     }
 }
 
-foreach ($repoUrl in $REPO_URLS) {
-    # Extract repository name from the URL
-    $repoName = ($repoUrl -split '/')[3]
+# Set log file paths
+$branchNoCommitLog = Join-Path $LOG_PATH "branchwithnocommit.log"
+$mergedFeatureBranchLog = Join-Path $LOG_PATH "mergedfeaturebranches.log"
 
-    # Set log file paths
-    $branchNoCommitLog = Join-Path $LOG_PATH "branchwithnocommit.log"
-    $mergedFeatureBranchLog = Join-Path $LOG_PATH "mergedfeaturebranches.log"
+# Get a list of child folders (repositories) within the root folder
+$repoFolders = Get-ChildItem -Path $ROOT_PATH -Directory
 
-    # Clone the repository
-    $REPO_PATH = Join-Path $env:TEMP $repoName
-    if (-not (Test-Path $REPO_PATH)) {
-        Write-Host "Cloning the repository $repoName..."
-        if (-not (CloneRepository $repoUrl $REPO_PATH)) {
-            Write-Host "Error cloning repository $repoName. Skipping to the next repository."
-            continue
-        }
-    }
-
-    # Navigate to the repository directory
+foreach ($repoFolder in $repoFolders) {
+    # Set the current repository path
+    $REPO_PATH = Join-Path $ROOT_PATH $repoFolder.Name
     Set-Location $REPO_PATH
+
+    # Extract repository name from the folder
+    $repoName = $repoFolder.Name
+
+    # Get latest updates for the repository
+    Write-Host "Updating repository $repoName..."
+    git pull
 
     # Get branches with no commits
     Write-Host "Getting branches with no commits for $repoName..."
