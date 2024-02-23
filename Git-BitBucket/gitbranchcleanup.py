@@ -33,12 +33,12 @@ def find_branches_no_commit(repo_dir):
         return  # Error running Git commands
 
     for line in lines:
-        logging.debug(f"Processing line: {line}")  # Log the raw line
+        logging.debug(f"Processing line: {line}") 
         try:
-            branch_name, creation_date = line.split(" ")
-            days_old = int(creation_date.split(" ")[0])
+            branch_name, message, *rest = line.split()  
+            days_old = calculate_days_old(message)
 
-            if days_old > cutoff_days_no_commit:
+            if days_old and days_old > cutoff_days_no_commit:  # Check if days_old is valid
                 count_output = subprocess.check_output(
                     ["git", "rev-list", "-1", "--count", branch_name], cwd=repo_dir
                 )
@@ -47,11 +47,25 @@ def find_branches_no_commit(repo_dir):
                         f.write(branch_name + "\n")
 
         except ValueError:
-            logging.warning(f"Error splitting line: {line}. Skipping...")
+            logging.warning(f"Error processing line: {line}. Skipping...")
 
 def find_merged_branches(repo_dir):
     """Finds merged feature branches"""
     # ... (Implementation remains the same)
+
+def calculate_days_old(message):
+    """Calculates days old from messages in various formats."""
+    for part in message.split():
+        if part.isdigit():
+            number = int(part)
+        elif part.endswith('day') or part.endswith('days'):
+            return number 
+        elif part.endswith('month') or part.endswith('months'):
+            return number * 30  
+        elif part.endswith('hour') or part.endswith('hours'):
+            return number / 24  
+
+    return None  # No valid time unit found
 
 # Main Execution
 for dirpath, dirnames, filenames in os.walk(root_folder):
