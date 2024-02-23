@@ -3,6 +3,7 @@ import subprocess
 import datetime
 
 # Settings
+root_folder = "/path/to/your/root/folder"  # Replace with your desired root folder
 log_dir = "./logs"
 cutoff_days_no_commit = 90
 cutoff_days_merged = 365
@@ -68,14 +69,7 @@ def find_merged_branches(repo_dir):
                 f.write(branch_name + "\n")
 
 # Main Execution
-repo_folders = [
-    "/path/to/repo1",
-    "/path/to/repo2" 
-]  # Replace with your repo paths
-
-for repo in repo_folders:
-    if is_git_repo(repo):
-        find_branches_no_commit(repo)
-        find_merged_branches(repo)
-    else:
-        print(f"Skipping {repo}: Not a Git repository")
+for dirpath, dirnames, filenames in os.walk(root_folder):
+    if is_git_repo(dirpath):
+        find_branches_no_commit(dirpath)
+        find_merged_branches(dirpath)
