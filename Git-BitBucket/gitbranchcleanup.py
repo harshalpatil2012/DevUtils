@@ -14,7 +14,9 @@ def get_repo_branches_with_no_commits(repo_path):
 
     for branch in repo.remote().refs: 
         if branch.name != 'origin/master':  # Exclude 'origin/master'
-            if not repo.is_ancestor(branch.commit, "origin/master"):
+            origin_branch = branch.remote_head  # Determine origin/HEAD 
+
+            if not repo.is_ancestor(branch.commit, origin_branch):
                 branches_with_no_commits.append(branch.name)
 
     return branches_with_no_commits
@@ -29,7 +31,7 @@ def get_repo_merged_feature_branches(repo_path):
                 for feature_branch in repo.branches:
                     if 'feature/' in feature_branch.name and commit in feature_branch.iter_commits():
                         merged_feature_branches.append(feature_branch.name)
-                        break
+                        break  # No need to check other parents once merged branch is found
 
     return merged_feature_branches
 
