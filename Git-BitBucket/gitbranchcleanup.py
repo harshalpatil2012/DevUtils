@@ -37,13 +37,15 @@ def write_to_file(file_path, data):
 def update_repository(repo_path):
     repo = Repo(repo_path)
     try:
+        print(f"Updating repository: {os.path.basename(repo_path)}")
         repo.remotes.origin.fetch()  # Git fetch operation to get updated remote branches
-        repo.remotes.origin.pull()  # Git pull operation
+        repo.remotes.origin.pull()   # Git pull operation
+        print(f"Update for repository {os.path.basename(repo_path)} complete.")
     except Exception as e:
         logging.error(f"Error updating Git repo at {repo_path}: {e}")
 
 def main():
-    log_file = os.path.join(LOG_FOLDER, 'script_log.log')  # Update the log file path
+    log_file = r'C:\logs\script_log.log'
     logging.basicConfig(filename=log_file, level=logging.ERROR, format='%(asctime)s - %(levelname)s: %(message)s')
 
     for repo_folder in os.listdir(CODEBASE_PATH):
@@ -51,7 +53,8 @@ def main():
 
         if os.path.isdir(repo_path):
             try:
-                update_repository(repo_path)  # Update the repository before analysis
+                print(f"Processing repository: {repo_folder}")
+                update_repository(repo_path)
 
                 repo = Repo(repo_path)
             except Exception as e:
@@ -69,6 +72,9 @@ def main():
             # Writing logs to files
             write_to_file(os.path.join(LOG_FOLDER, f'{repo_folder}_branchwithnocommit.logs'), old_branches_no_commits)
             write_to_file(os.path.join(LOG_FOLDER, f'{repo_folder}_mergedfeaturebranches.logs'), old_merged_feature_branches)
+
+            print(f"Processing for repository {repo_folder} complete.")
+            print("--------------------------------------------------")
 
 if __name__ == "__main__":
     main()
