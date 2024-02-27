@@ -4,20 +4,18 @@ import logging
 from git import Repo
 import time
 
-LOG_FOLDER = 'C:\\logs'
-CODEBASE_PATH = 'C:\\codebase'
+# *** Configuration ***
+LOG_FOLDER = 'C:\\logs'  # Customize if needed
+CODEBASE_PATH = 'C:\\codebase'  # Update with the path to the folder containing your Git repositories
 
 def get_repo_branches_with_no_commits(repo_path):
     repo = Repo(repo_path)
     branches_with_no_commits = []
 
-    for branch in repo.remote().refs:
-        try:
-            if branch.name != 'origin/master' and not branch.commit:
+    for branch in repo.remote().refs: 
+        if branch.name != 'origin/master':  # Exclude 'origin/master'
+            if not repo.is_ancestor(branch.commit, "origin/master"):
                 branches_with_no_commits.append(branch.name)
-        except Exception as e:
-            logging.error(f"Error checking branch {branch.name} in repo at {repo_path}: {e}")
-            print(f"Error checking branch {branch.name} in repo at {repo_path}: {e}")
 
     return branches_with_no_commits
 
@@ -28,14 +26,10 @@ def get_repo_merged_feature_branches(repo_path):
     for release_branch in repo.branches:
         if 'release/' in release_branch.name:
             for commit in repo.iter_commits(release_branch):
-                for parent in commit.parents:
-                    for feature_branch in repo.branches:
-                        try:
-                            if 'feature/' in feature_branch.name and feature_branch.commit == parent:
-                                merged_feature_branches.append(feature_branch.name)
-                        except Exception as e:
-                            logging.error(f"Error checking feature branch {feature_branch.name} in repo at {repo_path}: {e}")
-                            print(f"Error checking feature branch {feature_branch.name} in repo at {repo_path}: {e}")
+                for feature_branch in repo.branches:
+                    if 'feature/' in feature_branch.name and commit in feature_branch.iter_commits():
+                        merged_feature_branches.append(feature_branch.name)
+                        break
 
     return merged_feature_branches
 
@@ -47,9 +41,9 @@ def update_repository(repo_path):
     repo = Repo(repo_path)
     try:
         print(f"Updating repository: {os.path.basename(repo_path)}")
-        repo.remotes.origin.fetch()  # Git fetch operation to get updated remote branches
-        time.sleep(1)  # Introduce a delay to avoid potential conflicts
-        repo.remotes.origin.pull()   # Git pull operation
+        repo.remotes.origin.fetch()  
+        time.sleep(1)  
+        repo.remotes.origin.pull()  
         print(f"Update for repository {os.path.basename(repo_path)} complete.")
     except git.exc.GitCommandError as e:
         if 'cannot lock ref' in str(e):
@@ -77,19 +71,20 @@ def main():
                 continue
 
             branches_with_no_commits = get_repo_branches_with_no_commits(repo_path)
+            print(f"Branches with no commits in {repo_folder}: {branches_with_no_commits}")
+
+            # Age calculation for branches with no commits
             old_branches_no_commits = [branch for branch in branches_with_no_commits if
                                        (datetime.datetime.now(datetime.timezone.utc) - repo.branches[branch].commit.committed_datetime).days > 60]
 
             merged_feature_branches = get_repo_merged_feature_branches(repo_path)
+            print(f"Merged feature branches in {repo_folder}: {merged_feature_branches}")
+
+            # Age calculation for merged feature branches
             old_merged_feature_branches = [branch for branch in merged_feature_branches if
                                            (datetime.datetime.now(datetime.timezone.utc) - repo.branches[branch].commit.committed_datetime).days > 365]
 
-            # Writing logs to files
-            write_to_file(os.path.join(LOG_FOLDER, f'{repo_folder}_branchwithnocommit.logs'), old_branches_no_commits)
-            write_to_file(os.path.join(LOG_FOLDER, f'{repo_folder}_mergedfeaturebranches.logs'), old_merged_feature_branches)
-
-            print(f"Processing for repository {repo_folder} complete.")
-            print("--------------------------------------------------")
+            # ... (rest of your code) 
 
 if __name__ == "__main__":
     main()
