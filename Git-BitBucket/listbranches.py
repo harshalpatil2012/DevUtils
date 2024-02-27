@@ -1,6 +1,10 @@
 import requests
 import json
 import subprocess
+import logging
+
+# Set up logging
+logging.basicConfig(filename='project_repo_data.log', level=logging.INFO, format='%(asctime)s - %(levelname)s: %(message)s')
 
 # Bitbucket Server API Details
 stash_url = "https://your-stash-instance.com"
@@ -9,9 +13,6 @@ password = "your_stash_password"
 
 # Specific Project
 project_key = "DS"
-
-# Log File
-log_file = "project_repo_data.log"
 
 # Function to fetch branches with pagination
 def fetch_branches(repo_url):
@@ -32,6 +33,7 @@ def fetch_branches(repo_url):
             else:
                 start += limit
         else:
+            logging.error(f"Error fetching branches for repo: {repo_url}")
             break  # Exit loop on error
 
     return branches
@@ -43,31 +45,47 @@ repos_response = requests.get(repos_endpoint, auth=(username, password), verify=
 if repos_response.status_code == 200:
     repos = repos_response.json()['values']
 
-    with open(log_file, 'a') as f:  # Open log file in append mode
-        project_total_branches = 0
+    for repo in repos:
+        repo_name = repo['slug']
+        logging.info(f"\n--- Repository: {repo_name} ---")  # Log to file
+        print(f"\n--- Repository: {repo_name} ---")  # Print to console
 
-        for repo in repos:
-            repo_name = repo['slug']
-            f.write(f"\n--- Repository: {repo_name} ---\n")  # Section header
-
-            # Check if the repo URL uses ssh: scheme
-            if repo['links']['clone'][0]['name'] == 'ssh':
-                # Use git command for SSH-based Git operations
-                repo_url = repo['links']['clone'][0]['href']
-                branches = subprocess.run(['git', 'ls-remote', '--heads', repo_url], capture_output=True, text=True)
-                branches = branches.stdout.split('\n')
-            else:
-                # Get total remote branches for the repo using HTTPS-based URL
-                repo_url = f"{stash_url}/scm/{project_key}/{repo_name}.git"
+        # Check if the repo URL uses ssh: scheme
+        if repo['links']['clone'][0]['name'] == 'ssh':
+            # Use git command for SSH-based Git operations
+            repo_url = repo['links']['clone'][0]['href']
+            try:
+                branches_process = subprocess.Popen(['git', 'ls-remote', '--heads', repo_url], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+                branches_output, branches_error = branches_process.communicate()
+                if branches_process.returncode == 0:
+                    branches = branches_output.split('\n')
+                    print(f"Git Process Output:\n{branches_output}")
+                else:
+                    logging.error(f"Git command failed for repo {repo_url}. Error: {branches_error}")
+                    print(f"Git command failed for repo {repo_url}. Error: {branches_error}")
+                    continue
+            except Exception as e:
+                logging.error(f"Error executing git command for repo {repo_url}: {str(e)}")
+                print(f"Error executing git command for repo {repo_url}: {str(e)}")
+                continue
+        else:
+            # Get total remote branches for the repo using HTTPS-based URL
+            repo_url = f"{stash_url}/scm/{project_key}/{repo_name}.git"
+            try:
                 branches = fetch_branches(repo_url)
+            except requests.RequestException as e:
+                logging.error(f"Error fetching branches for repo {repo_url}: {str(e)}")
+                print(f"Error fetching branches for repo {repo_url}: {str(e)}")
+                continue
 
-            total_branches = len(branches)
-            project_total_branches += total_branches
+        total_branches = len(branches)
+        logging.info(f"Total branches: {total_branches}")  # Log to file
+        print(f"Total branches: {total_branches}")  # Print to console
 
-            f.write(f"Total branches: {total_branches}\n")
-
-        # Log the total branches for the project
-        f.write(f"\n--- Project Total Branches: {project_total_branches} ---\n")
+    # Log the total branches for the project
+    logging.info(f"\n--- Project Total Branches: {total_branches} ---")
+    print(f"\n--- Project Total Branches: {total_branches} ---")
 
 else:
+    logging.error(f"Error fetching repos for project: {project_key}")
     print(f"Error fetching repos for project: {project_key}")
