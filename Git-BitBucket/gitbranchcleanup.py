@@ -37,16 +37,17 @@ def write_to_file(file_path, data):
 def update_repository(repo_path):
     repo = Repo(repo_path)
     try:
+        repo.remotes.origin.fetch()  # Git fetch operation to get updated remote branches
         repo.remotes.origin.pull()  # Git pull operation
     except Exception as e:
         logging.error(f"Error updating Git repo at {repo_path}: {e}")
 
-def main(base_folder):
+def main():
     log_file = os.path.join(LOG_FOLDER, 'script_log.log')  # Update the log file path
     logging.basicConfig(filename=log_file, level=logging.ERROR, format='%(asctime)s - %(levelname)s: %(message)s')
 
-    for repo_folder in os.listdir(base_folder):
-        repo_path = os.path.join(base_folder, repo_folder)
+    for repo_folder in os.listdir(CODEBASE_PATH):
+        repo_path = os.path.join(CODEBASE_PATH, repo_folder)
 
         if os.path.isdir(repo_path):
             try:
@@ -70,5 +71,4 @@ def main(base_folder):
             write_to_file(os.path.join(LOG_FOLDER, f'{repo_folder}_mergedfeaturebranches.logs'), old_merged_feature_branches)
 
 if __name__ == "__main__":
-    base_folder = os.path.join(CODEBASE_PATH, input("Enter the relative base folder path: "))
-    main(base_folder)
+    main()
