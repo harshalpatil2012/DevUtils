@@ -14,10 +14,13 @@ def get_repo_branches_with_no_commits(repo_path):
 
     for branch in repo.remote().refs: 
         if branch.name != 'origin/master':  # Exclude 'origin/master'
-            origin_branch = branch.remote_head  # Determine origin/HEAD 
+            origin_branch = branch.remote_head  
 
-            if not repo.is_ancestor(branch.commit, origin_branch):
-                branches_with_no_commits.append(branch.name)
+            try:
+                if not repo.is_ancestor(branch.commit, origin_branch):
+                    branches_with_no_commits.append(branch.name)
+            except git.exc.GitCommandError as e:
+                logging.error(f"Error in is_ancestor for branch: {branch.name}, origin: {origin_branch}, error: {e}")
 
     return branches_with_no_commits
 
@@ -31,7 +34,7 @@ def get_repo_merged_feature_branches(repo_path):
                 for feature_branch in repo.branches:
                     if 'feature/' in feature_branch.name and commit in feature_branch.iter_commits():
                         merged_feature_branches.append(feature_branch.name)
-                        break  # No need to check other parents once merged branch is found
+                        break  
 
     return merged_feature_branches
 
@@ -81,10 +84,6 @@ def main():
 
             merged_feature_branches = get_repo_merged_feature_branches(repo_path)
             print(f"Merged feature branches in {repo_folder}: {merged_feature_branches}")
-
-            # Age calculation for merged feature branches
-            old_merged_feature_branches = [branch for branch in merged_feature_branches if
-                                           (datetime.datetime.now(datetime.timezone.utc) - repo.branches[branch].commit.committed_datetime).days > 365]
 
             # ... (rest of your code) 
 
