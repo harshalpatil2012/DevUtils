@@ -1,74 +1,62 @@
 import os
-import subprocess
 import datetime
 import logging
+from git import Repo
 
-# Settings
-root_folder = os.path.join(".", "path", "to", "your", "root", "folder")  
-log_dir = os.path.join(".", "logs")
-cutoff_days_no_commit = 90
-cutoff_days_merged = 365
+def get_repo_branches_with_no_commits(repo_path):
+    repo = Repo(repo_path)
+    branches_with_no_commits = []
 
-# Create log directory if it doesn't exist
-os.makedirs(log_dir, exist_ok=True)
+    for branch in repo.remote().refs:
+        if branch.name != 'origin/master' and not branch.commit:
+            branches_with_no_commits.append(branch.name)
 
-# Configure logging
-logging.basicConfig(level=logging.DEBUG)
+    return branches_with_no_commits
 
-def is_git_repo(repo_dir):
-    """Checks if a folder is a Git repository"""
-    return os.path.exists(os.path.join(repo_dir, ".git"))
+def get_repo_merged_feature_branches(repo_path):
+    repo = Repo(repo_path)
+    merged_feature_branches = []
 
-def find_branches_no_commit(repo_dir):
-    """Finds branches with no commits other than the initial commit"""
-    repo_name = os.path.basename(repo_dir)
+    for release_branch in repo.branches:
+        if 'release/' in release_branch.name:
+            for commit in repo.iter_commits(release_branch):
+                for parent in commit.parents:
+                    for feature_branch in repo.branches:
+                        if 'feature/' in feature_branch.name and feature_branch.commit == parent:
+                            merged_feature_branches.append(feature_branch.name)
 
-    try:
-        output = subprocess.check_output(
-            ["git", "for-each-ref", "--format=%(refname:short) %(creatordate:relative)", "refs/heads/"],
-            cwd=repo_dir
-        )
-        lines = output.decode().splitlines()
-    except subprocess.CalledProcessError:
-        return  # Error running Git commands
+    return merged_feature_branches
 
-    for line in lines:
-        logging.debug(f"Processing line: {line}") 
-        try:
-            branch_name, message, *rest = line.split()  
-            days_old = calculate_days_old(message)
+def write_to_file(file_path, data):
+    with open(file_path, 'w') as file:
+        file.write('\n'.join(data))
 
-            if days_old and days_old > cutoff_days_no_commit:  # Check if days_old is valid
-                count_output = subprocess.check_output(
-                    ["git", "rev-list", "-1", "--count", branch_name], cwd=repo_dir
-                )
-                if count_output.strip() == b'1':  # Only one commit (the initial)
-                    with open(os.path.join(log_dir, f"{repo_name}_branchwithnocommit.log"), "a") as f:
-                        f.write(branch_name + "\n")
+def main(base_folder):
+    log_file = os.path.join('C:\\logs', 'script_log.log')  # Update the log file path
+    logging.basicConfig(filename=log_file, level=logging.ERROR, format='%(asctime)s - %(levelname)s: %(message)s')
 
-        except ValueError:
-            logging.warning(f"Error processing line: {line}. Skipping...")
+    for repo_folder in os.listdir(base_folder):
+        repo_path = os.path.join(base_folder, repo_folder)
 
-def find_merged_branches(repo_dir):
-    """Finds merged feature branches"""
-    # ... (Implementation remains the same)
+        if os.path.isdir(repo_path):
+            try:
+                repo = Repo(repo_path)
+            except Exception as e:
+                logging.error(f"Error accessing Git repo at {repo_path}: {e}")
+                continue
 
-def calculate_days_old(message):
-    """Calculates days old from messages in various formats."""
-    for part in message.split():
-        if part.isdigit():
-            number = int(part)
-        elif part.endswith('day') or part.endswith('days'):
-            return number 
-        elif part.endswith('month') or part.endswith('months'):
-            return number * 30  
-        elif part.endswith('hour') or part.endswith('hours'):
-            return number / 24  
+            branches_with_no_commits = get_repo_branches_with_no_commits(repo_path)
+            old_branches_no_commits = [branch for branch in branches_with_no_commits if
+                                       (datetime.datetime.now() - repo.branches[branch].commit.committed_datetime).days > 60]
 
-    return None  # No valid time unit found
+            merged_feature_branches = get_repo_merged_feature_branches(repo_path)
+            old_merged_feature_branches = [branch for branch in merged_feature_branches if
+                                           (datetime.datetime.now() - repo.branches[branch].commit.committed_datetime).days > 365]
 
-# Main Execution
-for dirpath, dirnames, filenames in os.walk(root_folder):
-    if is_git_repo(dirpath):
-        find_branches_no_commit(dirpath)
-        find_merged_branches(dirpath)
+            # Writing logs to files
+            write_to_file(os.path.join('C:\\logs', f'{repo_folder}_branchwithnocommit.logs'), old_branches_no_commits)
+            write_to_file(os.path.join('C:\\logs', f'{repo_folder}_mergedfeaturebranches.logs'), old_merged_feature_branches)
+
+if __name__ == "__main__":
+    base_folder = input("Enter the base folder path: ")
+    main(base_folder)
