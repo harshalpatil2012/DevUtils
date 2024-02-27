@@ -17,6 +17,7 @@ def get_repo_branches_with_no_commits(repo_path):
                 branches_with_no_commits.append(branch.name)
         except Exception as e:
             logging.error(f"Error checking branch {branch.name} in repo at {repo_path}: {e}")
+            print(f"Error checking branch {branch.name} in repo at {repo_path}: {e}")
 
     return branches_with_no_commits
 
@@ -34,6 +35,7 @@ def get_repo_merged_feature_branches(repo_path):
                                 merged_feature_branches.append(feature_branch.name)
                         except Exception as e:
                             logging.error(f"Error checking feature branch {feature_branch.name} in repo at {repo_path}: {e}")
+                            print(f"Error checking feature branch {feature_branch.name} in repo at {repo_path}: {e}")
 
     return merged_feature_branches
 
@@ -54,6 +56,7 @@ def update_repository(repo_path):
             logging.warning(f"Cannot lock ref in Git repo at {repo_path}. Skipping update for now.")
         else:
             logging.error(f"Error updating Git repo at {repo_path}: {e}")
+            print(f"Error updating Git repo at {repo_path}: {e}")
 
 def main():
     log_file = r'C:\logs\script_log.log'
@@ -70,15 +73,16 @@ def main():
                 repo = Repo(repo_path)
             except Exception as e:
                 logging.error(f"Error accessing Git repo at {repo_path}: {e}")
+                print(f"Error accessing Git repo at {repo_path}: {e}")
                 continue
 
             branches_with_no_commits = get_repo_branches_with_no_commits(repo_path)
             old_branches_no_commits = [branch for branch in branches_with_no_commits if
-                                       (datetime.datetime.now() - repo.branches[branch].commit.committed_datetime).days > 60]
+                                       (datetime.datetime.now(datetime.timezone.utc) - repo.branches[branch].commit.committed_datetime).days > 60]
 
             merged_feature_branches = get_repo_merged_feature_branches(repo_path)
             old_merged_feature_branches = [branch for branch in merged_feature_branches if
-                                           (datetime.datetime.now() - repo.branches[branch].commit.committed_datetime).days > 365]
+                                           (datetime.datetime.now(datetime.timezone.utc) - repo.branches[branch].commit.committed_datetime).days > 365]
 
             # Writing logs to files
             write_to_file(os.path.join(LOG_FOLDER, f'{repo_folder}_branchwithnocommit.logs'), old_branches_no_commits)
