@@ -15,7 +15,7 @@ log_file = "project_repo_data.log"
 
 # Get repos for the project
 repos_endpoint = f"{stash_url}/projects/{project_key}/repos"
-repos_response = requests.get(repos_endpoint, auth=(username, password))
+repos_response = requests.get(repos_endpoint, auth=(username, password), verify=False)
 
 if repos_response.status_code == 200:
     repos = repos_response.json()['values']
@@ -26,9 +26,9 @@ if repos_response.status_code == 200:
             f.write(f"\n--- Repository: {repo_name} ---\n")  # Section header
 
             # Get branches (using Git command in the repo directory)
-            os.chdir('/path/to/your/local/repos')
-            branches_output = os.popen(f'git -C {repo_name} branch | wc -l').read()
-            total_branches = branches_output.strip()
+            os.chdir('C:\\repo')
+            branches_output = os.popen(f'git -C {repo_name} branch').read()
+            total_branches = len([line for line in branches_output.split('\n') if line.strip() != ''])
 
             f.write(f"Total branches: {total_branches}\n")
 
