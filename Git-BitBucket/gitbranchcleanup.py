@@ -4,6 +4,7 @@ import logging
 from git import Repo
 
 LOG_FOLDER = 'C:\\logs'
+CODEBASE_PATH = 'C:\\codebase'
 
 def get_repo_branches_with_no_commits(repo_path):
     repo = Repo(repo_path)
@@ -69,5 +70,5 @@ def main(base_folder):
             write_to_file(os.path.join(LOG_FOLDER, f'{repo_folder}_mergedfeaturebranches.logs'), old_merged_feature_branches)
 
 if __name__ == "__main__":
-    base_folder = input("Enter the base folder path: ")
+    base_folder = os.path.join(CODEBASE_PATH, input("Enter the relative base folder path: "))
     main(base_folder)
