@@ -12,8 +12,11 @@ def get_repo_branches_with_no_commits(repo_path):
     branches_with_no_commits = []
 
     for branch in repo.remote().refs:
-        if branch.name != 'origin/master' and not branch.commit:
-            branches_with_no_commits.append(branch.name)
+        try:
+            if branch.name != 'origin/master' and not branch.commit:
+                branches_with_no_commits.append(branch.name)
+        except Exception as e:
+            logging.error(f"Error checking branch {branch.name} in repo at {repo_path}: {e}")
 
     return branches_with_no_commits
 
@@ -26,8 +29,11 @@ def get_repo_merged_feature_branches(repo_path):
             for commit in repo.iter_commits(release_branch):
                 for parent in commit.parents:
                     for feature_branch in repo.branches:
-                        if 'feature/' in feature_branch.name and feature_branch.commit == parent:
-                            merged_feature_branches.append(feature_branch.name)
+                        try:
+                            if 'feature/' in feature_branch.name and feature_branch.commit == parent:
+                                merged_feature_branches.append(feature_branch.name)
+                        except Exception as e:
+                            logging.error(f"Error checking feature branch {feature_branch.name} in repo at {repo_path}: {e}")
 
     return merged_feature_branches
 
