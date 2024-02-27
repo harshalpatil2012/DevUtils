@@ -2,6 +2,7 @@ import os
 import datetime
 import logging
 from git import Repo
+import time
 
 LOG_FOLDER = 'C:\\logs'
 CODEBASE_PATH = 'C:\\codebase'
@@ -39,10 +40,14 @@ def update_repository(repo_path):
     try:
         print(f"Updating repository: {os.path.basename(repo_path)}")
         repo.remotes.origin.fetch()  # Git fetch operation to get updated remote branches
+        time.sleep(1)  # Introduce a delay to avoid potential conflicts
         repo.remotes.origin.pull()   # Git pull operation
         print(f"Update for repository {os.path.basename(repo_path)} complete.")
-    except Exception as e:
-        logging.error(f"Error updating Git repo at {repo_path}: {e}")
+    except git.exc.GitCommandError as e:
+        if 'cannot lock ref' in str(e):
+            logging.warning(f"Cannot lock ref in Git repo at {repo_path}. Skipping update for now.")
+        else:
+            logging.error(f"Error updating Git repo at {repo_path}: {e}")
 
 def main():
     log_file = r'C:\logs\script_log.log'
