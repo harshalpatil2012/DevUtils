@@ -1,9 +1,14 @@
 import requests
 import os
 
-def get_bitbucket_repositories(project_url, project_key):
-    api_url = f"{project_url.rstrip('/')}/rest/api/1.0/projects/{project_key}/repos"
-    response = requests.get(api_url)
+# Bitbucket Server API Details
+stash_url = "https://your-stash-instance.com"
+username = "your_stash_username"
+password = "your_stash_password"
+
+def get_bitbucket_repositories():
+    api_url = f"{stash_url.rstrip('/')}/rest/api/1.0/projects/{project_key}/repos"
+    response = requests.get(api_url, auth=(username, password), verify=False)
     
     if response.status_code == 200:
         return response.json()["values"]
@@ -19,24 +24,20 @@ def write_log(repository_slug, branches_without_commits):
             log_file.write(branch + "\n")
     print(f"Log file created for repository {repository_slug}: {log_file_path}")
 
-def get_branches_without_commits(project_url, project_key, repository_slug):
-    branches = get_bitbucket_branches(project_url, project_key, repository_slug)
+def get_branch_commits(repository_slug, branch_name):
+    commits_endpoint = f"{stash_url.rstrip('/')}/rest/api/1.0/projects/{project_key}/repos/{repository_slug}/commits"
+    params = {'until': branch_name}
+    response = requests.get(commits_endpoint, params=params, auth=(username, password), verify=False)
 
-    if branches:
-        branches_without_commits = []
+    if response.status_code == 200:
+        return response.json()["values"]
+    else:
+        print(f"Failed to fetch commits. Status Code: {response.status_code}, Error: {response.text}")
+        return None
 
-        for branch in branches:
-            branch_name = branch["displayId"]
-            commits = get_branch_commits(project_url, project_key, repository_slug, branch_name)
-
-            if not commits:
-                branches_without_commits.append(branch_name)
-
-        return branches_without_commits
-
-def get_bitbucket_branches(project_url, project_key, repository_slug):
-    api_url = f"{project_url.rstrip('/')}/rest/api/1.0/projects/{project_key}/repos/{repository_slug}/branches"
-    response = requests.get(api_url)
+def get_bitbucket_branches(repository_slug):
+    branches_endpoint = f"{stash_url.rstrip('/')}/rest/api/1.0/projects/{project_key}/repos/{repository_slug}/branches"
+    response = requests.get(branches_endpoint, auth=(username, password), verify=False)
     
     if response.status_code == 200:
         return response.json()["values"]
@@ -44,27 +45,30 @@ def get_bitbucket_branches(project_url, project_key, repository_slug):
         print(f"Failed to fetch branches. Status Code: {response.status_code}, Error: {response.text}")
         return None
 
-def get_branch_commits(project_url, project_key, repository_slug, branch_name):
-    api_url = f"{project_url.rstrip('/')}/rest/api/1.0/projects/{project_key}/repos/{repository_slug}/commits"
-    params = {'until': branch_name, 'limit': 1}
-    response = requests.get(api_url, params=params)
-    
-    if response.status_code == 200:
-        return response.json()["values"]
-    else:
-        print(f"Failed to fetch commits. Status Code: {response.status_code}, Error: {response.text}")
-        return None
+def get_branches_without_commits(repository_slug):
+    branches = get_bitbucket_branches(repository_slug)
+
+    if branches:
+        branches_without_commits = []
+
+        for branch in branches:
+            branch_name = branch["displayId"]
+            commits = get_branch_commits(repository_slug, branch_name)
+
+            if not commits:
+                branches_without_commits.append(branch_name)
+
+        return branches_without_commits
 
 if __name__ == "__main__":
-    project_url = "https://bitbucket.org/your_username/your_project"
     project_key = "YOUR_PROJECT_KEY"
 
-    repositories = get_bitbucket_repositories(project_url, project_key)
+    repositories = get_bitbucket_repositories()
 
     if repositories:
         for repo in repositories:
             repository_slug = repo["slug"]
-            result = get_branches_without_commits(project_url, project_key, repository_slug)
+            result = get_branches_without_commits(repository_slug)
 
             if result:
                 write_log(repository_slug, result)
