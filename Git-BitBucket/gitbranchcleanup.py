@@ -3,6 +3,8 @@ import datetime
 import logging
 from git import Repo
 
+LOG_FOLDER = 'C:\\logs'
+
 def get_repo_branches_with_no_commits(repo_path):
     repo = Repo(repo_path)
     branches_with_no_commits = []
@@ -31,8 +33,15 @@ def write_to_file(file_path, data):
     with open(file_path, 'w') as file:
         file.write('\n'.join(data))
 
+def update_repository(repo_path):
+    repo = Repo(repo_path)
+    try:
+        repo.remotes.origin.pull()  # Git pull operation
+    except Exception as e:
+        logging.error(f"Error updating Git repo at {repo_path}: {e}")
+
 def main(base_folder):
-    log_file = os.path.join('C:\\logs', 'script_log.log')  # Update the log file path
+    log_file = os.path.join(LOG_FOLDER, 'script_log.log')  # Update the log file path
     logging.basicConfig(filename=log_file, level=logging.ERROR, format='%(asctime)s - %(levelname)s: %(message)s')
 
     for repo_folder in os.listdir(base_folder):
@@ -40,6 +49,8 @@ def main(base_folder):
 
         if os.path.isdir(repo_path):
             try:
+                update_repository(repo_path)  # Update the repository before analysis
+
                 repo = Repo(repo_path)
             except Exception as e:
                 logging.error(f"Error accessing Git repo at {repo_path}: {e}")
@@ -54,10 +65,9 @@ def main(base_folder):
                                            (datetime.datetime.now() - repo.branches[branch].commit.committed_datetime).days > 365]
 
             # Writing logs to files
-            write_to_file(os.path.join('C:\\logs', f'{repo_folder}_branchwithnocommit.logs'), old_branches_no_commits)
-            write_to_file(os.path.join('C:\\logs', f'{repo_folder}_mergedfeaturebranches.logs'), old_merged_feature_branches)
+            write_to_file(os.path.join(LOG_FOLDER, f'{repo_folder}_branchwithnocommit.logs'), old_branches_no_commits)
+            write_to_file(os.path.join(LOG_FOLDER, f'{repo_folder}_mergedfeaturebranches.logs'), old_merged_feature_branches)
 
 if __name__ == "__main__":
     base_folder = input("Enter the base folder path: ")
     main(base_folder)
-
