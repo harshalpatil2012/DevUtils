@@ -60,3 +60,4 @@ def main(base_folder):
 if __name__ == "__main__":
     base_folder = input("Enter the base folder path: ")
     main(base_folder)
+
