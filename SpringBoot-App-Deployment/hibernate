@@ -28,6 +28,46 @@ public class OperatorDetailInfoResultTransformer implements ResultTransformer {
 }
 
 
+import java.util.concurrent.ForkJoinPool;
+import java.util.stream.Collectors;
+
+// ...
+
+private List<OperatorInfoDTO> convertToOperatorInfoDTOs(List<Object[]> results) {
+    // Your conversion logic here
+    // ...
+
+    ForkJoinPool forkJoinPool = new ForkJoinPool(Runtime.getRuntime().availableProcessors());
+
+    return forkJoinPool.submit(() ->
+            results.parallelStream().map(tuple -> {
+                OperatorInfoDTO operatorInfoDTO = new OperatorInfoDTO();
+                operatorInfoDTO.setId(tuple[0] != null ? tuple[0].toString() : null);
+                operatorInfoDTO.setStatusIndicator(tuple[1] != null ? tuple[1].toString() : null);
+                operatorInfoDTO.setProviderName(tuple[2] != null ? tuple[2].toString() : null);
+                operatorInfoDTO.setCid(tuple[3] != null ? tuple[3].toString() : null);
+                operatorInfoDTO.setIca(tuple[4] != null ? tuple[4].toString() : null);
+
+                // Conditionally set StatusCodeDescription only if not null
+                if (tuple[5] != null) {
+                    operatorInfoDTO.setStatusCodeDescription(tuple[5].toString());
+                }
+
+                // Conditionally set other fields only if not null
+                if (tuple[6] != null) {
+                    // Assuming versions is a List<VersionInfoDTO> already populated
+                    operatorInfoDTO.setVersions((List<VersionInfoDTO>) tuple[6]);
+                }
+
+                // Add conditions for other fields here
+
+                return operatorInfoDTO;
+            }).collect(Collectors.toList())
+    ).join();
+}
+
+
+
 @Query("SELECT od.id, od.statusIndicator, od.providerName, od.cid, od.ica, od.countryCode, od.statusCodeDescription, ver.version, ver.messageCategory, ver.statusIndicator " +
        "FROM OperatorDetail od LEFT JOIN od.versions ver")
 Page<OperatorDetailInfo> findAllOperatorDetailInfo(Pageable pageable, ResultTransformer transformer); 
