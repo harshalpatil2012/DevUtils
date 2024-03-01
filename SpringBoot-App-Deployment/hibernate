@@ -1,0 +1,33 @@
+import org.hibernate.transform.ResultTransformer;
+// ... other imports
+
+public class OperatorDetailInfoResultTransformer implements ResultTransformer {
+    
+    private Map<String, OperatorDetailInfo> operatorDetailInfoMap = new HashMap<>();
+
+    @Override
+    public Object transformTuple(Object[] tuple, String[] aliases) {
+        OperatorDetailInfo operatorDetailInfo = operatorDetailInfoMap.computeIfAbsent(
+                (String) tuple[0],  // Assuming the first column is the ID 
+                id -> new OperatorDetailInfo(id, (String) tuple[1], /* ... other fields... */) 
+        ); 
+
+        if (tuple[7] != null) { // Assuming the 7th column is the 'version' field 
+           operatorDetailInfo.getVersions().add(
+                   new VersionInfoDTO((String) tuple[7], (String) tuple[8], (String) tuple[9])
+           );
+        }
+
+        return operatorDetailInfo; 
+    }
+
+    @Override
+    public List transformList(List collection) {
+        return new ArrayList<>(operatorDetailInfoMap.values());
+    }
+}
+
+
+@Query("SELECT od.id, od.statusIndicator, od.providerName, od.cid, od.ica, od.countryCode, od.statusCodeDescription, ver.version, ver.messageCategory, ver.statusIndicator " +
+       "FROM OperatorDetail od LEFT JOIN od.versions ver")
+Page<OperatorDetailInfo> findAllOperatorDetailInfo(Pageable pageable, ResultTransformer transformer); 
