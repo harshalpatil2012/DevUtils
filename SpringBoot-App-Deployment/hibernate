@@ -31,3 +31,63 @@ public class OperatorDetailInfoResultTransformer implements ResultTransformer {
 @Query("SELECT od.id, od.statusIndicator, od.providerName, od.cid, od.ica, od.countryCode, od.statusCodeDescription, ver.version, ver.messageCategory, ver.statusIndicator " +
        "FROM OperatorDetail od LEFT JOIN od.versions ver")
 Page<OperatorDetailInfo> findAllOperatorDetailInfo(Pageable pageable, ResultTransformer transformer); 
+
+
+import org.springframework.stereotype.Service;
+import java.util.List;
+
+@Service
+public class OperatorService {
+
+    private final OperatorDetailRepository operatorDetailRepository;
+
+    public OperatorService(OperatorDetailRepository operatorDetailRepository) {
+        this.operatorDetailRepository = operatorDetailRepository;
+    }
+
+    public OperatorInfo getAllOperatorDetails(Pageable pageable) {
+        Page<Object[]> results = operatorDetailRepository.findAllOperatorDetailInfo(pageable);
+        List<OperatorInfoDTO> operatorInfoDTOList = convertToOperatorInfoDTOs(results.getContent());
+
+        OperatorInfo operatorInfo = new OperatorInfo();
+        operatorInfo.setCount(operatorInfoDTOList.size());
+        operatorInfo.setOffset(pageable.getPageNumber());
+        operatorInfo.setLimit(pageable.getPageSize());
+        operatorInfo.setOps(operatorInfoDTOList);
+
+        return operatorInfo;
+    }
+
+    private List<OperatorInfoDTO> convertToOperatorInfoDTOs(List<Object[]> results) {
+        // Your conversion logic here
+        // ...
+
+        // Assuming each row contains an OperatorInfoDTO and versions are already populated
+        List<OperatorInfoDTO> operatorInfoDTOList = new ArrayList<>();
+        for (Object[] tuple : results) {
+            OperatorInfoDTO operatorInfoDTO = new OperatorInfoDTO();
+            operatorInfoDTO.setId((String) tuple[0]);
+            operatorInfoDTO.setStatusIndicator((String) tuple[1]);
+            operatorInfoDTO.setProviderName((String) tuple[2]);
+            operatorInfoDTO.setCid((String) tuple[3]);
+            operatorInfoDTO.setIca((String) tuple[4]);
+            operatorInfoDTO.setStatusCodeDescription((String) tuple[5]);
+            // Assuming versions is a List<VersionInfoDTO> already populated
+            operatorInfoDTO.setVersions((List<VersionInfoDTO>) tuple[6]);
+
+            operatorInfoDTOList.add(operatorInfoDTO);
+        }
+
+        return operatorInfoDTOList;
+    }
+}
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
+public interface OperatorDetailRepository extends JpaRepository<OperatorDetail, String> {
+
+    @Query("SELECT od.id, od.statusIndicator, od.providerName, od.cid, od.ica, od.countryCode, od.statusCodeDescription, ver " +
+           "FROM OperatorDetail od LEFT JOIN FETCH od.versions ver")
+    Page<Object[]> findAllOperatorDetailInfo(Pageable pageable);
+}
