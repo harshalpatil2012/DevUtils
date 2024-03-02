@@ -28,6 +28,66 @@ public class OperatorDetailInfoResultTransformer implements ResultTransformer {
 }
 
 
+
+import java.util.concurrent.ForkJoinPool;
+import java.util.Map;
+import java.util.List;
+import java.util.stream.Collectors;
+
+// ...
+
+private List<OperatorInfoDTO> convertToOperatorInfoDTOs(List<Object[]> results) {
+    // Your conversion logic here
+    // ...
+
+    ForkJoinPool forkJoinPool = new ForkJoinPool(Runtime.getRuntime().availableProcessors());
+
+    return forkJoinPool.submit(() ->
+            results.parallelStream().collect(Collectors.groupingBy(
+                    tuple -> tuple[0] != null ? tuple[0].toString() : null,
+                    Collectors.mapping(tuple -> {
+                        OperatorInfoDTO operatorInfoDTO = new OperatorInfoDTO();
+                        operatorInfoDTO.setId(tuple[0] != null ? tuple[0].toString() : null);
+                        operatorInfoDTO.setStatusIndicator(tuple[1] != null ? tuple[1].toString() : null);
+                        operatorInfoDTO.setProviderName(tuple[2] != null ? tuple[2].toString() : null);
+                        operatorInfoDTO.setCid(tuple[3] != null ? tuple[3].toString() : null);
+                        operatorInfoDTO.setIca(tuple[4] != null ? tuple[4].toString() : null);
+
+                        // Conditionally set StatusCodeDescription only if not null
+                        if (tuple[5] != null) {
+                            operatorInfoDTO.setStatusCodeDescription(tuple[5].toString());
+                        }
+
+                        // Conditionally set other fields only if not null
+                        if (tuple[6] != null) {
+                            // Assuming versions is a List<VersionInfoDTO> already populated
+                            operatorInfoDTO.setVersions((List<VersionInfoDTO>) tuple[6]);
+                        }
+
+                        return operatorInfoDTO;
+                    }, Collectors.toList())
+            )).values().stream().map(operatorInfoDTOList -> {
+                // Merge versions for the same ID
+                OperatorInfoDTO mergedOperatorInfoDTO = new OperatorInfoDTO();
+                if (!operatorInfoDTOList.isEmpty()) {
+                    OperatorInfoDTO firstOperatorInfoDTO = operatorInfoDTOList.get(0);
+                    mergedOperatorInfoDTO.setId(firstOperatorInfoDTO.getId());
+                    mergedOperatorInfoDTO.setStatusIndicator(firstOperatorInfoDTO.getStatusIndicator());
+                    mergedOperatorInfoDTO.setProviderName(firstOperatorInfoDTO.getProviderName());
+                    mergedOperatorInfoDTO.setCid(firstOperatorInfoDTO.getCid());
+                    mergedOperatorInfoDTO.setIca(firstOperatorInfoDTO.getIca());
+                    mergedOperatorInfoDTO.setStatusCodeDescription(firstOperatorInfoDTO.getStatusCodeDescription());
+                    mergedOperatorInfoDTO.setVersions(operatorInfoDTOList.stream()
+                            .flatMap(operatorInfoDTO -> operatorInfoDTO.getVersions().stream())
+                            .collect(Collectors.toList()));
+                }
+                return mergedOperatorInfoDTO;
+            }).collect(Collectors.toList())
+    ).join();
+}
+
+
+
 import java.util.concurrent.ForkJoinPool;
 import java.util.stream.Collectors;
 
