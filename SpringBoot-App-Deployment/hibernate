@@ -27,6 +27,18 @@ public class OperatorDetailInfoResultTransformer implements ResultTransformer {
     }
 }
 
+----
+@Query(value = "SELECT id, status_indicator, provider_name, cid, ica, country_code, status_code_description, " +
+               "version, message_category, status_indicator, " +
+               "ROW_NUMBER() OVER (PARTITION BY id ORDER BY version) as rn " +
+               "FROM operator_detail od " +
+               "LEFT JOIN version_detail_record ver ON od.id = ver.oper_id " +
+               "ORDER BY id, version",
+       countQuery = "SELECT DISTINCT COUNT(id) FROM operator_detail",
+       nativeQuery = true)
+List<Object[]> findAllOperatorDetailInfo();
+
+
 
 
 
