@@ -248,28 +248,20 @@ public class YourServiceClass {
         return operatorInfoDTO;
     }
 
-    private OperatorInfoDTO mergeVersions(OperatorInfoDTO operatorInfoDTO) {
-        Map<String, VersionInfoDTO> versionInfoDTOMap = operatorInfoDTO.getVersions().stream()
-                .collect(Collectors.toMap(VersionInfoDTO::getVersion, Function.identity()));
+   private OperatorInfoDTO mergeVersions(OperatorInfoDTO operatorInfoDTO) {
+    OperatorInfoDTO mergedOperatorInfoDTO = new OperatorInfoDTO();
+    mergedOperatorInfoDTO.setId(operatorInfoDTO.getId());
+    mergedOperatorInfoDTO.setStatusIndicator(operatorInfoDTO.getStatusIndicator());
+    mergedOperatorInfoDTO.setProviderName(operatorInfoDTO.getProviderName());
+    mergedOperatorInfoDTO.setCid(operatorInfoDTO.getCid());
+    mergedOperatorInfoDTO.setIca(operatorInfoDTO.getIca());
+    mergedOperatorInfoDTO.setStatusCodeDescription(operatorInfoDTO.getStatusCodeDescription());
+    mergedOperatorInfoDTO.setVersions(
+            operatorInfoDTO.getVersions().stream()
+                    .flatMap(version -> operatorInfoDTO.getVersions().stream())
+                    .collect(Collectors.toList())
+    );
 
-        // Assuming versions is a List<VersionInfoDTO> obtained from tuples
-        List<VersionInfoDTO> mergedVersions = versions.stream()
-                .map(version -> {
-                    VersionInfoDTO existingVersion = versionInfoDTOMap.get(version.getVersion());
-
-                    // Merge logic for fields in VersionInfoDTO
-                    if (existingVersion != null) {
-                        existingVersion.setMessageCategory(version.getMessageCategory());
-                        existingVersion.setStatusIndicator(version.getStatusIndicator());
-                        // Add more fields to merge if needed
-                        return existingVersion;
-                    } else {
-                        return version;
-                    }
-                })
-                .collect(Collectors.toList());
-
-        operatorInfoDTO.setVersions(mergedVersions);
-        return operatorInfoDTO;
-    }
+    return mergedOperatorInfoDTO;
+}
 }
