@@ -39,7 +39,23 @@ server:
     enabled: true
     mime-types: application/json
     min-response-size: 10KB
-The order of dependencies in your pom.xml determines the priority of compression methods. If both Gzip and Brotli dependencies are present, the one declared first in the pom.xml will take precedence.
+The order of dependencies in your pom.xml determines the priority of compression methods. If both Gzip and Brotli dependencies are present,
+the one declared first in the pom.xml will take precedence.
+
+<dependencies>
+    <!-- Spring Boot Starter for Brotli -->
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-brotli</artifactId>
+    </dependency>
+
+    <!-- Spring Boot Starter for Gzip -->
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-tomcat</artifactId>
+    </dependency>
+</dependencies>
+
 
 Example Headers in a Gzip/Brotli -Compressed JSON Response:
 Content-Type: application/json
