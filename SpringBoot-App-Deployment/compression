@@ -40,3 +40,12 @@ server:
     mime-types: application/json
     min-response-size: 10KB
 The order of dependencies in your pom.xml determines the priority of compression methods. If both Gzip and Brotli dependencies are present, the one declared first in the pom.xml will take precedence.
+
+Example Headers in a Gzip/Brotli -Compressed JSON Response:
+Content-Type: application/json
+Content-Encoding: br
+Vary: Accept-Encoding
+
+Content-Type: application/json
+Content-Encoding: gzip
+Vary: Accept-Encoding
