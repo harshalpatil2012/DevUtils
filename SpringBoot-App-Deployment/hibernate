@@ -29,6 +29,9 @@ public class OperatorDetailInfoResultTransformer implements ResultTransformer {
 
 
 
+
+
+
 import java.util.concurrent.ForkJoinPool;
 import java.util.Map;
 import java.util.List;
@@ -265,3 +268,30 @@ public class YourServiceClass {
     return mergedOperatorInfoDTO;
 }
 }
+
+
+===
+
+private OperatorInfoDTO mergeVersions(List<OperatorInfoDTO> operatorInfoDTOs) {
+    return operatorInfoDTOs.stream()
+            .reduce(OperatorInfoDTO::merge)
+            .orElse(new OperatorInfoDTO()); // Provide a default if no elements are present
+}
+
+public OperatorInfoDTO merge(OperatorInfoDTO other) {
+        // Create a new OperatorInfoDTO with the same ID and other fields
+        OperatorInfoDTO merged = new OperatorInfoDTO();
+        merged.setId(this.id);
+        merged.setStatusIndicator(this.statusIndicator);
+        merged.setProviderName(this.providerName);
+        merged.setCid(this.cid);
+        merged.setIca(this.ica);
+        merged.setStatusCodeDescription(this.statusCodeDescription);
+
+        // Merge versions by combining their lists
+        List<VersionInfoDTO> mergedVersions = new ArrayList<>(this.versions);
+        mergedVersions.addAll(other.getVersions());
+        merged.setVersions(mergedVersions);
+
+        return merged;
+    }
