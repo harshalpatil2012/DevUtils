@@ -1,5 +1,42 @@
+<dependencies>
+    <!-- Spring Boot Starter for Brotli -->
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-brotli</artifactId>
+    </dependency>
+
+    <!-- Spring Boot Starter for Gzip -->
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-tomcat</artifactId>
+    </dependency>
+</dependencies>
+
+
+Gzip Compression:
+
+Include the spring-boot-starter-tomcat dependency in your pom.xml.
+
+Add the following configuration in your application.yml:
+
+yaml
+
 server:
   compression:
     enabled: true
     mime-types: application/json
-    min-response-size: 50KB
+    min-response-size: 10KB
+Brotli Compression:
+
+Include the spring-boot-starter-brotli dependency in your pom.xml.
+
+Add the same configuration in your application.yml:
+
+yaml
+
+server:
+  compression:
+    enabled: true
+    mime-types: application/json
+    min-response-size: 10KB
+The order of dependencies in your pom.xml determines the priority of compression methods. If both Gzip and Brotli dependencies are present, the one declared first in the pom.xml will take precedence.
