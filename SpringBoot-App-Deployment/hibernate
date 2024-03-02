@@ -191,3 +191,85 @@ public interface OperatorDetailRepository extends JpaRepository<OperatorDetail, 
            "FROM OperatorDetail od LEFT JOIN FETCH od.versions ver")
     Page<Object[]> findAllOperatorDetailInfo(Pageable pageable);
 }
+
+
+====
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ForkJoinPool;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+
+public class YourServiceClass {
+
+    public List<OperatorInfoDTO> convertToOperatorInfoDTOs(List<Object[]> results) {
+        // Choose between parallel and sequential processing based on the result set size
+        if (results.size() > 500) {
+            return processResults(results.parallelStream());
+        } else {
+            return processResults(results.stream());
+        }
+    }
+
+    private List<OperatorInfoDTO> processResults(java.util.stream.Stream<Object[]> resultStream) {
+        // Group tuples by ID and map them to OperatorInfoDTO
+        Map<String, OperatorInfoDTO> operatorInfoDTOMap = resultStream.collect(
+                Collectors.groupingBy(
+                        tuple -> tuple[0] != null ? tuple[0].toString() : null,
+                        Collectors.mapping(this::mapToObject, Collectors.toList())
+                )
+        );
+
+        // Merge versions for each OperatorInfoDTO
+        return operatorInfoDTOMap.values().stream()
+                .map(this::mergeVersions)
+                .collect(Collectors.toList());
+    }
+
+    private OperatorInfoDTO mapToObject(Object[] tuple) {
+        OperatorInfoDTO operatorInfoDTO = new OperatorInfoDTO();
+        operatorInfoDTO.setId(tuple[0] != null ? tuple[0].toString() : null);
+        operatorInfoDTO.setStatusIndicator(tuple[1] != null ? tuple[1].toString() : null);
+        operatorInfoDTO.setProviderName(tuple[2] != null ? tuple[2].toString() : null);
+        operatorInfoDTO.setCid(tuple[3] != null ? tuple[3].toString() : null);
+        operatorInfoDTO.setIca(tuple[4] != null ? tuple[4].toString() : null);
+
+        // Conditionally set StatusCodeDescription only if not null
+        if (tuple[5] != null) {
+            operatorInfoDTO.setStatusCodeDescription(tuple[5].toString());
+        }
+
+        // Conditionally set other fields only if not null
+        if (tuple[6] != null) {
+            // Assuming versions is a List<VersionInfoDTO> already populated
+            operatorInfoDTO.setVersions((List<VersionInfoDTO>) tuple[6]);
+        }
+
+        return operatorInfoDTO;
+    }
+
+    private OperatorInfoDTO mergeVersions(OperatorInfoDTO operatorInfoDTO) {
+        Map<String, VersionInfoDTO> versionInfoDTOMap = operatorInfoDTO.getVersions().stream()
+                .collect(Collectors.toMap(VersionInfoDTO::getVersion, Function.identity()));
+
+        // Assuming versions is a List<VersionInfoDTO> obtained from tuples
+        List<VersionInfoDTO> mergedVersions = versions.stream()
+                .map(version -> {
+                    VersionInfoDTO existingVersion = versionInfoDTOMap.get(version.getVersion());
+
+                    // Merge logic for fields in VersionInfoDTO
+                    if (existingVersion != null) {
+                        existingVersion.setMessageCategory(version.getMessageCategory());
+                        existingVersion.setStatusIndicator(version.getStatusIndicator());
+                        // Add more fields to merge if needed
+                        return existingVersion;
+                    } else {
+                        return version;
+                    }
+                })
+                .collect(Collectors.toList());
+
+        operatorInfoDTO.setVersions(mergedVersions);
+        return operatorInfoDTO;
+    }
+}
