@@ -65,3 +65,46 @@ Vary: Accept-Encoding
 Content-Type: application/json
 Content-Encoding: gzip
 Vary: Accept-Encoding
+
+
+Proposed Solution:
+
+Producer Microservice (Generating JSON Response):
+
+Add the spring-boot-starter-tomcat dependency to the producer microservice's pom.xml or build.gradle file.
+Set the server.compression.enabled property to true in the producer microservice's application.properties or application.yml.
+Configure compression properties such as server.compression.mime-types and server.compression.min-response-size based on requirements.
+Consumer Microservice (Consuming JSON Response):
+
+Ensure that the consumer microservice is capable of handling Gzip-encoded responses (Spring Boot typically handles this automatically).
+
+Background:
+You are tasked with enhancing the performance and efficiency of a set of Java Spring Boot microservices. The microservices architecture involves a producer microservice that generates JSON responses and a consumer microservice responsible for consuming these JSON responses. To optimize data transfer and reduce bandwidth usage, you are required to implement Gzip compression in the communication between these microservices.
+
+Objectives:
+
+Enable Gzip Compression:
+
+Configure the producer microservice to compress JSON responses using Gzip encoding.
+Ensure that the consumer microservice is capable of handling Gzip-encoded responses and can automatically decompress them.
+Testing:
+
+Implement comprehensive testing for both positive and negative scenarios to ensure the correctness and robustness of the Gzip compression implementation.
+Performance Evaluation:
+
+Measure the impact of Gzip compression on response time and payload size.
+Evaluate the resource usage, including CPU and memory, for both microservices during high load scenarios.
+Monitoring and Logging:
+
+Implement monitoring and logging to trace the Gzip encoding and decoding processes.
+Utilize monitoring tools to track compression ratios, response times, and other relevant metrics.
+Proposed Solution:
+
+Producer Microservice (Generating JSON Response):
+
+Add the spring-boot-starter-tomcat dependency to the producer microservice's pom.xml or build.gradle file.
+Set the server.compression.enabled property to true in the producer microservice's application.properties or application.yml.
+Configure compression properties such as server.compression.mime-types and server.compression.min-response-size based on requirements.
+Consumer Microservice (Consuming JSON Response):
+
+Ensure that the consumer microservice is capable of handling Gzip-encoded responses (Spring Boot typically handles this automatically).
