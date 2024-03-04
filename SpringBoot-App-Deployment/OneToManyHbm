@@ -1,0 +1,34 @@
+Alternative Approaches Explored:
+1. Eager Fetching with Entity Graph:
+Approach:
+
+Attempted to use the @EntityGraph annotation to define a fetch plan for eager loading of associated entities (versions) in a single query.
+Issues:
+
+Entity Graphs often lead to cartesian products, causing performance issues when dealing with large result sets.
+Difficulties in customizing the fetch plan based on specific use cases.
+2. Custom Fetch Strategy with Hibernate:
+Approach:
+
+Investigated the possibility of implementing a custom fetch strategy with Hibernate to optimize the loading of associated entities.
+Issues:
+
+Custom fetch strategies may add complexity and could potentially lead to maintenance challenges.
+Limited improvements observed in N+1 query scenarios.
+3. DTO Projection with Spring Data JPA:
+Approach:
+
+Explored the use of DTO projections with Spring Data JPA to fetch only the required fields from the database.
+Issues:
+
+Limited control over the loading of associated entities when using DTO projections.
+Difficulty in populating nested DTOs and handling relationships.
+
+4. Subquery Optimization:
+Approach:
+
+Attempted to optimize the subquery in the original Repository query.
+Issues:
+
+Subquery optimization might not always be effective, especially in complex queries or with large datasets.
+Difficulties in ensuring consistent performance across different database systems.
