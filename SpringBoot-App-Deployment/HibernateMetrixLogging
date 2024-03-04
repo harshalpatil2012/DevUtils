@@ -1,0 +1,58 @@
+To log the time taken by Hibernate JPA repository to execute database calls, we can create an aspect-oriented service using Spring AOP. Spring AOP allows you to define aspects, which are reusable modules that encapsulate cross-cutting concerns, such as logging.
+
+Here's a simple example of a service that logs the time taken by Hibernate JPA repository calls:
+
+java
+
+import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.After;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
+import org.springframework.stereotype.Component;
+
+import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.After;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
+import org.springframework.stereotype.Component;
+
+@Aspect
+@Component
+public class JpaExecutionTimeLogger {
+
+    private long startTime;
+
+    // Update the pointcut expression to include any JPA repository package
+    @Before("execution(* your.base.package..repository.*.*(..))")
+    public void logBefore(JoinPoint joinPoint) {
+        startTime = System.currentTimeMillis();
+    }
+
+    // Update the pointcut expression to include any JPA repository package
+    @After("execution(* your.base.package..repository.*.*(..))")
+    public void logAfter(JoinPoint joinPoint) {
+        long endTime = System.currentTimeMillis();
+        long executionTime = endTime - startTime;
+        String methodName = joinPoint.getSignature().toShortString();
+        System.out.println("Method " + methodName + " executed in " + executionTime + "ms");
+    }
+}
+
+Make sure to replace your.package.repository with the actual package where your JPA repositories are located.
+
+Additionally, you need to enable Spring AOP in your application. We can do this by adding @EnableAspectJAutoProxy to your main application class:
+
+java
+
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+@EnableAspectJAutoProxy
+public class YourApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(YourApplication.class, args);
+    }
+}
