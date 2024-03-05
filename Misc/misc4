@@ -1,1 +1,88 @@
 
+// Alternative Approach 1: Eager Fetching with Entity Graph
+
+/*
+   Approach:
+   Attempted to use the @EntityGraph annotation to define a fetch plan for eager loading
+   of associated entities (versions) in a single query.
+*/
+
+@Entity
+@Table(name = "OPER")
+@Data
+public class OperatorDetail {
+
+    @Id
+    @Column(name = "OPER ID")
+    private String id;
+
+    // ... other fields
+
+    @OneToMany(targetEntity = VersionDetailRecord.class, fetch = FetchType.EAGER)
+    @JoinColumn(name = "OPER ID", referencedColumnName = "OPER ID")
+    private List<VersionDetailRecord> versions = new ArrayList<>();
+}
+
+// Issues:
+// Entity Graphs often lead to cartesian products, causing performance issues when dealing with large result sets.
+// Difficulties in customizing the fetch plan based on specific use cases.
+java
+
+// Alternative Approach 2: Custom Fetch Strategy with Hibernate
+
+/*
+   Approach:
+   Investigated the possibility of implementing a custom fetch strategy with Hibernate
+   to optimize the loading of associated entities.
+*/
+
+// CustomFetchStrategy implementation (Not a real implementation, just for illustration)
+
+public class CustomFetchStrategy {
+
+    public List<OperatorDetail> fetchOperatorDetailsWithVersions() {
+        // Custom logic for fetching OperatorDetails with versions
+    }
+}
+
+// Issues:
+// Custom fetch strategies may add complexity and could potentially lead to maintenance challenges.
+// Limited improvements observed in N+1 query scenarios.
+java
+
+// Alternative Approach 3: DTO Projection with Spring Data JPA
+
+/*
+   Approach:
+   Explored the use of DTO projections with Spring Data JPA to fetch only the required fields
+   from the database.
+*/
+
+public interface OperatorDetailRepository extends JpaRepository<OperatorDetail, String> {
+
+    @Query("SELECT od.id, od.statusIndicator, od.providerName, od.cid, od.ica, od.countryCode, od.statusCodeDescription FROM OperatorDetail od")
+    List<Object[]> findOperatorDetails();
+}
+
+// Issues:
+// Limited control over the loading of associated entities when using DTO projections.
+// Difficulty in populating nested DTOs and handling relationships.
+java
+
+// Alternative Approach 4: Subquery Optimization
+
+/*
+   Approach:
+   Attempted to optimize the subquery in the original OperatorDetailRepository query.
+*/
+
+public interface OperatorDetailRepository extends JpaRepository<OperatorDetail, String> {
+
+    @Query("SELECT od FROM OperatorDetail od WHERE od.id IN (SELECT DISTINCT od.id FROM OperatorDetail od LEFT JOIN FETCH od.versions ver)")
+    List<OperatorDetail> findOperatorDetails();
+}
+
+// Issues:
+// Subquery optimization might not always be effective, especially in complex queries or with large datasets.
+// Difficulties in ensuring consistent performance across different database systems.
+These are the alternative approaches considered along with their respective code snippets and issues encountered during explorat
