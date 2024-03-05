@@ -249,3 +249,92 @@ gradle runWar
 This will start the application in the Tomcat server on port 8080.
 
 
+Components
+1. YourServiceClass
+Responsibilities:
+
+Orchestrates the processing of operator details and versions.
+Implements query optimization strategies based on the result set size.
+Methods:
+
+convertToOperatorInfoDTOs(List<Object[]> results): List<OperatorInfoDTO>
+processResults(Stream<Object[]> resultStream): List<OperatorInfoDTO>
+mapToObject(Object[] tuple): OperatorInfoDTO
+mergeVersions(List<OperatorInfoDTO> operatorInfoDTOs): OperatorInfoDTO
+2. OperatorInfoDTO
+Responsibilities:
+
+Represents operator details and associated versions.
+Provides a merge method to combine multiple instances.
+Fields:
+
+id, statusIndicator, providerName, cid, ica, statusCodeDescription: Operator details.
+versions: List of VersionInfoDTO representing associated versions.
+Methods:
+
+merge(OperatorInfoDTO other): OperatorInfoDTO
+3. VersionInfoDTO
+Responsibilities:
+
+Represents version details.
+Fields:
+
+version, messageCategory, statusIndicator: Version details.
+Design Details
+1. YourServiceClass
+Methods
+
+convertToOperatorInfoDTOs(List<Object[]> results): List<OperatorInfoDTO>
+
+Input:
+results: Raw result sets from the database.
+Output:
+List of OperatorInfoDTO instances.
+Processing Logic:
+Chooses between parallel and sequential processing based on the result set size.
+Calls processResults to handle the processing based on the chosen approach.
+processResults(Stream<Object[]> resultStream): List<OperatorInfoDTO>
+
+Input:
+resultStream: Stream of raw result tuples.
+Output:
+List of OperatorInfoDTO instances.
+Processing Logic:
+Groups tuples by ID and maps them to a list of OperatorInfoDTOs.
+Calls mergeVersions to merge versions for each group.
+mapToObject(Object[] tuple): OperatorInfoDTO
+
+Input:
+tuple: Single result tuple.
+Output:
+OperatorInfoDTO instance.
+Processing Logic:
+Converts a tuple into an OperatorInfoDTO instance.
+mergeVersions(List<OperatorInfoDTO> operatorInfoDTOs): OperatorInfoDTO
+
+Input:
+operatorInfoDTOs: List of OperatorInfoDTO instances.
+Output:
+Merged OperatorInfoDTO instance.
+Processing Logic:
+Merges versions for a group of OperatorInfoDTOs using the merge method of OperatorInfoDTO.
+2. OperatorInfoDTO
+Fields
+
+id, statusIndicator, providerName, cid, ica, statusCodeDescription: Operator details.
+versions: List of VersionInfoDTO representing associated versions.
+Methods
+
+merge(OperatorInfoDTO other): OperatorInfoDTO
+
+Input:
+other: Another OperatorInfoDTO instance.
+Output:
+Merged OperatorInfoDTO instance.
+Processing Logic:
+Combines two OperatorInfoDTO instances by merging versions.
+3. VersionInfoDTO
+Fields
+
+version, messageCategory, statusIndicator: Version details.
+
