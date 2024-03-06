@@ -35,3 +35,36 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addInterceptor(sizeLoggingInterceptor());
     }
 }
+
+
+for webclient
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.reactive.function.client.ExchangeFilterFunction;
+import org.springframework.web.reactive.function.client.WebClient;
+
+@Configuration
+public class WebClientConfig {
+
+    private final Logger logger = LoggerFactory.getLogger(WebClientConfig.class);
+
+    @Bean
+    public WebClient.Builder webClientBuilder() {
+        return WebClient.builder()
+                .filter(logResponseSize());
+    }
+
+    private ExchangeFilterFunction logResponseSize() {
+        return ExchangeFilterFunction.ofResponseProcessor(clientResponse -> {
+            // Log the response size
+            long responseSize = clientResponse.headers().contentLength();
+            double sizeInKB = responseSize / 1024.0;
+            logger.info("Response size: {} KB", sizeInKB);
+
+            return Mono.just(clientResponse);
+        });
+    }
+}
