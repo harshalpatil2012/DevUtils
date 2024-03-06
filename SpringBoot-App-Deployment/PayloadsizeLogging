@@ -1,0 +1,37 @@
+import org.springframework.web.servlet.HandlerInterceptor;
+import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+public class SizeLoggingInterceptor implements HandlerInterceptor {
+
+    @Override
+    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
+                           ModelAndView modelAndView) {
+        long responseSize = response.getHeader("Content-Length") != null ?
+                Long.parseLong(response.getHeader("Content-Length")) : 0;
+        double sizeInKB = responseSize / 1024.0;
+        System.out.println("Response size: " + sizeInKB + " KB");
+    }
+}
+
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+@Configuration
+public class WebConfig implements WebMvcConfigurer {
+
+    @Bean
+    public SizeLoggingInterceptor sizeLoggingInterceptor() {
+        return new SizeLoggingInterceptor();
+    }
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(sizeLoggingInterceptor());
+    }
+}
