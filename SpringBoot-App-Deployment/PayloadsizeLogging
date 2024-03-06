@@ -1,4 +1,4 @@
-import org.springframework.web.servlet.HandlerInterceptor;
+noimport org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -43,6 +43,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpHeaders;
 import org.springframework.web.reactive.function.client.ExchangeFilterFunction;
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -54,15 +55,24 @@ public class WebClientConfig {
     @Bean
     public WebClient.Builder webClientBuilder() {
         return WebClient.builder()
-                .filter(logResponseSize());
+                .filter(logResponseDetails());
     }
 
-    private ExchangeFilterFunction logResponseSize() {
+    private ExchangeFilterFunction logResponseDetails() {
         return ExchangeFilterFunction.ofResponseProcessor(clientResponse -> {
+            // Log the API URL
+            String apiUrl = clientResponse.request().url().toString();
+            logger.info("API URL: {}", apiUrl);
+
             // Log the response size
             long responseSize = clientResponse.headers().contentLength();
             double sizeInKB = responseSize / 1024.0;
             logger.info("Response size: {} KB", sizeInKB);
+
+            // Log additional response details
+            HttpHeaders headers = clientResponse.headers().asHttpHeaders();
+            headers.forEach((name, values) ->
+                    values.forEach(value -> logger.info("Response Header - {} : {}", name, value)));
 
             return Mono.just(clientResponse);
         });
