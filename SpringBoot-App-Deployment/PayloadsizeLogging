@@ -1,4 +1,4 @@
-noimport org.springframework.web.servlet.HandlerInterceptor;
+oonoimport org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -39,22 +39,6 @@ public class WebConfig implements WebMvcConfigurer {
 
 for webclient
 
-8ponseSize = clientResponse.headers().contentLength();
-            double sizeInKB = responseSize / 1024.0;
-            logger.info("Response size: {} KB", sizeInKB);
-
-            // Log additional response details
-            HttpHeaders headers = clientResponse.headers().asHttpHeaders();
-            headers.forEach((name, values) ->
-                    values.forEach(value -> logger.info("Response Header - {} : {}", name, value)));
-
-            return Mono.just(clientResponse);
-        });
-    }
-}
-
-
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
@@ -62,6 +46,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.reactive.function.client.ExchangeFilterFunction;
 import org.springframework.web.reactive.function.client.WebClient;
+
+import java.util.Arrays;
+import java.util.List;
 
 @Configuration
 public class WebClientConfig {
@@ -86,6 +73,9 @@ public class WebClientConfig {
     }
 
     private ExchangeFilterFunction logResponseDetails() {
+        // Specify the headers you want to log
+        List<String> headersToLog = Arrays.asList("Content-Type", "Content-Encoding", "Vary");
+
         return ExchangeFilterFunction.ofResponseProcessor(clientResponse -> {
             // Log the response size with 3 decimal places
             long responseSize = clientResponse.headers().contentLength();
@@ -93,10 +83,14 @@ public class WebClientConfig {
             String formattedSize = String.format("%.3f", sizeInKB);
             logger.info("Response size: {} KB", formattedSize);
 
-            // Log additional response details
+            // Log specified response headers
             HttpHeaders headers = clientResponse.headers().asHttpHeaders();
-            headers.forEach((name, values) ->
-                    values.forEach(value -> logger.info("Response Header - {} : {}", name, value)));
+            headersToLog.forEach(headerName -> {
+                List<String> values = headers.get(headerName);
+                if (values != null) {
+                    values.forEach(value -> logger.info("Response Header - {} : {}", headerName, value));
+                }
+            });
 
             return Mono.just(clientResponse);
         });
