@@ -4,8 +4,8 @@ import os
 def get_unique_strings_from_html(html_file):
     with open(html_file, 'r', encoding='utf-8') as file:
         soup = BeautifulSoup(file, 'html.parser')
-        tr_elements = soup.find_all('tr')
-        strings = [tr.get_text(strip=True) for tr in tr_elements]
+        span_elements = soup.find_all('span', attrs={'ng-bind-html': True})
+        strings = [span['ng-bind-html'] for span in span_elements]
 
     return set(strings)
 
@@ -20,11 +20,9 @@ def process_folder(folder_path):
     return list(unique_strings)
 
 if __name__ == "__main__":
-    folder_path = "/path/to/your/html/files"
+    folder_path = "c:/logs"
     unique_strings = process_folder(folder_path)
 
-    print("Consolidated Unique Strings:")
+    print("Consolidated Unique ng-bind-html Values:")
     for string in unique_strings:
         print(string)
-
-pip install beautifulsoup4
