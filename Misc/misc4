@@ -4,14 +4,20 @@ import os
 
 def decode_base64(encoded_string):
     try:
+        # Calculate the padding needed
+        padding = (4 - len(encoded_string) % 4) % 4
+
         # Adding padding to ensure length is a multiple of 4
-        while len(encoded_string) % 4 != 0:
-            encoded_string += '='
-        
-        decoded_bytes = base64.b64decode(encoded_string)
-        
+        encoded_string += '=' * padding
+
+        # First decoding attempt
+        decoded_bytes_1 = base64.b64decode(encoded_string)
+
+        # Second decoding attempt
+        decoded_bytes_2 = base64.b64decode(decoded_bytes_1)
+
         # Attempt to decode using utf-8, latin-1, and replace non-decodable characters
-        decoded_string = decoded_bytes.decode('utf-8', errors='replace')
+        decoded_string = decoded_bytes_2.decode('utf-8', errors='replace')
         return decoded_string
     except Exception as e:
         print(f"Error decoding base64: {e}")
