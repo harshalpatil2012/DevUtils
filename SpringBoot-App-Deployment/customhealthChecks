@@ -1,0 +1,120 @@
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.actuate.health.Health;
+import org.springframework.boot.actuate.health.HealthIndicator;
+import org.springframework.boot.actuate.health.Status;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.stereotype.Component;
+
+import java.util.Properties;
+
+@Component
+public class CustomHealthIndicator implements HealthIndicator {
+
+    @Value("${server.port}")
+    private int serverPort;
+
+    private String buildVersion;
+
+    public CustomHealthIndicator() {
+        this.buildVersion = getBuildVersion();
+    }
+
+    private String getBuildVersion() {
+        try {
+            Properties properties = new Properties();
+            properties.load(new ClassPathResource("META-INF/build-info.properties").getInputStream());
+            return properties.getProperty("build.version", "Unknown");
+        } catch (Exception e) {
+            return "Unknown";
+        }
+    }
+
+    @Override
+    public Health health() {
+        // Your custom health check logic goes here
+        // You can return UP, DOWN, or any custom status
+
+        Status status = getStatus(); // Implement your custom logic to determine status
+
+        return Health.status(status)
+                .withDetail("port", serverPort)
+                .withDetail("buildVersion", buildVersion)
+                .build();
+    }
+
+    private Status getStatus() {
+        // Implement your custom logic to determine status
+        // Example: Check if a required component is available
+        // Return Status.UP or Status.DOWN accordingly
+        return Status.UP;
+    }
+}
+
+
+pom.xml chnages
+<build>
+    <plugins>
+        <!-- ... other plugins ... -->
+        <plugin>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-maven-plugin</artifactId>
+            <executions>
+                <execution>
+                    <goals>
+                        <goal>build-info</goal>
+                    </goals>
+                </execution>
+            </executions>
+        </plugin>
+
+        <!-- ... other plugins ... -->
+
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-resources-plugin</artifactId>
+            <executions>
+                <execution>
+                    <id>copy-resources</id>
+                    <phase>install</phase>
+                    <goals>
+                        <goal>copy-resources</goal>
+                    </goals>
+                    <configuration>
+                        <outputDirectory>${project.build.directory}/${project.build.finalName}/META-INF</outputDirectory>
+                        <resources>
+                            <resource>
+                                <directory>${project.build.directory}</directory>
+                                <includes>
+                                    <include>*.properties</include>
+                                </includes>
+                            </resource>
+                        </resources>
+                    </configuration>
+                </execution>
+            </executions>
+        </plugin>
+    </plugins>
+</build>
+
+Sample response:
+  {
+  "status": "UP",
+  "components": {
+    "diskSpace": {
+      "status": "UP",
+      "details": {
+        // Disk space details
+      }
+    },
+    // ... other default components and their statuses ...
+
+    "custom": {
+      "status": "UP",
+      "details": {
+        "port": 8080,  // Your server port
+        "buildVersion": "1.0.0",  // Your build version
+        // Other custom health details
+      }
+    }
+  }
+}
