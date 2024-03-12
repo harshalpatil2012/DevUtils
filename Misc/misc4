@@ -4,6 +4,10 @@ import os
 
 def decode_base64(encoded_string):
     try:
+        # Adding padding to ensure length is a multiple of 4
+        while len(encoded_string) % 4 != 0:
+            encoded_string += '='
+        
         decoded_bytes = base64.b64decode(encoded_string)
         decoded_string = decoded_bytes.decode('utf-8')
         return decoded_string
