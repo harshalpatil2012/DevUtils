@@ -248,5 +248,23 @@ gradle runWar
 
 This will start the application in the Tomcat server on port 8080.
 
+@Configuration
+public class AppConfig {
+
+    @Bean
+    public ObjectMapper objectMapper() {
+        return new ObjectMapper();
+    }
+}
+
+Private final ObjectMapper objectMapper;
+
+    @Autowired
+    public YourService(ObjectMapper objectMapper) {
+        this.objectMapper = objectMapper;
+    }
+
+
+
 
 
