@@ -1,3 +1,4 @@
+```
 @RestController 
 public class DataSyncController {
 
@@ -13,8 +14,8 @@ public class DataSyncController {
         return Mono.empty();
     }
 }
-
-
+```
+```
 @Service
 @EnableScheduling
 public class DataSyncService {
@@ -59,13 +60,13 @@ public class DataSyncService {
                 });
     }
 }
-
-
+```
+```
 @Repository
 public interface BookRepository extends JpaRepository<Book, Long> {
 }
-
-
+```
+```
 @Entity
 @Table(name = "books")
 public class Book {
@@ -77,6 +78,7 @@ public class Book {
 
     // Getters and setters
 }
+```
 
 ```
 <?xml version="1.0" encoding="UTF-8"?>
