@@ -1,0 +1,61 @@
+Example Script handle gzip or json encoding for the Rest API call from jenkins
+pipeline {
+    agent any
+    
+    stages {
+        stage('Call API') {
+            steps {
+                script {
+                    // Make API call
+                    def response = sh(script: 'curl -H "Accept-Encoding: gzip" http://example.com/api', returnStdout: true).trim()
+
+                    // Check if response is gzip-encoded
+                    if (isGzipEncoded(response)) {
+                        // Decode gzip-encoded response
+                        def decodedResponse = decodeGzip(response)
+                        // Process decoded response
+                        handleDecodedResponse(decodedResponse)
+                    } else {
+                        // Process JSON-encoded response directly
+                        handleDecodedResponse(response)
+                    }
+                }
+            }
+        }
+    }
+}
+
+// Utility method to check if response is gzip-encoded
+def isGzipEncoded(String response) {
+    // Check if the response starts with the gzip magic number
+    return response.startsWith("\u001f\u008b")
+}
+
+// Utility method to decode gzip content
+def decodeGzip(String encodedContent) {
+    def result = new ByteArrayOutputStream()
+    def inputStream = new ByteArrayInputStream(encodedContent.bytes)
+
+    // Decode gzip content
+    try {
+        def gzipInputStream = new GZIPInputStream(inputStream)
+        def buffer = new byte[1024]
+        int length
+        while ((length = gzipInputStream.read(buffer)) > 0) {
+            result.write(buffer, 0, length)
+        }
+        gzipInputStream.close()
+    } catch (IOException e) {
+        throw new RuntimeException("Error decoding gzip content", e)
+    }
+    
+    // Return the decoded content as a string
+    return result.toString('UTF-8')
+}
+
+// Utility method to handle decoded response
+def handleDecodedResponse(String decodedResponse) {
+    // Process decoded response, e.g., parse JSON or perform validation
+    // For simplicity, we'll just print the response in this example
+    echo "Decoded Response: ${decodedResponse}"
+}
