@@ -78,7 +78,7 @@ public class Book {
     // Getters and setters
 }
 
-
+```
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
@@ -142,7 +142,7 @@ public class Book {
     </build>
 
 </project>
-
+```
 
 Explanation of the Consolidated Code for very large number of Book Data Synchronization from Oracle DB to Redis Instance
 This code addresses the scenario where you want to periodically synchronize a large dataset (200 million books) from a database (represented by JPA and a Book entity) to Redis in batches (50k) while considering deleted books.
