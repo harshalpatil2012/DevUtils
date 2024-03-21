@@ -1,7 +1,8 @@
 import cx_Oracle
 
 # Establish the database connection
-connection = cx_Oracle.connect(user="your_username", password="your_password", dsn="your_dsn")
+dsn = cx_Oracle.makedsn("hostname", port, service_name="service_name")
+connection = cx_Oracle.connect(user="your_username", password="your_password", dsn=dsn)
 
 # Create a cursor
 cursor = connection.cursor()
