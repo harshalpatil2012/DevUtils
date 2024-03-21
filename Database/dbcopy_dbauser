@@ -1,0 +1,63 @@
+-- For Sequences
+BEGIN
+   FOR s IN (SELECT sequence_name FROM dba_sequences) LOOP
+      DECLARE
+         ddl CLOB;
+         file_handle UTL_FILE.FILE_TYPE;
+      BEGIN
+         ddl := DBMS_METADATA.get_ddl('SEQUENCE',s.sequence_name);
+         file_handle := UTL_FILE.fopen('DIRECTORY_PATH', 'SEQUENCE_' || s.sequence_name || '.sql', 'w');
+         UTL_FILE.put_line(file_handle, ddl);
+         UTL_FILE.fclose(file_handle);
+      END;
+   END LOOP;
+END;
+/
+
+-- For Synonyms
+BEGIN
+   FOR s IN (SELECT synonym_name FROM dba_synonyms) LOOP
+      DECLARE
+         ddl CLOB;
+         file_handle UTL_FILE.FILE_TYPE;
+      BEGIN
+         ddl := DBMS_METADATA.get_ddl('SYNONYM',s.synonym_name);
+         file_handle := UTL_FILE.fopen('DIRECTORY_PATH', 'SYNONYM_' || s.synonym_name || '.sql', 'w');
+         UTL_FILE.put_line(file_handle, ddl);
+         UTL_FILE.fclose(file_handle);
+      END;
+   END LOOP;
+END;
+/
+
+-- For Database Links
+BEGIN
+   FOR d IN (SELECT db_link FROM dba_db_links) LOOP
+      DECLARE
+         ddl CLOB;
+         file_handle UTL_FILE.FILE_TYPE;
+      BEGIN
+         ddl := DBMS_METADATA.get_ddl('DB_LINK',d.db_link);
+         file_handle := UTL_FILE.fopen('DIRECTORY_PATH', 'DB_LINK_' || d.db_link || '.sql', 'w');
+         UTL_FILE.put_line(file_handle, ddl);
+         UTL_FILE.fclose(file_handle);
+      END;
+   END LOOP;
+END;
+/
+
+-- For Tablespaces
+BEGIN
+   FOR t IN (SELECT tablespace_name FROM dba_tablespaces) LOOP
+      DECLARE
+         ddl CLOB;
+         file_handle UTL_FILE.FILE_TYPE;
+      BEGIN
+         ddl := DBMS_METADATA.get_ddl('TABLESPACE',t.tablespace_name);
+         file_handle := UTL_FILE.fopen('DIRECTORY_PATH', 'TABLESPACE_' || t.tablespace_name || '.sql', 'w');
+         UTL_FILE.put_line(file_handle, ddl);
+         UTL_FILE.fclose(file_handle);
+      END;
+   END LOOP;
+END;
+/
