@@ -92,3 +92,16 @@ BEGIN
    END LOOP;
 END;
 /
+
+TOAD Script:
+SET SERVEROUTPUT ON
+DECLARE
+  v_sql VARCHAR2(4000);
+BEGIN
+  FOR cur IN (SELECT table_name FROM user_tables) LOOP
+    v_sql := 'SELECT DBMS_METADATA.GET_DDL(''TABLE'', ''' || cur.table_name || ''') FROM DUAL';
+    EXECUTE IMMEDIATE v_sql;
+  END LOOP;
+END;
+/
+
