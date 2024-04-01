@@ -73,3 +73,10 @@ Search for Network Errors:
 
 index=* sourcetype=your_network_sourcetype "error" OR "exception" | table _time, sourcetype, host, source, _raw
 
+
+Count total records based on repeated count logs like total records =111 
+
+index=your_index_name_here "total records="
+| rex field=_raw "total records=(?<record_count>\d+)"
+| stats sum(record_count) as total_records
+
