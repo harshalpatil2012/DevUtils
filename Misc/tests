@@ -1,0 +1,183 @@
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import java.util.Arrays;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.when;
+
+@ExtendWith(MockitoExtension.class)
+public class ProviderControllerTest {
+
+    @InjectMocks
+    private ProviderController providerController;
+
+    @Mock
+    private ProviderService providerService;
+
+    @Test
+    public void testGzipEncodingAppliedForLargeResponse() {
+        // Mocking service to return large response
+        when(providerService.getLargeResponse()).thenReturn(generateLargeResponse());
+
+        // Calling controller method
+        ResponseEntity<BinDetails> response = providerController.getLargeResponse();
+
+        // Asserting that response is gzip encoded
+        assertTrue(response.getHeaders().containsKey(HttpHeaders.CONTENT_ENCODING));
+        assertEquals("gzip", response.getHeaders().getFirst(HttpHeaders.CONTENT_ENCODING));
+    }
+
+    @Test
+    public void testGzipEncodingNotAppliedForSmallResponse() {
+        // Mocking service to return small response
+        when(providerService.getSmallResponse()).thenReturn(generateSmallResponse());
+
+        // Calling controller method
+        ResponseEntity<BinDetails> response = providerController.getSmallResponse();
+
+        // Asserting that response is not gzip encoded
+        assertFalse(response.getHeaders().containsKey(HttpHeaders.CONTENT_ENCODING));
+    }
+
+    private ResponseEntity<BinDetails> generateLargeResponse() {
+        HttpHeaders headers = new HttpHeaders();
+        headers.set(HttpHeaders.CONTENT_ENCODING, "gzip");
+        return new ResponseEntity<>(new BinDetails("Large Bin", 1000), headers, HttpStatus.OK);
+    }
+
+    private ResponseEntity<BinDetails> generateSmallResponse() {
+        return new ResponseEntity<>(new BinDetails("Small Bin", 50), HttpStatus.OK);
+    }
+}
+
+
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.test.web.reactive.server.WebTestClient;
+
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+class ProviderIntegrationTest {
+
+    @Autowired
+    private WebTestClient webTestClient;
+
+    @Test
+    void testGzipEncodingAppliedForLargeResponse() {
+        webTestClient.get().uri("/your-api-endpoint")
+                .header(HttpHeaders.ACCEPT_ENCODING, "gzip")
+                .exchange()
+                .expectStatus().isOk()
+                .expectHeader().valueEquals(HttpHeaders.CONTENT_ENCODING, "gzip")
+                .expectBody(BinDetails.class);
+    }
+
+    @Test
+    void testGzipEncodingNotAppliedForSmallResponse() {
+        webTestClient.get().uri("/small-response")
+                .exchange()
+                .expectStatus().isOk()
+                .expectHeader().doesNotExist(HttpHeaders.CONTENT_ENCODING)
+                .expectBody(BinDetails.class);
+    }
+}
+
+
+
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
+import reactor.core.publisher.Mono;
+import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.*;
+
+@ExtendWith(MockitoExtension.class)
+public class ConsumerServiceTest {
+
+    @InjectMocks
+    private ConsumerService consumerService;
+
+    @Mock
+    private WebClient webClient;
+
+    @Test
+    public void testHandleGzipEncodedResponse() {
+        // Mocking WebClient to simulate receiving gzip-encoded response
+        WebClient.ResponseSpec responseSpec = mock(WebClient.ResponseSpec.class);
+        when(webClient.get()).thenReturn(responseSpec);
+        when(responseSpec.exchange()).thenReturn(Mono.just(generateGzipEncodedResponseEntity()));
+
+        // Calling the method that interacts with WebClient
+        Mono<BinDetails> responseMono = consumerService.consumeProviderApi();
+
+        // Asserting that response is correctly handled
+        StepVerifier.create(responseMono)
+                .expectNextMatches(response -> /* your assertion logic here */)
+                .verifyComplete();
+    }
+
+    @Test
+    public void testHandleErrorResponseFromProvider() {
+        // Mocking WebClient to simulate receiving an error response
+        WebClient.ResponseSpec responseSpec = mock(WebClient.ResponseSpec.class);
+        when(webClient.get()).thenReturn(responseSpec);
+        when(responseSpec.exchange()).thenReturn(Mono.error(new WebClientResponseException(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Internal Server Error", null, null, null)));
+
+        // Calling the method that interacts with WebClient
+        Mono<BinDetails> responseMono = consumerService.consumeProviderApi();
+
+        // Asserting that appropriate error handling is implemented
+        StepVerifier.create(responseMono)
+                .expectError(WebClientResponseException.class)
+
+
+
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.reactive.server.WebTestClient;
+
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+class ConsumerIntegrationTest {
+
+    @Autowired
+    private WebTestClient webTestClient;
+
+    @Test
+    void testConsumeGzipEncodedResponse() {
+        webTestClient.get().uri("/consumer-endpoint-large")
+                .exchange()
+                .expectStatus().isOk()
+                .expectHeader().valueEquals(HttpHeaders.CONTENT_ENCODING, "gzip")
+                .expectBody(BinDetails.class);
+    }
+
+    @Test
+    void testConsumeSmallResponse() {
+        webTestClient.get().uri("/consumer-endpoint-small")
+                .accept(MediaType.APPLICATION_JSON)
+                .exchange()
+                .expectStatus().isOk()
+                .expectHeader().contentType(MediaType.APPLICATION_JSON)
+                .expectBody(BinDetails.class);
+    }
+
+    @Test
+    void testHandleErrorResponseFromProvider() {
+        webTestClient.get().uri("/consumer-endpoint-large")
+                .exchange()
+                .expectStatus().isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+}
