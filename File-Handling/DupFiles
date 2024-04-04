@@ -9,6 +9,8 @@ echo "Running RemoveDuplicatesWithBackup..."
 java RemoveDuplicatesWithBackup
 
 
+ logic:Process Current File:Read the current file line by line.Identify duplicates within the current file.Write unique records to the output file.Check for Current File Records in Backup Files:After processing the current file, read each backup file.For each backup file, check if any records from the current file exist in it.If found, exclude those records from the output file.
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
@@ -59,7 +61,6 @@ public class RemoveDuplicatesWithBackup {
             int totalRecords = 0;
             int totalUniqueRecords = 0;
             int totalDuplicateRecords = 0;
-            int totalRecordsRemoved = 0;
             Set<String> seen = new HashSet<>();
             Set<String> backupRecords = new HashSet<>();
 
@@ -95,7 +96,7 @@ public class RemoveDuplicatesWithBackup {
                             writer.newLine();
                             totalUniqueRecords++;
                         } else {
-                            totalRecordsRemoved++;
+                            totalDuplicateRecords++;
                         }
                     } else {
                         totalDuplicateRecords++;
@@ -112,7 +113,6 @@ public class RemoveDuplicatesWithBackup {
             System.out.println("Total records: " + totalRecords);
             System.out.println("Total unique records: " + totalUniqueRecords);
             System.out.println("Total duplicate records: " + totalDuplicateRecords);
-            System.out.println("Total records removed: " + totalRecordsRemoved);
             System.out.println("Total execution time: " + executionTime + " seconds");
             System.out.println("Unique records file generated: " + outputPath);
 
