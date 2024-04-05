@@ -1,0 +1,30 @@
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.TimeZone;
+
+public class DateManipulation {
+
+    public static void main(String[] args) {
+        String dateString = "2023-04-08T18:41:00.000Z"; // Assuming the input string format
+
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+            sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+            Date date = sdf.parse(dateString);
+
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(date);
+            calendar.add(Calendar.DAY_OF_MONTH, -2); // Subtracting 2 days
+
+            Date newDate = calendar.getTime();
+            String newDateString = sdf.format(newDate);
+            System.out.println("Original Date: " + dateString);
+            System.out.println("Date 2 days previous: " + newDateString);
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
+}
