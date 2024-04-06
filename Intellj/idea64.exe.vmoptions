@@ -1,8 +1,15 @@
--Xms4g
--Xmx32g
--XX:+UseG1GC
--XX:+TieredCompilation
--XX:ReservedCodeCacheSize=512m
--Didea.filewatcher.executable.interval=10000
--XX:+HeapDumpOnOutOfMemoryError
--XX:-OmitStackTraceInFastThrow
+-Xms4G        # Initial heap size
+-Xmx16G       # Maximum heap size
+-XX:+UseG1GC  # Use G1 garbage collector for better performance
+-XX:ReservedCodeCacheSize=512m  # Size of the code cache
+-XX:SoftRefLRUPolicyMSPerMB=50  # Soft reference LRU policy
+-XX:+UseStringDeduplication  # Use string deduplication for saving memory
+-XX:+UseCompressedOops  # Enable compressed object pointers for reduced memory overhead
+-XX:+UseCompressedClassPointers  # Enable compressed class pointers
+-XX:+OptimizeStringConcat  # Optimize string concatenation
+-XX:+AggressiveOpts  # Enable aggressive optimizations
+-XX:+DisableExplicitGC  # Disable explicit garbage collection calls
+-XX:+UnlockExperimentalVMOptions  # Unlock experimental VM options
+-XX:+UseCGroupMemoryLimitForHeap  # Use cgroup memory limit for heap
+-XX:MaxInlineLevel=20  # Maximum number of nested calls that are inlined
+-XX:MaxInlineSize=100  # Maximum bytecode size of a method to be inlined
