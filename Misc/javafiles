@@ -1,0 +1,85 @@
+import java.io.*;
+import java.nio.file.*;
+import java.util.*;
+
+public class FileProcessingService {
+
+    public void removeDuplicatesAndCompareFiles(File file1, File file2) throws IOException {
+        File tempFile = Files.createTempFile("uniqueLines", ".txt").toFile();
+        Set<String> linesFromFile2 = new HashSet<>(Files.readAllLines(file2.toPath()));
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(file1));
+             BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile))) {
+            String currentLine;
+            Set<String> uniqueLines = new HashSet<>();
+
+            while ((currentLine = reader.readLine()) != null) {
+                if (uniqueLines.add(currentLine) && !linesFromFile2.contains(currentLine)) {
+                    writer.write(currentLine);
+                    writer.newLine();
+                }
+            }
+        }
+
+        Files.move(tempFile.toPath(), file1.toPath(), StandardCopyOption.REPLACE_EXISTING);
+    }
+}
+
+
+import java.io.File;
+import java.util.concurrent.RecursiveTask;
+
+public class FileProcessTask extends RecursiveTask<Void> {
+    private File file1;
+    private File file2;
+
+    public FileProcessTask(File file1, File file2) {
+        this.file1 = file1;
+        this.file2 = file2;
+    }
+
+    @Override
+    protected Void compute() {
+        FileProcessingService service = new FileProcessingService();
+        try {
+            service.removeDuplicatesAndCompareFiles(file1, file2);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+}
+
+
+
+
+import java.io.File;
+import java.util.concurrent.ForkJoinPool;
+import java.util.concurrent.TimeUnit;
+
+public class FileProcessingConcurrentRunner {
+
+    public static void main(String[] args) {
+        File[][] filePairs = {
+            {new File("path/to/your/file1a.txt"), new File("path/to/your/file2a.txt")},
+            {new File("path/to/your/file1b.txt"), new File("path/to/your/file2b.txt")}
+            // Add more file pairs as needed
+        };
+
+        ForkJoinPool pool = ForkJoinPool.commonPool();
+
+        for (File[] pair : filePairs) {
+            pool.execute(new FileProcessTask(pair[0], pair[1]));
+        }
+
+        pool.shutdown();
+
+        try {
+            pool.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+
+        System.out.println("All file processing tasks completed.");
+    }
+}
