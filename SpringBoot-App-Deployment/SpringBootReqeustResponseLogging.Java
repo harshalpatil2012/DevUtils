@@ -72,3 +72,22 @@ public class LoggingFilter implements Filter {
         System.out.println("Body: " + body);
     }
 }
+
+
+logging:
+  level:
+    org:
+      apache:
+        http: DEBUG
+        http.headers: DEBUG
+        http.wire: DEBUG
+logging:
+  level:
+    org:
+      springframework:
+        web:
+          reactive:
+            function:
+              client:
+                ExchangeFunctions: DEBUG
+
