@@ -1,16 +1,3 @@
-<dependencies>
-    <!-- Spring Boot Starter for Brotli -->
-    <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-brotli</artifactId>
-    </dependency>
-
-    <!-- Spring Boot Starter for Gzip -->
-    <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-tomcat</artifactId>
-    </dependency>
-</dependencies>
 
 
 Gzip Compression:
@@ -26,6 +13,17 @@ server:
     enabled: true
     mime-types: application/json
     min-response-size: 10KB
+
+Content-Encoding (Compression)
+For compression (Content-Encoding like gzip or deflate), Spring Boot can automatically compress responses if certain conditions are met. This behavior is controlled by server properties and the client's Accept-Encoding header:
+
+Compression Enabled: Enable response compression explicitly in application.yml file for Spring Boot to compress responses. This is done by setting properties server.compression.enabled=true and specifying the mime types to be compressed via server.compression.mime-types=application/json
+Client Accept-Encoding Header: The client must indicate support for compression through the Accept-Encoding header, e.g. Accept-Encoding: gzip, deflate
+
+ WebClient webClient = WebClient.builder()
+                .baseUrl("APIURL")
+                .defaultHeader("Accept-Encoding", "gzip, deflate")
+
 
 
 import org.springframework.web.reactive.function.client.WebClient;
