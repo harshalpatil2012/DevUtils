@@ -1,12 +1,13 @@
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Collections;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
+import java.util.HashMap;
+import java.util.Map;
 
 @Component
 public class RequestResponseLoggingFilter implements Filter {
@@ -20,13 +21,17 @@ public class RequestResponseLoggingFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
 
-        // Log request headers
+        // Collect and log request headers
+        Map<String, String> requestHeaders = new HashMap<>();
         Collections.list(request.getHeaderNames())
-                .forEach(headerName -> log.info("Request Header: {} = {}", headerName, request.getHeader(headerName)));
+                .forEach(headerName -> requestHeaders.put(headerName, request.getHeader(headerName)));
+        log.info("Request Headers: {}", requestHeaders);
 
         filterChain.doFilter(servletRequest, servletResponse);
 
-        // Log response headers (limited to what's available at this point)
-        response.getHeaderNames().forEach(headerName -> log.info("Response Header: {} = {}", headerName, response.getHeader(headerName)));
+        // Collect and log response headers (limited to what's available at this point)
+        Map<String, String> responseHeaders = new HashMap<>();
+        response.getHeaderNames().forEach(headerName -> responseHeaders.put(headerName, response.getHeader(headerName)));
+        log.info("Response Headers: {}", responseHeaders);
     }
 }
