@@ -117,9 +117,43 @@ public class GzipHeaderIntegrationTest {
     }
 }
 
-<dependency>
-    <groupId>org.assertj</groupId>
-    <artifactId>assertj-core</artifactId>
-    <version>3.23.1</version>
-    <scope>test</scope>
-</dependency>
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.web.reactive.server.WebTestClient;
+import static org.junit.jupiter.api.Assertions.*;
+
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@AutoConfigureWebTestClient(timeout = "36000") // Increased timeout for real network calls
+public class GzipHeaderIntegrationTest {
+
+    @Autowired
+    private WebTestClient webTestClient;
+
+    @Test
+    public void testResponseWithGzipEncodingWhenRequested() {
+        webTestClient.get().uri("http://provider-service-url/api/data") // Full URL if necessary
+            .header("Accept-Encoding", "gzip")
+            .exchange()
+            .expectStatus().isOk()
+            .expectHeader().valueEquals("Content-Encoding", "gzip")
+            .expectBody()
+            .consumeWith(response -> {
+                assertNotNull(response.getResponseBody(), "Response body should not be null");
+            });
+    }
+
+    @Test
+    public void testResponseWithoutGzipEncodingWhenNotRequested() {
+        webTestClient.get().uri("http://provider-service-url/api/data")
+            .exchange()
+            .expectStatus().isOk()
+            .expectHeader().doesNotExist("Content-Encoding")
+            .expectBody(String.class)
+            .consumeWith(response -> {
+                assertNotNull(response.getResponseBody(), "Response body should not be null");
+            });
+    }
+}
+
