@@ -82,3 +82,37 @@ public class GzipCpuUsageTest {
         System.out.println("CPU Usage After GZIP Test: " + cpuAfterGzip);
     }
 }
+
+
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@AutoConfigureWebTestClient(timeout = "36000") // Increased timeout for real network calls
+public class GzipHeaderIntegrationTest {
+
+    @Autowired
+    private WebTestClient webTestClient;
+
+    @Test
+    public void testResponseWithGzipEncodingWhenRequested() {
+        webTestClient.get().uri("http://provider-service-url/api/data") // Full URL if necessary
+            .header("Accept-Encoding", "gzip")
+            .exchange()
+            .expectStatus().isOk()
+            .expectHeader().valueEquals("Content-Encoding", "gzip")
+            .expectBody()
+            .consumeWith(response -> {
+                assertThat(response.getResponseBody()).isNotNull();
+            });
+    }
+
+    @Test
+    public void testResponseWithoutGzipEncodingWhenNotRequested() {
+        webTestClient.get().uri("http://provider-service-url/api/data")
+            .exchange()
+            .expectStatus().isOk()
+            .expectHeader().doesNotExist("Content-Encoding")
+            .expectBody(String.class)
+            .consumeWith(response -> {
+                assertThat(response.getResponseBody()).isNotNull();
+            });
+    }
+}
