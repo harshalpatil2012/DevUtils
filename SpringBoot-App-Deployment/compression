@@ -1,47 +1,42 @@
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.*;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.web.reactive.function.client.WebClient;
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@AutoConfigureMockMvc
+class ProductControllerIntegrationTest {
 
-import static org.mockito.Mockito.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.assertj.core.api.Assertions.*;
+    @Autowired
+    private TestRestTemplate restTemplate;
 
-@ExtendWith(MockitoExtension.class)
-public class WebClientConfigTests {
+    @Test
+    void testGetAllProducts_gzipEnabled() {
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Accept-Encoding", "gzip");
+        HttpEntity<?> requestEntity = new HttpEntity<>(headers);
 
-    @Mock
-    private WebClient.Builder builder;
+        ResponseEntity<String> response = restTemplate.exchange(
+                "/api/v1/products", HttpMethod.GET, requestEntity, String.class);
 
-    @Mock
-    private WebClient webClient;
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(response.getHeaders().get("Content-Encoding")).containsOnly("gzip");
 
-    @Mock
-    private HttpClient httpClient;
-
-    @InjectMocks
-    private WebClientConfig webClientConfig;
-
-    @BeforeEach
-    void setUp() {
-        // Setup the builder to return itself when filter and other methods are called
-        when(builder.filter(any())).thenReturn(builder);
-        when(builder.clientConnector(any())).thenReturn(builder);
-        when(builder.build()).thenReturn(webClient);  // Return the mocked WebClient instead of calling WebClient.builder().build()
-
-        // Assume WebClientConfig is properly modified to not use real HttpClient in the constructor if that's part of the problem
+        // Assuming your API returns a JSON array
+        String responseBody = // ... Decompress the response body if needed
+        assertThat(responseBody).startsWith("["); // Basic JSON array check
     }
 
     @Test
-    void testWebClientIsProperlyConfigured() {
-        WebClient client = webClientConfig.webClient();
-        assertNotNull(client);
+    void testCreateProduct_gzipEnabled() {
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Accept-Encoding", "gzip");
+        headers.setContentType(MediaType.APPLICATION_JSON);
 
-        // Verify that the WebClient.Builder methods are called correctly
-        verify(builder).filter(any());
-        verify(builder).clientConnector(any());
-        verify(builder).build();
+        Product newProduct = new Product("Test Product", "Test Description");
+        HttpEntity<Product> requestEntity = new HttpEntity<>(newProduct, headers);
+
+        ResponseEntity<String> response = restTemplate.exchange(
+                "/api/v1/products", HttpMethod.POST, requestEntity, String.class);
+
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
+        assertThat(response.getHeaders().get("Content-Encoding")).containsOnly("gzip");
+
+        // ... Verify the details in the compressed response body (if any)
     }
 }
