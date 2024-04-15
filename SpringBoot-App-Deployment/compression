@@ -16,3 +16,9 @@ public class CompressionTests {
             .expectHeader().isEqualTo("Content-Encoding", "gzip");
     }
 }
+
+
+@Query(value = "SELECT /*+ PARALLEL(e, 4) */ e.* FROM Employee e",
+           countQuery = "SELECT count(*) FROM Employee",
+           nativeQuery = true)
+    Page<Employee> findAllWithParallelHint(Pageable pageable);
