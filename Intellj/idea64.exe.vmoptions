@@ -1,8 +1,16 @@
--Xms4g
--Xmx32g
+# custom IntelliJ IDEA VM options (expand/override 'bin\idea64.exe.vmoptions')
+-Xms2G
+-Xmx12G
 -XX:+UseG1GC
--XX:+TieredCompilation
 -XX:ReservedCodeCacheSize=512m
--Didea.filewatcher.executable.interval=10000
--XX:+HeapDumpOnOutOfMemoryError
--XX:-OmitStackTraceInFastThrow
+-XX:SoftRefLRUPolicyMSPerMB=50
+-XX:+UseStringDeduplication
+-XX:+UseCompressedOops
+-XX:+UseCompressedClassPointers
+-XX:+OptimizeStringConcat
+-XX:+AggressiveOpts
+-XX:+DisableExplicitGC
+-XX:+UnlockExperimentalVMOptions
+-XX:+UseCGroupMemoryLimitForHeap
+-XX:MaxInlineLevel=20
+-XX:MaxInlineSize=100

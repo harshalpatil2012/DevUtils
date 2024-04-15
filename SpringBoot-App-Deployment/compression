@@ -1,129 +1,39 @@
-<dependencies>
-    <!-- Spring Boot Starter for Brotli -->
-    <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-brotli</artifactId>
-    </dependency>
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.web.reactive.server.WebTestClient;
+import org.springframework.web.reactive.function.client.ExchangeFilterFunction;
 
-    <!-- Spring Boot Starter for Gzip -->
-    <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-tomcat</artifactId>
-    </dependency>
-</dependencies>
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@ActiveProfiles("test")
+@AutoConfigureWebTestClient
+public class CompressionTests {
 
+    @Autowired
+    private WebTestClient webTestClient;
 
-Gzip Compression:
+    @Test
+    public void testCompression() {
+        webTestClient
+            .mutate()
+            .filter(logResponse()) // Add this filter to log all response headers
+            .build()
+            .get().uri("/your-endpoint")
+            .exchange()
+            .expectHeader().exists("Content-Encoding")
+            .expectHeader().isEqualTo("Content-Encoding", "gzip");
+    }
 
-Include the spring-boot-starter-tomcat dependency in your pom.xml.
-
-Add the following configuration in your application.yml:
-
-yaml
-
-server:
-  compression:
-    enabled: true
-    mime-types: application/json
-    min-response-size: 10KB
-Brotli Compression:
-
-Include the spring-boot-starter-brotli dependency in your pom.xml.
-
-Add the same configuration in your application.yml:
-
-yaml
-
-server:
-  compression:
-    enabled: true
-    mime-types: application/json
-    min-response-size: 10KB
-The order of dependencies in your pom.xml determines the priority of compression methods. If both Gzip and Brotli dependencies are present,
-the one declared first in the pom.xml will take precedence.
-
-<dependencies>
-    <!-- Spring Boot Starter for Brotli -->
-    <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-brotli</artifactId>
-    </dependency>
-
-    <!-- Spring Boot Starter for Gzip -->
-    <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-tomcat</artifactId>
-    </dependency>
-</dependencies>
-
-
-Example Headers in a Gzip/Brotli -Compressed JSON Response:
-Content-Type: application/json
-Content-Encoding: br
-Vary: Accept-Encoding
-
-Content-Type: application/json
-Content-Encoding: gzip
-Vary: Accept-Encoding
-
-
-Proposed Solution:
-
-Producer Microservice (Generating JSON Response):
-
-Add the spring-boot-starter-tomcat dependency to the producer microservice's pom.xml or build.gradle file.
-Set the server.compression.enabled property to true in the producer microservice's application.properties or application.yml.
-Configure compression properties such as server.compression.mime-types and server.compression.min-response-size based on requirements.
-Consumer Microservice (Consuming JSON Response):
-
-Ensure that the consumer microservice is capable of handling Gzip-encoded responses (Spring Boot typically handles this automatically).
-
-Background:
-You are tasked with enhancing the performance and efficiency of a set of Java Spring Boot microservices. The microservices architecture involves a producer microservice that generates JSON responses and a consumer microservice responsible for consuming these JSON responses. To optimize data transfer and reduce bandwidth usage, you are required to implement Gzip compression in the communication between these microservices.
-
-Objectives:
-
-Enable Gzip Compression:
-
-Configure the producer microservice to compress JSON responses using Gzip encoding.
-Ensure that the consumer microservice is capable of handling Gzip-encoded responses and can automatically decompress them.
-Testing:
-
-Implement comprehensive testing for both positive and negative scenarios to ensure the correctness and robustness of the Gzip compression implementation.
-Performance Evaluation:
-
-Measure the impact of Gzip compression on response time and payload size.
-Evaluate the resource usage, including CPU and memory, for both microservices during high load scenarios.
-Monitoring and Logging:
-
-Implement monitoring and logging to trace the Gzip encoding and decoding processes.
-Utilize monitoring tools to track compression ratios, response times, and other relevant metrics.
-Proposed Solution:
-
-Producer Microservice (Generating JSON Response):
-
-Add the spring-boot-starter-tomcat dependency to the producer microservice's pom.xml or build.gradle file.
-Set the server.compression.enabled property to true in the producer microservice's application.properties or application.yml.
-Configure compression properties such as server.compression.mime-types and server.compression.min-response-size based on requirements.
-
-
-Server-Side Compression Configuration:
-
-Compression settings, such as MIME types and size thresholds, are typically configured on the server (provider) side.
-The server determines whether to apply compression based on its own configuration and rules.
-Client-Side Request Headers:
-
-The client (consumer) can indicate its preference for compression by including the "Accept-Encoding" header in the request.
-Common values for "Accept-Encoding" include "gzip" to indicate support for gzip compression.
-Server's Decision:
-
-The server decides whether to compress the response based on its own configuration and the conditions specified for compression.
-Server-side compression is often applied uniformly based on predefined rules, such as MIME types and size thresholds.
-Dynamic Compression Adjustments:
-
-It's not common for servers to dynamically adjust compression behavior based on individual client requests.
-Most servers apply compression globally according to predetermined settings.
-
-Consumer Microservice (Consuming JSON Response):
-
-Ensure that the consumer microservice is capable of handling Gzip-encoded responses (Spring Boot typically handles this automatically).
+    // Utility method to create a filter that logs response details
+    private static ExchangeFilterFunction logResponse() {
+        return ExchangeFilterFunction.ofResponseProcessor(clientResponse -> {
+            System.out.println("Response Headers: ");
+            clientResponse.headers().asHttpHeaders().forEach((name, values) -> {
+                System.out.println(name + ": " + values);
+            });
+            return Mono.just(clientResponse);
+        });
+    }
+}
