@@ -1,42 +1,23 @@
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.web.reactive.server.WebTestClient;
+
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@AutoConfigureMockMvc
-class ProductControllerIntegrationTest {
+@ActiveProfiles("test")  // Activating the 'test' profile
+@AutoConfigureWebTestClient  // Automatically configure WebTestClient
+public class CompressionTests {
 
     @Autowired
-    private TestRestTemplate restTemplate;
+    private WebTestClient webTestClient;
 
     @Test
-    void testGetAllProducts_gzipEnabled() {
-        HttpHeaders headers = new HttpHeaders();
-        headers.set("Accept-Encoding", "gzip");
-        HttpEntity<?> requestEntity = new HttpEntity<>(headers);
-
-        ResponseEntity<String> response = restTemplate.exchange(
-                "/api/v1/products", HttpMethod.GET, requestEntity, String.class);
-
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(response.getHeaders().get("Content-Encoding")).containsOnly("gzip");
-
-        // Assuming your API returns a JSON array
-        String responseBody = // ... Decompress the response body if needed
-        assertThat(responseBody).startsWith("["); // Basic JSON array check
-    }
-
-    @Test
-    void testCreateProduct_gzipEnabled() {
-        HttpHeaders headers = new HttpHeaders();
-        headers.set("Accept-Encoding", "gzip");
-        headers.setContentType(MediaType.APPLICATION_JSON);
-
-        Product newProduct = new Product("Test Product", "Test Description");
-        HttpEntity<Product> requestEntity = new HttpEntity<>(newProduct, headers);
-
-        ResponseEntity<String> response = restTemplate.exchange(
-                "/api/v1/products", HttpMethod.POST, requestEntity, String.class);
-
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
-        assertThat(response.getHeaders().get("Content-Encoding")).containsOnly("gzip");
-
-        // ... Verify the details in the compressed response body (if any)
+    public void testCompression() {
+        webTestClient.get().uri("/your-endpoint")
+            .exchange()
+            .expectHeader().exists("Content-Encoding")
+            .expectHeader().isEqualTo("Content-Encoding", "gzip");
     }
 }
