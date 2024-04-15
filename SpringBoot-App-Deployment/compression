@@ -1,7 +1,14 @@
-import java.time.Duration;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.web.reactive.server.WebTestClient;
+import org.springframework.web.reactive.function.client.ExchangeFilterFunction;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
+@AutoConfigureWebTestClient
 public class CompressionTests {
 
     @Autowired
@@ -9,16 +16,24 @@ public class CompressionTests {
 
     @Test
     public void testCompression() {
-        webTestClient.mutate().responseTimeout(Duration.ofSeconds(10)) // Setting a higher timeout
-            .build().get().uri("/your-endpoint")
+        webTestClient
+            .mutate()
+            .filter(logResponse()) // Add this filter to log all response headers
+            .build()
+            .get().uri("/your-endpoint")
             .exchange()
             .expectHeader().exists("Content-Encoding")
             .expectHeader().isEqualTo("Content-Encoding", "gzip");
     }
+
+    // Utility method to create a filter that logs response details
+    private static ExchangeFilterFunction logResponse() {
+        return ExchangeFilterFunction.ofResponseProcessor(clientResponse -> {
+            System.out.println("Response Headers: ");
+            clientResponse.headers().asHttpHeaders().forEach((name, values) -> {
+                System.out.println(name + ": " + values);
+            });
+            return Mono.just(clientResponse);
+        });
+    }
 }
-
-
-@Query(value = "SELECT /*+ PARALLEL(e, 4) */ e.* FROM Employee e",
-           countQuery = "SELECT count(*) FROM Employee",
-           nativeQuery = true)
-    Page<Employee> findAllWithParallelHint(Pageable pageable);
