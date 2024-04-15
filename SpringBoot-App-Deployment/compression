@@ -1,13 +1,7 @@
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.web.reactive.server.WebTestClient;
+import java.time.Duration;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@ActiveProfiles("test")  // Activating the 'test' profile
-@AutoConfigureWebTestClient  // Automatically configure WebTestClient
+@ActiveProfiles("test")
 public class CompressionTests {
 
     @Autowired
@@ -15,7 +9,8 @@ public class CompressionTests {
 
     @Test
     public void testCompression() {
-        webTestClient.get().uri("/your-endpoint")
+        webTestClient.mutate().responseTimeout(Duration.ofSeconds(10)) // Setting a higher timeout
+            .build().get().uri("/your-endpoint")
             .exchange()
             .expectHeader().exists("Content-Encoding")
             .expectHeader().isEqualTo("Content-Encoding", "gzip");
