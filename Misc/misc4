@@ -1,1 +1,0 @@
-Get-Content your_file.txt | Select-String -Pattern '\[HTTPS\] (\w+)' | ForEach-Object { $_.Matches.Groups[1].Value } | Get-Unique
