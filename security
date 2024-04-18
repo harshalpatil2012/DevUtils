@@ -1,0 +1,1 @@
+keytool -list -keystore /path/to/keystore.jks -alias yourAlias -storepass yourKeystorePassword
