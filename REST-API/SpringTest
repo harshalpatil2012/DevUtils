@@ -1,0 +1,28 @@
+import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
+
+public class WebClientUtil {
+    private WebClient webClient;
+
+    public WebClientUtil(String baseUrl) {
+        this.webClient = WebClient.builder()
+                .baseUrl(baseUrl)
+                .defaultHeader("Host", "your-hostname.com") // Set the desired hostname here
+                .build();
+    }
+
+    public Mono<String> performGetRequest(String uri) {
+        return webClient.get()
+                .uri(uri)
+                .retrieve() // retrieve the response
+                .bodyToMono(String.class); // convert the response body to String
+    }
+
+    public static void main(String[] args) {
+        WebClientUtil client = new WebClientUtil("https://api.example.com");
+        client.performGetRequest("/data")
+                .subscribe(System.out::println,
+                           error -> System.err.println("Error: " + error.getMessage()),
+                           () -> System.out.println("Completed successfully!"));
+    }
+}
