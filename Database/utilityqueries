@@ -50,3 +50,12 @@ FROM your_table
 WHERE TO_CHAR(your_timestamp_column, 'DD-MM-RR') LIKE '31-01-24'
 GROUP BY TO_CHAR(your_timestamp_column, 'DD-MM-RR HH24')
 ORDER BY TO_CHAR(your_timestamp_column, 'DD-MM-RR HH24');
+
+Delete random records from table 
+DELETE FROM YourTable
+WHERE rowid IN (
+    SELECT rowid FROM (
+        SELECT rowid FROM YourTable
+        ORDER BY DBMS_RANDOM.VALUE
+    ) WHERE ROWNUM <= 1000000
+);
