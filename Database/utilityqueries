@@ -59,3 +59,11 @@ WHERE rowid IN (
         ORDER BY DBMS_RANDOM.VALUE
     ) WHERE ROWNUM <= 1000000
 );
+
+
+SELECT ui.index_name, ui.table_name, ui.uniqueness, uic.column_name, uic.column_position
+FROM user_indexes ui
+JOIN user_ind_columns uic ON ui.index_name = uic.index_name
+WHERE ui.table_name = 'YOUR_TABLE_NAME'
+ORDER BY ui.index_name, uic.column_position;
+
