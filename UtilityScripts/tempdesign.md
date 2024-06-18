@@ -193,50 +193,57 @@ public class DataService {
 }
 
 
-Test Scenarios for DataService
+Test Scenarios:
 Pagination within OpsData only:
 
-Test fetching a page where all results are from OpsData.
+Scenario: Fetch a page where all results are from OpsData.
 Pagination within SdkData only:
 
-Test fetching a page where all results are from SdkData.
+Scenario: Fetch a page where all results are from SdkData.
 Pagination spanning both OpsData and SdkData:
 
-Test fetching a page where results span from OpsData to SdkData.
+Scenario: Fetch a page where results span from OpsData to SdkData.
 Empty OpsData and filled SdkData:
 
-Test fetching a page when OpsData is empty but SdkData contains data.
+Scenario: Fetch a page when OpsData is empty but SdkData contains data.
 Empty SdkData and filled OpsData:
 
-Test fetching a page when SdkData is empty but OpsData contains data.
+Scenario: Fetch a page when SdkData is empty but OpsData contains data.
 Both OpsData and SdkData are empty:
 
-Test fetching a page when both tables are empty.
+Scenario: Fetch a page when both tables are empty.
 Exact page size results from OpsData:
 
-Test fetching a page where the number of results from OpsData exactly matches the page size.
+Scenario: Fetch a page where the number of results from OpsData exactly matches the page size.
 Exact page size results from SdkData:
 
-Test fetching a page where the number of results from SdkData exactly matches the page size.
-Test Scenarios for DataController
-Get data with default pagination parameters:
-
-Test fetching data with default page and size parameters.
-Get data with specific pagination parameters:
-
-Test fetching data with specific page and size parameters.
-Get data when OpsData is empty:
-
-Test fetching data when there are no results in OpsData.
-Get data when SdkData is empty:
-
-Test fetching data when there are no results in SdkData.
-Get data when both OpsData and SdkData are empty:
-
-Test fetching data when both tables are empty.
-Handle pagination spanning across OpsData and SdkData:
-
-Test fetching data that spans across both tables to verify pagination logic.
+Scenario: Fetch a page where the number of results from SdkData exactly matches the page size.
 Invalid pagination parameters:
 
-Test handling of invalid pagination parameters, such as negative page numbers or page sizes.
+Scenario: Handle cases with invalid pagination parameters like negative page numbers or page sizes.
+
+
+Introduction
+The purpose of this document is to provide a high-level design for an API that fetches data from two different sources, combines the results, and supports pagination. The data is fetched from OpsDataRepository and SdkDataRepository, combined, and returned as a paginated list of DataDTO objects.
+
+Requirements
+Fetch Data from Two Repositories: The API should fetch data from both OpsDataRepository and SdkDataRepository.
+Combine Data: The fetched data should be combined into a single list.
+Support Pagination: The combined data should support pagination, allowing clients to request specific pages of data.
+Parallel Data Fetching: Data fetching operations from both repositories should be executed in parallel to improve performance.
+Error Handling: The API should handle any errors that occur during data fetching and combining.
+Components
+Controller Layer
+
+DataController: Exposes the endpoint to retrieve the combined data with pagination support.
+Service Layer
+
+DataService: Handles the business logic of fetching data from both repositories, combining the results, and handling pagination.
+Repository Layer
+
+OpsDataRepository: Fetches data from the opsdata table.
+SdkDataRepository: Fetches data from the sdkdata table.
+DTOs and Projections
+
+DataDTO: Data Transfer Object for returning combined data.
+DataProjection: Interface for projecting data from the repositories.
