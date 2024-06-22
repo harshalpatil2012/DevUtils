@@ -1,115 +1,35 @@
-inkoWhen building a proxy gateway application in Spring Boot with WebClient for API calls, you should consider implementing various security measures, including OWASP recommendations and other filters to enhance the security of application. Here's a list of some key security measures and filters you should consider:
+Codility is a company that creates programming tasks which are solved by candidates. After submitting their solution to a task, each candidate receives a report containing the number of points their solution scored, which is an integer between 0 and 100.
 
-1. **Authentication and Authorization**:
-   - Implement user authentication using Spring Security.
-   - Configure role-based or permission-based authorization.
+3
 
-2. **Input Validation**:
-   - Implement input validation to prevent SQL injection, XSS, and other injection attacks.
+You are given two tables, tasks and reports, with the following structure:
 
-3. **Rate Limiting**:
-   - Implement rate limiting to protect against API abuse or DDoS attacks.
+create table tasks (
 
-4. **Cross-Origin Resource Sharing (CORS)**:
-   - Configure CORS settings to control which domains can access proxy.
+id integer not null,
 
-5. **Content Security Policy (CSP)**:
-   - Implement CSP headers to prevent XSS attacks by controlling which scripts can be executed on pages.
+name varchar(40) not null,
 
-6. **HTTP Security Headers**:
-   - Set security headers like X-Content-Type-Options, X-Frame-Options, and X-XSS-Protection.
+unique(id)
 
-7. **Logging and Monitoring**:
-   - Implement comprehensive logging to detect and investigate security incidents.
-   - Set up monitoring and alerting for suspicious activities.
+create table reports (
 
-8. **SSL/TLS Configuration**:
-   - Ensure application uses HTTPS with proper SSL/TLS configuration.
+id integer not null, candidate varchar(40) not null,
 
-9. **API Request Validation**:
-   - Validate incoming API requests for correctness and adherence to expected formats.
+task_id integer not null,
 
-10. **Request and Response Filtering**:
-    - Use Spring's WebFilters or AOP to filter and sanitize incoming and outgoing data.
+score integer not null,
 
-11. **OWASP Top Ten**:
-    - Address common vulnerabilities like Injection, Broken Authentication, Sensitive Data Exposure, XML External Entity (XXE), and more as per the OWASP Top Ten list.
+unique(id)
 
-12. **CSRF Protection**:
-    - Implement CSRF protection mechanisms to prevent cross-site request forgery attacks.
+Your task is to write an SQL query which assigns a difficulty rating to each task having at least one solution. The difficulty of the task depends on the average score of all candidates' solutions submitted for this task. It is possible that one candidate have submitted multiple solutions for the same task; in this case, all of those solutions should be included in the average.
 
-13. **Input and Output Encoding**:
-    - Encode and decode input and output data properly to prevent injection attacks.
+There are three difficulties: "Easy", "Medium" and "Hard".
 
-14. **Error Handling**:
-    - Handle errors gracefully without exposing sensitive information.
+If the average score for the task is lower than or equal to 20, then its difficulty is "Hard". If the average is higher than 20 but lower than or equal to 60, then its difficulty is "Medium".
 
-15. **Secure Configuration**:
-    - Store sensitive configuration properties securely, such as API keys or secrets.
+If the average is higher than 60, its difficulty is "Easy".
 
-16. **Secure API Keys and Secrets**:
-    - Protect API keys and secrets using environment variables or a secret management tool.
+For example, if the average score of the task is 50, then its difficulty is "Medium" because the average score is greater than 20 but less then 60.
 
-17. **Security Headers**:
-    - Add security headers like Strict-Transport-Security (HSTS) and Content-Security-Policy (CSP) to HTTP responses.
-
-18. **Security Testing**:
-    - Regularly perform security testing, including penetration testing and vulnerability scanning.
-
-19. **Dependency Scanning**:
-    - Regularly update and scan project's dependencies for known vulnerabilities.
-
-20. **API Rate Limiting**:
-    - Implement rate limiting to protect backend services from excessive requests.
-
-Remember that security is an ongoing process, and you should stay updated with the latest security best practices and vulnerabilities to adapt application's security measures accordingly. Additionally, consider using Spring Cloud Gateway as it provides built-in features for building API gateways in a Spring Boot application.
-
-
-
-Implementing comprehensive security headers in a Spring Boot proxy web application to follow OWASP (Open Web Application Security Project) recommendations is essential for enhancing application's security posture. Below, I'll provide a high-level overview of how to implement these headers and some code examples. Please note that this is just a starting point, and you should adapt it to specific application and security requirements.Add Dependencies: Ensure you have the necessary dependencies in build.gradle or pom.xml file to work with Spring Security. For example:<!-- For Maven -->
-<dependency>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-security</artifactId>
-</dependency>Configuration: Create a configuration class that extends WebSecurityConfigurerAdapter to customize security settings. You can configure security headers using headers() method:import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-
-@Configuration
-@EnableWebSecurity
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
-
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http
-            .headers()
-                .contentSecurityPolicy("default-src 'self'") // Customize CSP policy
-                .and()
-            .httpStrictTransportSecurity()
-                .maxAgeInSeconds(31536000) // 1 year
-                .includeSubDomains(true)
-                .and()
-            .frameOptions()
-                .deny()
-                .and()
-            .xssProtection()
-                .block(true)
-                .and()
-            .and().csrf().disable(); // Disable CSRF for simplicity, consider enabling and configuring
-    }
-}Content Security Policy (CSP): Customize CSP policy to specify trusted sources for scripts, styles, images, etc. Make sure to adapt the policy to application's needs.HTTP Strict Transport Security (HSTS): Enforce HTTPS by setting the max-age to an appropriate duration.Frame Options: By setting deny(), you prevent site from being embedded in iframes on other sites, enhancing protection against clickjacking attacks.X-XSS-Protection: Enable XSS protection by setting block(true).CSRF Protection: CSRF protection is disabled in the example for simplicity. You should enable and configure it based on application's requirements.Test and Adjust: Thoroughly test application with these headers in place and adjust them based on application's behavior and security requirements.Remember that security headers are only one part of a comprehensive security strategy. Regularly update and monitor application for security vulnerabilities, and consider other security measures like input validation, authentication, and authorization mechanisms.
-
-
-
-https://github.com/spring-cloud-samples/spring-cloud-gateway-sample
-ThomasVitale/spring-cloud-gateway-resilience-security-goto-2021: This project provides a sample Spring Cloud Gateway application that implements resilience and security features, including circuit breakers, retries, fallbacks, rate limiters, user authentication, OAuth2, and OpenID Connect. Link: https://github.com/ThomasVitale/spring-cloud-gateway-resilience-security-goto-2021
-
-piomin/sample-spring-cloud-webflux: This project provides a sample Spring Cloud Gateway application that demonstrates the usage of Spring Reactive support with Spring WebFlux. Link: https://github.com/piomin/sample-spring-cloud-webflux
-
-
-tasks.withType(JavaCompile) {
-    options.compilerArgs << "-Xlint:none"
-}
-
-
-
+Your query should return a table containing three columns: task_id (ID of task), task_name (name of task) and difficulty the difficulty of the task, which is one of three possible strings: "Easy", "Medium" or "Hard". Rows should be ordered by increasing task_id. If no solutions exist for some task, that task should not appear in your table.
