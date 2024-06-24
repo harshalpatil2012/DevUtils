@@ -1,35 +1,48 @@
-Codility is a company that creates programming tasks which are solved by candidates. After submitting their solution to a task, each candidate receives a report containing the number of points their solution scored, which is an integer between 0 and 100.
 
-3
+As a Lead Engineer with a proven track record of technical excellence and team leadership, my career aspiration is to transition into a Principal Engineer role where I can make an even greater impact. I am passionate about leveraging my expertise to drive innovation, solve complex problems, and mentor the next generation of engineers.
 
-You are given two tables, tasks and reports, with the following structure:
+I envision myself as a technical authority in the Principal Engineer role, providing guidance and mentorship to other engineers while actively contributing to the company's strategic direction through research and development. I am eager to tackle challenging technical problems, explore new technologies, and develop innovative solutions that have a lasting impact on the industry.
 
-create table tasks (
+Furthermore, I am committed to fostering a collaborative and inclusive work environment where engineers can thrive and reach their full potential. I believe my strong communication skills, ability to build consensus, and experience leading cross-functional teams will be invaluable in this role.
 
-id integer not null,
+My experience as a Lead Engineer has equipped me with the skills and knowledge necessary to excel as a Principal Engineer. I have consistently delivered high-quality results on complex projects, demonstrated my ability to lead and inspire teams, and consistently sought out opportunities to learn and grow. I am confident that in the Principal Engineer role, I can continue to make significant contributions to the company's success and further develop my technical and leadership skills.
 
-name varchar(40) not null,
 
-unique(id)
+To further strengthen my capabilities and align with the ABC Way, I am committed to continuously developing the following key areas:
 
-create table reports (
+Technical Leadership and Mentorship:  I recognize the importance of not only being a strong individual contributor but also inspiring and guiding others.  I will continue to hone my leadership skills by actively seeking out mentorship opportunities for junior engineers, organizing knowledge-sharing sessions, and fostering a culture of collaboration and continuous learning within my team. I am also eager to deepen my expertise in emerging technologies such as AI, machine learning, and blockchain, as these areas are increasingly crucial for driving innovation in the financial services industry.
 
-id integer not null, candidate varchar(40) not null,
+Strategic Thinking and Business Acumen:  To effectively contribute to the company's strategic direction, I am committed to expanding my understanding of the broader business landscape. I will proactively seek out opportunities to participate in cross-functional projects, engage with stakeholders from different departments, and stay abreast of industry trends and competitive insights. By developing a strong business acumen, I can better align my technical solutions with the company's overall objectives and contribute to its long-term success.
 
-task_id integer not null,
+Innovation and Adaptability: In a rapidly evolving technological landscape, the ability to embrace change and drive innovation is paramount. I will continue to challenge myself by seeking out new challenges, experimenting with emerging technologies, and pushing the boundaries of what is possible. I am also committed to cultivating a growth mindset, continuously learning and adapting to new information and approaches. By staying ahead of the curve and embracing a culture of innovation, I can help ensure that ABC remains at the forefront of the financial services industry.
 
-score integer not null,
+In addition to these specific areas, I am also committed to embodying the ABC Way values in all aspects of my work. This includes prioritizing customer needs, fostering a culture of collaboration and inclusion, and upholding the highest ethical standards. By living these values, I believe I can make a meaningful contribution to ABC's continued success and growth.
 
-unique(id)
+I am excited about the opportunity to continue growing and developing as a Principal Engineer at ABC. With my strong technical foundation, passion for innovation, and commitment to the ABC Way, I am confident in my ability to deliver exceptional results and make a lasting impact on the company.
 
-Your task is to write an SQL query which assigns a difficulty rating to each task having at least one solution. The difficulty of the task depends on the average score of all candidates' solutions submitted for this task. It is possible that one candidate have submitted multiple solutions for the same task; in this case, all of those solutions should be included in the average.
 
-There are three difficulties: "Easy", "Medium" and "Hard".
 
-If the average score for the task is lower than or equal to 20, then its difficulty is "Hard". If the average is higher than 20 but lower than or equal to 60, then its difficulty is "Medium".
+To further excel in my current role and prepare for future opportunities, I am focusing on refining the following key areas:
 
-If the average is higher than 60, its difficulty is "Easy".
+Strategic Influence and Communication: While I am confident in my technical abilities and project management skills, I recognize the importance of effectively communicating complex technical concepts to a broader audience. I will continue to hone my presentation skills, tailor my communication style to different stakeholders, and proactively seek feedback to ensure my message is clear and impactful. By strengthening my strategic influence and communication skills, I can better advocate for my team's initiatives, build stronger relationships with stakeholders, and drive broader organizational impact.
 
-For example, if the average score of the task is 50, then its difficulty is "Medium" because the average score is greater than 20 but less then 60.
+Cross-Functional Collaboration and Relationship Building: Building strong relationships with colleagues across different departments is crucial for achieving shared goals and fostering a collaborative work environment. I will actively seek out opportunities to collaborate with colleagues from other functions, learn about their perspectives and challenges, and identify areas for mutual support. By strengthening my cross-functional collaboration skills, I can break down silos, build trust, and foster a more cohesive and efficient organization.
 
-Your query should return a table containing three columns: task_id (ID of task), task_name (name of task) and difficulty the difficulty of the task, which is one of three possible strings: "Easy", "Medium" or "Hard". Rows should be ordered by increasing task_id. If no solutions exist for some task, that task should not appear in your table.
+Business Acumen and Financial Literacy: As a technical leader, I understand the importance of aligning technical solutions with business objectives. I am committed to expanding my knowledge of financial concepts, such as budgeting, forecasting, and return on investment analysis. By deepening my understanding of business and financial principles, I can make more informed decisions, effectively communicate the value of my team's work, and contribute to the company's financial success.
+
+By focusing on these areas of development, I believe I can further enhance my value as a Lead Engineer and position myself for continued growth and success within the company. I am committed to embracing the ABC Way values, continuously learning and growing, and making a meaningful contribution to the organization's goals.
+
+Development is a multifaceted journey that extends beyond traditional promotions.  To unlock my full potential and become a well-rounded Principal Engineer, I am committed to expanding my knowledge and skillset through a variety of avenues:
+
+Continuous Learning and Skill Enhancement: I believe in the power of lifelong learning and actively seek out opportunities to expand my technical expertise. Currently, I am enrolled in an online course to deepen my understanding of Python programming language, a valuable skill for data analysis and automation tasks. I am also preparing for the AWS Certified Solutions Architect - Associate certification to broaden my cloud computing knowledge and enhance my ability to design scalable and resilient solutions.
+
+Exploring New Technologies and Trends: To stay ahead of the curve, I regularly attend industry conferences, webinars, and workshops to learn about emerging technologies and trends. I am particularly interested in exploring the potential of artificial intelligence and machine learning for fraud detection and prevention, as well as the role of blockchain technology in enhancing security and transparency in financial transactions.
+
+Mentorship and Knowledge Sharing: I believe that sharing knowledge and learning from others is essential for personal and professional growth. I actively seek out mentorship opportunities from experienced colleagues and industry experts to gain new perspectives and insights. I also enjoy mentoring junior engineers, sharing my knowledge and experience to help them grow and succeed.
+
+Cross-Functional Collaboration and Project Exposure: Working on diverse projects across different teams and functions provides valuable opportunities to learn new skills and broaden my perspective. I actively seek out opportunities to collaborate with colleagues from other departments, such as product management, marketing, and sales, to gain a deeper understanding of their challenges and priorities. This cross-functional exposure helps me develop a more holistic understanding of the business and enables me to design solutions that better align with the company's overall goals.
+
+By embracing a multi-faceted approach to development, I am confident in my ability to continuously grow and evolve as a Principal Engineer. Whether it's through formal training, self-directed learning, or on-the-job experiences, I am committed to expanding my knowledge and skillset to deliver exceptional results and contribute to ABC's ongoing success.
+
+
+42% increase
