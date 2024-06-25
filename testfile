@@ -80,4 +80,11 @@ Expand knowledge of financial services regulations and compliance requirements
 Stay updated on emerging trends and technologies in the payments industry
 
 
+F5 DNS servers have been added to enhance resiliency across our K, S, and B data centers.
+Consumers from K, S, and B calling providers will always have a backup site available.
+Previously, direct calls to providers were at risk of failing.
+Going forward, even during provider releases, K, S, and B consumers will experience no impact due to the fallback site.
+In case of any issue, the backup site will be available to ensure continuous service.
+
+
 
