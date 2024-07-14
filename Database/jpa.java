@@ -31,3 +31,24 @@ XMLAGG(XMLELEMENT(E, e.service || ',') ORDER BY e.service).EXTRACT('//text()')
 
         return new PageImpl<>(enrollments, pageable, result.getTotalElements());
     }
+
+
+            enrolmentPage = enrolmentRepository.findAll(PageRequest.of(pageNumber, pageSize));
+
+            // Process enrolments in parallel batches
+            IntStream.range(0, (int) Math.ceil((double) enrolmentPage.getNumberOfElements() / parallelBatchSize))
+                .parallel()
+                .forEach(batchIndex -> {
+                    int start = batchIndex * parallelBatchSize;
+                    int end = Math.min(start + parallelBatchSize, enrolmentPage.getNumberOfElements());
+                    
+                    List<EnrolmentEntity> enrolmentBatch = enrolmentPage.getContent().subList(start, end);
+                    enrolmentBatch.parallelStream().forEach(enrolment -> {
+                        Set<String> features = enrolmentRepository.findFeaturesByBnums(List.of(enrolment.getBnum()));
+                        enrolment.setFeatures(features);
+                    });
+                });
+
+            // ... Process or return the enrolmentPage with loaded features
+            pageNumber++;
+        } while (enrolmentPage.hasNext());
