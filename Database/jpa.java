@@ -65,3 +65,6 @@ XMLAGG(XMLELEMENT(E, e.service || ',') ORDER BY e.service).EXTRACT('//text()')
             }
         } while (enrolmentPage.hasNext());
     }
+
+ @Query("SELECT s.feature FROM Service s WHERE s.bnum IN :bnums")
+    List<String> findFeaturesByBnums(@Param("bnums") List<String> bnums);
