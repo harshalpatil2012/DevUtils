@@ -33,15 +33,22 @@ XMLAGG(XMLELEMENT(E, e.service || ',') ORDER BY e.service).EXTRACT('//text()')
     }
 
 
-            enrolmentPage = enrolmentRepository.findAll(PageRequest.of(pageNumber, pageSize));
+           public void loadFeatures() {
+        int pageNumber = 0;
+        int pageSize = 10000;  // Main batch size
+        int parallelBatchSize = 500; // Batch size for parallel feature fetching
 
+        // Fetch the first page to enter the loop initially
+        Page<EnrolmentEntity> enrolmentPage = enrolmentRepository.findAll(PageRequest.of(pageNumber, pageSize));
+        
+        do {
             // Process enrolments in parallel batches
             IntStream.range(0, (int) Math.ceil((double) enrolmentPage.getNumberOfElements() / parallelBatchSize))
                 .parallel()
                 .forEach(batchIndex -> {
                     int start = batchIndex * parallelBatchSize;
                     int end = Math.min(start + parallelBatchSize, enrolmentPage.getNumberOfElements());
-                    
+
                     List<EnrolmentEntity> enrolmentBatch = enrolmentPage.getContent().subList(start, end);
                     enrolmentBatch.parallelStream().forEach(enrolment -> {
                         Set<String> features = enrolmentRepository.findFeaturesByBnums(List.of(enrolment.getBnum()));
@@ -51,4 +58,10 @@ XMLAGG(XMLELEMENT(E, e.service || ',') ORDER BY e.service).EXTRACT('//text()')
 
             // ... Process or return the enrolmentPage with loaded features
             pageNumber++;
+
+            // Fetch the next page within the loop
+            if (enrolmentPage.hasNext()) {
+                enrolmentPage = enrolmentRepository.findAll(PageRequest.of(pageNumber, pageSize));
+            }
         } while (enrolmentPage.hasNext());
+    }
