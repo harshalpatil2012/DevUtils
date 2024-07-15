@@ -124,3 +124,14 @@ SELECT t1.primary_key_column, t1.column2, t1.column3
 FROM table1 t1
 LEFT JOIN table2 t2 ON t1.primary_key_column = t2.foreign_key_column
 WHERE t2.foreign_key_column IS NULL;
+
+DELETE FROM table1
+WHERE id IN (
+    SELECT id
+    FROM (
+        SELECT id,
+               ROW_NUMBER() OVER (PARTITION BY col_name ORDER BY id) AS row_num
+        FROM table1
+    )
+    WHERE row_num > 1
+);
