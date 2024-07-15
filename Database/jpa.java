@@ -1,4 +1,4 @@
-
+Dr
 XMLAGG(XMLELEMENT(E, e.service || ',') ORDER BY e.service).EXTRACT('//text()')
 
 
@@ -68,3 +68,52 @@ XMLAGG(XMLELEMENT(E, e.service || ',') ORDER BY e.service).EXTRACT('//text()')
 
  @Query("SELECT s.feature FROM Service s WHERE s.bnum IN :bnums")
     List<String> findFeaturesByBnums(@Param("bnums") List<String> bnums);
+
+
+
+
+    public void loadFeatures() {
+        int pageNumber = 0;
+        int pageSize = 10000;
+        int parallelBatchSize = 500; // Batch size for parallel enrolment processing
+        int serviceBatchSize = 500;  // Batch size for fetching services
+
+        Page<EnrolmentEntity> enrolmentPage;
+        do {
+            enrolmentPage = enrolmentRepository.findAll(PageRequest.of(pageNumber, pageSize));
+
+            List<String> allBnums = enrolmentPage.getContent().stream()
+                .map(EnrolmentEntity::getBnum)
+                .distinct()
+                .collect(Collectors.toList());
+
+            Map<String, List<Service>> serviceMap = new HashMap<>();
+
+            // Fetch services in batches
+            for (int i = 0; i < allBnums.size(); i += serviceBatchSize) {
+                int start = i;
+                int end = Math.min(i + serviceBatchSize, allBnums.size());
+                List<String> bnumBatch = allBnums.subList(start, end);
+
+                List<Service> services = enrolmentRepository.findServicesByBnums(bnumBatch);
+                serviceMap.putAll(services.stream().collect(Collectors.groupingBy(Service::getBnum)));
+            }
+
+            // Process enrolments in parallel and assign features
+            enrolmentPage.getContent().parallelStream().forEach(enrolment -> {
+                List<Service> enrolmentServices = serviceMap.get(enrolment.getBnum());
+                if (enrolmentServices != null) {
+                    Set<String> features = enrolmentServices.stream()
+                        .map(Service::getFeature)
+                        .collect(Collectors.toSet());
+                    enrolment.setFeatures(features);
+                } else {
+                    enrolment.setFeatures(new HashSet<>());
+                }
+            });
+
+            // ... Process or return the enrolmentPage with loaded features
+            pageNumber++;
+        } while (enrolmentPage.hasNext());
+    }
+}
