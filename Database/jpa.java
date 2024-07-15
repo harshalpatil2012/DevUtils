@@ -1,4 +1,4 @@
-Dr
+okDr
 XMLAGG(XMLELEMENT(E, e.service || ',') ORDER BY e.service).EXTRACT('//text()')
 
 
@@ -117,3 +117,10 @@ XMLAGG(XMLELEMENT(E, e.service || ',') ORDER BY e.service).EXTRACT('//text()')
         } while (enrolmentPage.hasNext());
     }
 }
+
+
+INSERT INTO table2 (foreign_key_column, column2, column3)
+SELECT t1.primary_key_column, t1.column2, t1.column3
+FROM table1 t1
+LEFT JOIN table2 t2 ON t1.primary_key_column = t2.foreign_key_column
+WHERE t2.foreign_key_column IS NULL;
