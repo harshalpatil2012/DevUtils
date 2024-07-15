@@ -1,4 +1,4 @@
-okDr
+miokDr
 XMLAGG(XMLELEMENT(E, e.service || ',') ORDER BY e.service).EXTRACT('//text()')
 
 
@@ -134,4 +134,12 @@ WHERE id IN (
         FROM table1
     )
     WHERE row_num > 1
+);
+
+
+DELETE FROM table1
+WHERE ROWID NOT IN (
+    SELECT MIN(ROWID)
+    FROM table1
+    GROUP BY col_name
 );
