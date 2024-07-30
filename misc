@@ -1,3 +1,4 @@
+ 
 pipeline {
     agent any
     
@@ -9,6 +10,7 @@ pipeline {
     properties([
         parameters([
             choice(name: 'SERVICE', choices: ['ServiceA', 'ServiceB'], description: 'Select the service to call'),
+            choice(name: 'HTTP_METHOD', choices: ['GET', 'POST'], description: 'Select the HTTP method'),
             string(name: 'NUMBER', trim: true, description: 'Enter a number'),
             string(name: 'COUNTRY', trim: true, description: 'Enter a country'),
             string(name: 'FEATURE', trim: true, description: 'Enter a feature'),
@@ -22,6 +24,7 @@ pipeline {
                 script {
                     echo "Job started with the following inputs:"
                     echo "SERVICE: ${params.SERVICE}"
+                    echo "HTTP_METHOD: ${params.HTTP_METHOD}"
                     echo "NUMBER: ${params.NUMBER}"
                     echo "COUNTRY: ${params.COUNTRY}"
                     echo "FEATURE: ${params.FEATURE}"
@@ -67,12 +70,20 @@ pipeline {
                     env.CORRELATION_ID = UUID.randomUUID().toString()
                     echo "Generated Correlation ID: ${env.CORRELATION_ID}"
                     
-                    if (params.SERVICE == 'ServiceA') {
-                        env.REQUEST_BODY = """{"number": "${params.NUMBER}", "country": "${params.COUNTRY}", "feature": "${params.FEATURE}"}"""
+                    if (params.HTTP_METHOD == 'POST') {
+                        if (params.SERVICE == 'ServiceA') {
+                            env.REQUEST_BODY = """{"number": "${params.NUMBER}", "country": "${params.COUNTRY}", "feature": "${params.FEATURE}"}"""
+                        } else {
+                            env.REQUEST_BODY = """{"id": "${params.NUMBER}", "region": "${params.COUNTRY}", "capability": "${params.FEATURE}", "additionalInfo": "${params.EXTRA_PARAM}"}"""
+                        }
+                        echo "Prepared request body: ${env.REQUEST_BODY}"
                     } else {
-                        env.REQUEST_BODY = """{"id": "${params.NUMBER}", "region": "${params.COUNTRY}", "capability": "${params.FEATURE}", "additionalInfo": "${params.EXTRA_PARAM}"}"""
+                        env.QUERY_PARAMS = "number=${params.NUMBER}&country=${params.COUNTRY}&feature=${params.FEATURE}"
+                        if (params.SERVICE == 'ServiceB') {
+                            env.QUERY_PARAMS += "&extraParam=${params.EXTRA_PARAM}"
+                        }
+                        echo "Prepared query parameters: ${env.QUERY_PARAMS}"
                     }
-                    echo "Prepared request body: ${env.REQUEST_BODY}"
                 }
             }
         }
@@ -85,13 +96,21 @@ pipeline {
                     def statusCode
                     try {
                         timeout(time: 30, unit: 'SECONDS') {
-                            response = sh(script: """
-                                curl -s -w "\\n%{http_code}" -X POST \
-                                -H "Content-Type: application/json" \
-                                -H "X-Correlation-ID: ${env.CORRELATION_ID}" \
-                                -d '${env.REQUEST_BODY}' \
-                                ${env.SERVICE_URL}
-                            """, returnStdout: true).trim()
+                            if (params.HTTP_METHOD == 'POST') {
+                                response = sh(script: """
+                                    curl -s -w "\\n%{http_code}" -X POST \
+                                    -H "Content-Type: application/json" \
+                                    -H "X-Correlation-ID: ${env.CORRELATION_ID}" \
+                                    -d '${env.REQUEST_BODY}' \
+                                    ${env.SERVICE_URL}
+                                """, returnStdout: true).trim()
+                            } else { // GET
+                                response = sh(script: """
+                                    curl -s -w "\\n%{http_code}" -X GET \
+                                    -H "X-Correlation-ID: ${env.CORRELATION_ID}" \
+                                    "${env.SERVICE_URL}?${env.QUERY_PARAMS}"
+                                """, returnStdout: true).trim()
+                            }
                             
                             // The last line of the response is the status code
                             def responseLines = response.readLines()
@@ -101,7 +120,7 @@ pipeline {
                             echo "API call completed. Response status: ${statusCode}"
                             echo "Response body: ${responseBody}"
                             
-                            if (statusCode != "201") {
+                            if (statusCode != "200" && statusCode != "201") {
                                 error "API call failed with status code: ${statusCode}"
                             }
                         }
@@ -134,3 +153,4 @@ pipeline {
     }
 }
 ```
+
