@@ -2,7 +2,7 @@ pipeline {
     agent any
     
     options {
-        timeout(time: 1, unit: 'HOURS')
+        timeout(time: 15, unit: 'MINUTES')
         timestamps()
     }
     
@@ -17,6 +17,19 @@ pipeline {
     ])
     
     stages {
+        stage('Print Inputs') {
+            steps {
+                script {
+                    echo "Job started with the following inputs:"
+                    echo "SERVICE: ${params.SERVICE}"
+                    echo "NUMBER: ${params.NUMBER}"
+                    echo "COUNTRY: ${params.COUNTRY}"
+                    echo "FEATURE: ${params.FEATURE}"
+                    echo "EXTRA_PARAM: ${params.EXTRA_PARAM}"
+                }
+            }
+        }
+
         stage('Validate Input') {
             steps {
                 script {
@@ -48,32 +61,18 @@ pipeline {
             steps {
                 script {
                     echo "Preparing API call..."
-                    def serviceUrl = params.SERVICE == 'ServiceA' ? 'http://serviceA.example.com/api' : 'http://serviceB.example.com/api'
-                    echo "Service URL: ${serviceUrl}"
+                    env.SERVICE_URL = params.SERVICE == 'ServiceA' ? 'http://serviceA.example.com/api' : 'http://serviceB.example.com/api'
+                    echo "Service URL: ${env.SERVICE_URL}"
                     
-                    def correlationId = UUID.randomUUID().toString()
-                    echo "Generated Correlation ID: ${correlationId}"
+                    env.CORRELATION_ID = UUID.randomUUID().toString()
+                    echo "Generated Correlation ID: ${env.CORRELATION_ID}"
                     
-                    def requestBody
                     if (params.SERVICE == 'ServiceA') {
-                        requestBody = """{
-                            "number": "${params.NUMBER}",
-                            "country": "${params.COUNTRY}",
-                            "feature": "${params.FEATURE}"
-                        }"""
+                        env.REQUEST_BODY = """{"number": "${params.NUMBER}", "country": "${params.COUNTRY}", "feature": "${params.FEATURE}"}"""
                     } else {
-                        requestBody = """{
-                            "id": "${params.NUMBER}",
-                            "region": "${params.COUNTRY}",
-                            "capability": "${params.FEATURE}",
-                            "additionalInfo": "${params.EXTRA_PARAM}"
-                        }"""
+                        env.REQUEST_BODY = """{"id": "${params.NUMBER}", "region": "${params.COUNTRY}", "capability": "${params.FEATURE}", "additionalInfo": "${params.EXTRA_PARAM}"}"""
                     }
-                    echo "Prepared request body: ${requestBody}"
-                    
-                    env.SERVICE_URL = serviceUrl
-                    env.CORRELATION_ID = correlationId
-                    env.REQUEST_BODY = requestBody
+                    echo "Prepared request body: ${env.REQUEST_BODY}"
                 }
             }
         }
@@ -83,23 +82,36 @@ pipeline {
                 script {
                     echo "Making API call..."
                     def response
+                    def statusCode
                     try {
-                        response = httpRequest(
-                            url: env.SERVICE_URL,
-                            httpMode: 'POST',
-                            contentType: 'APPLICATION_JSON',
-                            customHeaders: [[name: 'X-Correlation-ID', value: env.CORRELATION_ID]],
-                            requestBody: env.REQUEST_BODY
-                        )
-                        echo "API call completed. Response status: ${response.status}"
-                        echo "Response body: ${response.content}"
-                        
-                        if (response.status != 201) {
-                            error "API call failed with status code: ${response.status}"
+                        timeout(time: 30, unit: 'SECONDS') {
+                            response = sh(script: """
+                                curl -s -w "\\n%{http_code}" -X POST \
+                                -H "Content-Type: application/json" \
+                                -H "X-Correlation-ID: ${env.CORRELATION_ID}" \
+                                -d '${env.REQUEST_BODY}' \
+                                ${env.SERVICE_URL}
+                            """, returnStdout: true).trim()
+                            
+                            // The last line of the response is the status code
+                            def responseLines = response.readLines()
+                            statusCode = responseLines.last()
+                            def responseBody = responseLines.dropRight(1).join("\n")
+                            
+                            echo "API call completed. Response status: ${statusCode}"
+                            echo "Response body: ${responseBody}"
+                            
+                            if (statusCode != "201") {
+                                error "API call failed with status code: ${statusCode}"
+                            }
                         }
                     } catch (Exception e) {
-                        echo "Exception occurred during API call: ${e.getMessage()}"
-                        throw e
+                        echo "Exception occurred during API call:"
+                        echo "Exception type: ${e.getClass().getName()}"
+                        echo "Exception message: ${e.getMessage()}"
+                        echo "Stack trace:"
+                        e.printStackTrace()
+                        error "API call failed due to exception. See above for details."
                     }
                 }
             }
@@ -121,3 +133,4 @@ pipeline {
         }
     }
 }
+```
