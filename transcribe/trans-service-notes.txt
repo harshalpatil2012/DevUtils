@@ -1,0 +1,4 @@
+python trans-service.py install
+python trans-service.py start
+python trans-service.py stop
+python trans-service.py remove
