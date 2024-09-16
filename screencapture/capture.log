@@ -70,3 +70,76 @@ Hew 10 £3[ Ml tanscribepy £2[[tans-servicepy 3] vans-service-notestt E3|Mgit-t
 Normal text file length : 1,296 lines : 45 Ln:30. Col: 1 Pos: 873 Windows (CRLF) UTF-8 INS
 are -: — 3 ¢€ 10] B 44 id ENG a 12:32 ge
 O25, ciny me SO Search UWS #@CP#OB+tA4 OSE: aN FO® seo02000 F
+
+----------------- SEPARATOR -----------------
+Lei! *D.\ GitHubProjects\DevUtils\screencapture\screen_capture.py - Notepad-+ - a x
+File Edit Search View Encoding Language Settings Tools Macro Run Plugins Window 2 +4 Xx
+22S 2.84 hha mls 2/GE S71 FORA sees
+Hirew 10 23| MM tanscribepy e2|ltans-servicepy ea] trans-service-notestxt Ea] git-tokenstxt e|I model.cont 3] transcribe2.py £3|l meeting transcriptiontt L3|IMM app-log £3 FE screen _capturepy Ea copturetog 13|MMeppiog a] no
+115
+116 end_time = time.time() Find x
+117 logger. info(£"Ock completed in {end_time - start_time:.2f} seccnds")
+
+118 7~ 7~ Find Replace Find in Files Find in Projects Mark
+119 return text
+121 # Upload to Git (with silent Git operations and hardcoded token)
+
+122 |[EJdef upload_to_git(text): Count
+123 |) try:
+
+124 os.chdir{REPO_PATH) In selection Find alin Current
+125
+we |G with open(LOG PATH, ‘a’, encoding='utf-§"') as f: Ctactard direction Find Allin All Opened
+127 f£.write("\n----------------- SEPARATOR -----------------\n") Catch whole word only Documents
+128 f.write (text) (Cmatch case dose
+129 @wrap around
+130 subprocess.call({"git", "add", LOG_PATH])
+
+131 subprocess.call(["git", "commit", "-m", "Updated screen capture log", "--quiet"]) Search Mode RA rransparency
+132 Onormal on losing focus
+133 # Hardcoded Git token (replace with your actual token) Oatended (jn, rt 10, be.) Oatways
+134 GTT_TOKEN = "YOUR_GTT_TOKEN" ORegular expression, matches newline i]
+
+135 remote_url = subprocess.check_output(["git", "config", "--get", "remote.origin.url"]) .de . A
+136 1A if "https://" in remote_url:
+
+137 remote_url = remote_url.replace("https://", f£"https://{GIT_TOKEN}@") N /
+
+138 subprocess.call(["git", "push", remote_url, "--quiet"])
+
+139
+140 logger. info("Successfully committed and pushed te GitEub")
+
+141 |E) — except Exception as e:
+
+142 logger.error({£"Failed te commit and push: {str(e)}")
+
+143
+144 # Main loop
+145 [Eig name = '_ mair_':
+
+146 |E) while True:
+
+147 logger. info("Capturing screen...")
+
+148 text = capture_and_ocr()
+
+149
+150 A if text.strip{) and text != previous_text:
+
+151 logger. info("Upleading te Git...")
+
+152 upload_to_git (text)
+
+153 previous text = text
+is4 1A else:
+
+155 logger.warning("Nc significant changes detected, skipping upload.")
+
+156
+157 time.sleep (30)
+
+Python file length | 5,492. lines: 157 Ln: 157 Col: 23 Pos: 5,493 Windows (CRLF) UTF-8 INS
+
+are - @ ENG 1232 pe
+OF oon i Q Search "= bo Ff € 2 4 4 (CO) bog a £ A ‘nF ®® 6092004 na
