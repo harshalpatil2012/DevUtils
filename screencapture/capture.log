@@ -406,3 +406,57 @@ a8 subprocess.call(["git", "push", "--quiet"])
 Python file length | 3,732 lines: 108 Ln: 108 Col: 23 Pos: 3,733 Windows (CRLF) UTF-8 INS
 are = -— 3 ¢€ 13] B 464 > ENG a 12:22 pe
 OF oon mm = & Search wv. he w”# € | ga * 4% (CO) bog | A ‘nF ® ® 4609-2004 na
+
+----------------- SEPARATOR -----------------
+lez’ D.\GitHubProjects\DevUtils\screencapture\screen_capture.py - Notepad++ - eo xX
+File Edit Search View Encoding Language Settings Tools Macro Run Plugins Window 2 + yx
+eS s.8l4 OOo mls 2 | GR S71 FORA s|eenae
+Hirew 10 23[ MM tanscribepy e2|tans-servicepy ea] trans-service-notesxt | git-tokenstxt e3|I model.cont 3] transcribe2.py £|I meeting transcriptiontt L3|IMM applog £3 [AW screen_capturepy Ea copturetog 13|MMeppiog a] no
+
+T import time
+2 import os
+3 import pytesseract
+4 from PIL import Image
+5 import cv2
+6 import pyautogui
+7 import subprocess
+8 import logging
+9 from logging. handlers import RotatingFileHandler
+10 import numpy as np
+qt
+12 # Paths
+13 TESSERACT PATH = r"c:/Eregram Files/Tesseract-OCR/tesseract .exe"
+14 LOG_PATH = 1D: /GitHubProjects/SevUtils/screencapture/capture.1og”
+15 APP_LOG PATH = 1"D:/GitEubPrejects/SevUtils/screencapture/app.1¢g"
+16 LOCAL_IMG_PATH = r"D:/GitKubPrejects/JevUtils/screencapture/screen_capture.png”
+17 REPO PATH = r"D:\GitHubProjects\JevUtils\screencapture"
+18
+19 # Git token (optional)
+20 GIT_TOKEN = os.getenv("(NN") # Retrieve from environment variable
+21
+22 # Tesseract setup
+23 pytesseract .pytesseract .tesseract_cmd = TESSERACT_PATH
+24
+25 # Logging
+26 logging. basicConfig(level=logging. INFO)
+27 logger = logging. getLogger ("ScreencaptureLegger")
+28 handler = RotatingFileHandler (APP_LOG PATH, maxBytes=5000000, backupCount=5)
+29 logger. addHandler (handler)
+30
+31 # Caching for OCR results
+32 previous text ="
+33
+34 # optimized image preprocessing
+35 def preprocess_inace (image) :
+36 # Convert Eo grayscale
+31 gray = cv2.cvtColor (image, cv2.COLOR_BGR2GRAY)
+38
+39 # Adaptive thresholding for better handling of varying lighting
+40 thresh = cv2.adaptiveThreshold(gray, 255, cv2.ADAPTIVE_THRESH GAUSSIAN_C,
+41 cv2.THRESH BINARY, 11, 2)
+42
+43 # Morphological opening for noise removal
+AA vernal = nn anset/1 1) nn nine ay
+Python file length : 3,732. lines : 108 Ln: 20 Col:33. Sel:911 Windows (CRLF) UTF-8 INS
+are = _— = ¢ o | B 464 nd ENG a 12:22 pe
+OF om mm = & Search wv. he w@# € 2 ga * + (CO) bog | A ‘nF ® ® 4609-2004 a
