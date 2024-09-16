@@ -1,364 +1,49 @@
 
 ----------------- SEPARATOR -----------------
-Administrator: Command Prampt - python screen_capture.py - a a
-D: \GitHubProjects\DevUtils\screencapture>cls
-D: \GitHubProjects\DevUtils\screencapture>python screen_capture.py
-O 26° - . ~ ENG » tay 1206 2 0
-“i ad Serres “bes CP MBL4O Me na eg) te scoot BT
-
------------------ SEPARATOR -----------------
 Administratar: Command Prompt - python screen_capture.py - oO x
-D: \GitHubProjects\DevUtils\screencapture>cls
-D: \GitHubProjects\DevUtils\screencapture>python screen_capture.py
-INFO:ScreenCaptureLogger :Capturing screen...
-INFO:ScreenCaptureLogger :Starting OCR...
-INFO:ScreenCaptureLogger :0CR completed in 8.63 seconds
-INFO:ScreenCaptureLogger :Uploading to Git...
-[main 627db1b] Updated screen capture log
-1 file changed, 5 insertions(+), 104 deletions(-
-Enumerating objects: 14, done.
-Counting objects: 180% (14/14), done.
-Delta compression using up to 16 threads
-Compressing objects: 100% (12/12), done.
-Writing objects: 100% (12/12), 3.31 KiB | 1.10 MiB/s, done.
-Total 12 (delta 4), reused @ (delta @), pack-reused @ (from 8)
-remote: Resolving deltas: 100% (4/4), completed with 1 local object.
-To https: //github.com/harshalpatil2012/Devutils.git
-2407e58..627db1b main -> main
-
-INFO:ScreenCaptureLogger :Successfully committed and pushed to GitHub
-INFO:ScreenCaptureLogger :Capturing screen...
-
-O 26% 4 Q Seach a @ 446 9 ENG ax ayy tay 1207 gp
-
-Sut aa Search . we ow-kz © 8 + + uw in SH  6.9-2004 Fone
-
------------------ SEPARATOR -----------------
-Administratar: Command Prompt - python screen_capture.py - oO x
-D: \GitHubProjects\DevUtils\screencapture>python screen_capture.py
-
-Ox 4 Q Search a & ¢ a | 4 4 © ®?. A ENG on oy dep 1208 a,
-
-Sul a search . em & > ue in SP 16-09-2024 “wae
-
------------------ SEPARATOR -----------------
-- mM @ +¢ * * © 6 569000 2 €@ G aaashht ¢oaasgsaeOF F ® x Ot - o xX
-€ > G 8% github.com/harshalpatil2012/DevUtils/blob/main/screencapture/capture.log Ge aB@oege@ae.s @:
-_ *
-= q) harshalpatil2012 / DevUtils Q Type [to search ++ On B
-<> Code © Issues $9 Pullrequests © Actions (FH Projects D1 wiki © Security |x Insights Settings
-(1 Files DevUtils / screencapture / capture.log (0) aad
-F main . + Q DHistory
-Q Goto file t
-Blame 42 lines (34 loc) - 1.71 KB & Code 55% faster with GitHub Copilot Rw O ws 2 -~ PB
-> BB SonarScans “
-> [Mm SpringBoot-App-Deployment 1
-2 ae eee eens o----- SEPARATOR -----------------
-> BB SystemDesign 3 Administrator: Command Prampt - python screen_capture.py - a a
-4 D: \GitHubProjects\DevUtils\screencapture>cls
-> BB Tomcat \ Jects\ \ P
-5 D: \GitHubProjects\DevUtils\screencapture>python screen_capture.py
-> Be Ul-Application-Setup-Script 6 0 26° - . ~ ENG » tay 1206 20
-ao. 7 “iad Serres “bes CP MBL40 Me na eg) te scoot BT
-> BE UtilityScripts 3
-¥ fim screencapture 9 sressnsosesconnes, SEPARATOR, <---> -52220-0000
-10 Administratar: Command Prompt - python screen_capture.py - 00 x
-| © capture.log a1 D: \GitHubProjects\DevUtils\screencapture>cls
-12 D: \GitHubProjects\DevUtils\screencapture>python screen_capture.
-© screen_capture.py \ jects\ \ Pp py \_cap py
-3 INFO:ScreenCaptureLogger :Capturing screen...
-> @B transcribe 14 INFO:ScreenCaptureLogger :Starting OCR...
-. 15 INFO:ScreenCaptureLogger :@CR completed in 8.63 seconds
-DB F5-logging te Intos. : | |
-:ScreenCaptureLogger :Uploading to Git...
-(1) README.md v7 [main 627db1b] Updated screen capture log
-18 1 file changed, 5 insertions(+), 104 deletions(-
-B lista 19 Enumerating objects: 14, done.
-+ 20 Counting objects: 188% (14/14), done.
-© maven-perf-settings B obs (14/14)
-a Delta compression using up to 16 threads
-https://github.com/harshalpatil2012/DevUtils/blob/main/screencapture/capture.log PESSing objects: 100% (12/12), done. +
-26°C = -_— = ¢ 2 1o] B 464 id ENG = 12:08 pn,
-wv Le A ® di a ay
-, ae mm = & Search - bo om aw” € ga * + (©) q bog a ww FD ® 609200 B
-
------------------ SEPARATOR -----------------
-- mM @ + * * © @6@ 59000 @ @ G5 @ aas ht} FSG aas ae OFF BQ x + - o xX
-€ > G  &% leetcode.cafall/256 html#:~:text=There%20are%20a%20row%200f houses%20have%20the%20same%20color. ey @H@O@e@o- 5 0:
-= 256. Paint House
-fe
-hoe SD ~ . . a - .
-es ne SS There are a row of n houses, each house can be painted with one of the three colors: red, blue or green. The cost of painting each house with a certain
-& a * Samm color is different. You have to paint all the houses such that no two adjacent houses have the same color.
-3 BS fae
-tS PS fn The cost of painting each house with a certain color is represented by a n x 3 cost matrix. For example, costs[@][@] is the cost of painting house 0
-. : ‘e with color red; costs[1][2] is the cost of painting house 1 with color green, and so on... Find the minimum cost to paint all houses.
-‘ ee J
-‘, —_— Note:
-All costs are positive integers.
-DONATE TC
-CHANGE
-Example:
-This brain Input: [[17,2,17],[16,16,5],[14,3,19]]
-Output: 10
-condition Explanation: Paint house @ into blue, paint house 1 into green, paint house 2 into blue.
-. . Minimum cost: 2+5 +3 = 10.
-is taking
-his life. Difficulty:
-Hep
-save him!
-Lock:
-Y Camname
-emneeeee = Led anegernen RE se oye anne DX
-SE NEE te e es
-° mn 9 BO SS RES
-et I wee on ee Ey a .
-26°C a — & Oo ENG 12:08
-oN, BE seach ~ Eee HEC RDO41 0 FSM > Heme yohne
-
------------------ SEPARATOR -----------------
-~- mM @ ¢ * * © 6 56000 &2 €8 G aaashht ¢ oa as Ae OF F Ox Ot - o xX
-€ > G 8%. github.com/harshalpatil2012/DevUtils/blob/main/screencapture/capture.log Ge aBfBOoOge@aoa.s @:
-, DevUtils / screencapture / capture.log 1 Top
-(1 Files
-Blame 117 lines (187 loc) - 5.16 KB & Code 55% faster with GitHub Copilot Rw O ws 2 -~ BP
-P main + + Q _
-Q Gotofil 89 fe
-t
-oto me 98 hoe SD~ 2. a.
-. 1 es ne SS There are a row of n houses, each house can be painted with one of the three colors: red, blue or green. The cost of painting each house with a certain
-> Op idea 92 & a * Samm color is different. You have to paint all the houses such that no two adjacent houses have the same color.
-> BE AWS 93 3 BS fae
-94 +S PS fn The cost of painting each house with a certain color is represented by an x 3 cost matrix. For example, costs[@][@] is the cost of painting house 0
-> BB Agile 95 . + fe with color red; costs[1][2] is the cost of painting house 1 with color green, and so on... Find the minimum cost to paint all houses.
-96 feed
-> Data-Analysis
-La ¥ 7 «, —= Note:
-> BB Database 98 All costs are positive integers.
-99 DONATE TC
-> BB Embedded-Redis 108 CHANGE
-> Bm ExceptionHandling ter Example:
-102 This brain Input: [[17,2,17],[16,16,5], [14,3,19]]
-> Bm File-Handling 103 Output: 1¢
-7 104 condition Explanation: Paint house inte blue, paint house 1 into green, paint house 2 into blue.
-> Bim Git-BitBucket if é p Breen, P
-105 . . Minimum cost: 2+5 +3 = 18.
-> Bl ImMemory-H2-DB-Spring-Boot-... 106 is taking
-107 his life. Difficulty:
-> Bp Intell 108 Hep
-> BE Interview 109 save him!
-118 Lock:
-> BB JMeter a4 Y Camname
-7 112 emneeeee = Led anegernen RE se oye anne DX
-> BB Jira-BitBucket-Integration 8 ¥
-113 SE NEE te e es
-> Be Log4j2-SpringBoot 114 ® mn 9 BO SS RES
-115 et I wee on ee Ey a.
-> BB Monitoring 116 26°C a — & Oo ENG 12:08
-> Bm REST-API 117 oN, BE seach ~ Eee HEC RDO41 @ FSM > Heme yohne
-> BB Redis
-ms = meta EC SOBL1O PS aS ual @
-: he A ® di ei
-ae mm = & Search wv bo aw € gat «* 4% . a we PD ® 609-2004 & os ]
-
------------------ SEPARATOR -----------------
-- mM @ + * * © @6@ 59000 @ @ G5 @ aas ht} FSG aas ae OFF BQ x + - o xX
-€ > G  &% leetcode.cafall/256 html#:~:text=There%20are%20a%20row%200f houses%20have%20the%20same%20color. ey @H@O@e@o- 5 0:
-= 256. Paint House
-fe
-hoe SD ~ . . a - .
-es ne SS There are a row of n houses, each house can be painted with one of the three colors: red, blue or green. The cost of painting each house with a certain
-& a * Samm color is different. You have to paint all the houses such that no two adjacent houses have the same color.
-3 BS fae
-tS PS fn The cost of painting each house with a certain color is represented by a n x 3 cost matrix. For example, costs[@][@] is the cost of painting house 0
-. : ‘e with color red; costs[1][2] is the cost of painting house 1 with color green, and so on... Find the minimum cost to paint all houses.
-‘ ee J
-‘, —_— Note:
-All costs are positive integers.
-DONATE TC
-CHANGE
-Example:
-This brain Input: [[17,2,17],[16,16,5],[14,3,19]]
-Output: 10
-condition Explanation: Paint house @ into blue, paint house 1 into green, paint house 2 into blue.
-. . Minimum cost: 2+5 +3 = 10.
-is taking
-his life. Difficulty:
-Hep
-save him!
-Lock:
-Y Camname
-emneeeee = Led anegernen RE se oye anne DX
-SE NEE te e es
-° mn 9 BO SS RES
-et I wee on ee Ey a .
-26°C a — & Oo ENG 12:09
-oN, BE seach ~ Eee HEC RDO4141 0 FSM > Heme yore
-
------------------ SEPARATOR -----------------
-Administratar: Command Prompt - python screen_capture.py - oO x
-INFO:ScreenCaptureLogger :Capturing screen...
-INFO:ScreenCaptureLogger :Starting OCR...
-INFO:ScreenCaptureLogger :OCR completed in 1.24 seconds
-INFO:ScreenCaptureLogger :Uploading to Git...
-[main e1b2ba5] Updated screen capture log
-1 file changed, 34 insertions(+)
-Enumerating objects: 7, done.
-Counting objects: 100% (7/7), done.
-Delta compression using up to 16 threads
-Compressing objects: 100% (4/4), done.
-riting objects: 100% (4/4), 1.19 KiB | 1.19 MiB/s, done.
-Total 4 (delta 2), reused @ (delta 8), pack-reused @ (from @)
-remote: Resolving deltas: 100% (2/2), completed with 2 local objects.
-To https: //github.com/harshalpatil2012/Devutils.git
-5@cad@8..e1b2ba5 main -> main
-INFO:ScreenCaptureLogger :Successfully conmitted and pushed to GitHub
-INFO:ScreenCaptureLogger :Capturing screen...
-INFO:ScreenCaptureLogger :Starting OCR...
-INFO:ScreenCaptureLogger :OCR completed in 1.51 seconds
-INFO:ScreenCaptureLogger :Uploading to Git...
-[main @292dae] Updated screen capture log
-1 file changed, 45 insertions(+)
-Enumerating objects: 7, done.
-Counting objects: 100% (7/7), done.
-Delta compression using up to 16 threads
-Compressing objects: 100% (4/4), done.
-riting objects: 100% (4/4), 1.21 KiB | 1.21 MiB/s, done.
-Total 4 (delta 2), reused @ (delta 8), pack-reused @ (from @)
-remote: Resolving deltas: 100% (2/2), completed with 2 local objects.
-To https: //github.com/harshalpatil2012/Devutils.git
-e1b2ba5..0292dae_ main -> main
-INFO:ScreenCaptureLogger :Successfully conmitted and pushed to GitHub
-INFO:ScreenCaptureLogger :Capturing screen...
-INFO:ScreenCaptureLogger :Starting OCR...
-INFO:ScreenCaptureLogger :OCR completed in 1.32 seconds
-INFO:ScreenCaptureLogger :Uploading to Git...
-[main 3b@e296] Updated screen capture log
-1 file changed, 34 insertions(+)
-Enumerating objects: 7, done.
-Counting objects: 100% (7/7), done.
-Delta compression using up to 16 threads
-Compressing objects: 100% (4/4), done.
-riting objects: 100% (4/4), 461 bytes | 230.00 KiB/s, done.
-Total 4 (delta 2), reused @ (delta 8), pack-reused @ (from @)
-remote: Resolving deltas: 100% (2/2), completed with 2 local objects.
-To https: //github.com/harshalpatil2012/Devutils.git
-@292dae..3b0e296 main -> main
-INFO:ScreenCaptureLogger :Successfully conmitted and pushed to GitHub
-Orr -  Q Search as ¢ @ 44 ©6 9 A ENG @ oy tw 1209 pw
-Sut aa Search + uw «ss € &* + + we in 9) 16.09-2024 Fane
-
------------------ SEPARATOR -----------------
-Administratar: Command Prompt - python screen_capture.py - oO x
-@ shapely-2.0.6 tifffile-2024.8.30 validators-0.34.0
-[ ] A new release of pip is available: >
-[ ] To update, run:
-D: \GitHubProjects\DevUtils\screencapture>pip install keras-ocr
-Requirement already satisfied: keras-ocr in c:\users\harsh\appdata\ local \prograns \python\python311\1ib\site-packages (8.9.3)
-Requirement already satisfied: editdistance in c:\users\harsh\appdata\ local \programs\python\python311\1ib\site-packages (from keras-ocr) (8.8.1)
-Requirement already satisfied: efficientnet==1.0.0 in c:\users\harsh\appdata\ local \programs\python\python311\1ib\site-packages (from keras-ocr) (1.0.0)
-Requirement already satisfied: essential_generators in c:\users\harsh\appdata\ local \programs\python\python311\lib\site-packages (from keras-ocr) (1.0)
-Requirement already satisfied: fonttools in c:\users\harsh\appdata\ Local \programs\python\python311\lib\site-packages (from keras-ocr) (4.58.0)
-Requirement already satisfied: imgaug in c:\users\harsh\appdata\ local \programs \python\python311\1ib\site-packages (from keras-ocr) (0.4.8)
-Requirement already satisfied: pyclipper in c:\users\harsh\appdata\ local \programs\python\python311\1ib\site-packages (from keras-ocr) (1.3.@.post5)
-Requirement already satisfied: shapely in c:\users\harsh\appdata\ local \programs\python\python311\lib\site-packages (from keras-ocr) (2.0.6)
-Requirement already satisfied: tqdnm in c:\users\harsh\appdata\ local \prograns\python\python311\1ib\site-packages (from keras-ocr) (4.66.2)
-Requirement already satisfied: validators in c:\users\harsh\appdata\ local \programs\python\python311\1ib\site-packages (from keras-ocr) (8.34.9)
-Requirement already satisfied: keras-applications<=1.0.8,>=1.8.7 in c:\users\harsh\appdata\ local \programs\python\python311\lib\site-packages (from efficientnet==1.0.0->keras-ocr) (1.0.8)
-Requirement already satisfied: scikit-image in c:\users\harsh\appdata\local \programs \python\python311\1ib\site-packages (from efficientnet==1.0.0->keras-ocr) (0.24.8)
-Requirement already satisfied: six in c:\users\harsh\appdata\ local \programs\python\python311\lib\site-packages (from imgaug->keras-ocr) (1.16.0)
-Requirement already satisfied: numpy>=1.15 in c:\users\harsh\appdata\ local \programs\python\python311\1ib\site-packages (from imgaug->keras-ocr) (1.24.3)
-Requirement already satisfied: scipy in c:\users\harsh\appdata\ local \programs\python\python311\1ib\site-packages (from imgaug->keras-ocr) (1.12.0)
-Requirement already satisfied: Pillow in c:\users\harsh\appdata\ local \programs \python\python311\1ib\site-packages (from ingaug->keras-ocr) (10.2.0)
-Requirement already satisfied: matplotlib in c:\users\harsh\appdata\ local \programs\python\python311\lib\site-packages (from imgaug->keras-ocr) (3.8.3)
-Requirement already satisfied: opencv-python in c:\users\harsh\appdata\ local \programs\python\python311\lib\site-packages (from imgaug->keras-ocr) (4.10.0.84)
-Requirement already satisfied: imageio in c:\users\harsh\appdata\ local \programs\python\python311\lib\site-packages (from imgaug->keras-ocr) (2.35.1)
-Requirement already satisfied: colorama in c:\users\harsh\appdata\ local \programs \python\python311\1ib\site-packages (from tqdm->keras-ocr) (8.4.6)
-Requirement already satisfied: hSpy in c:\users\harsh\appdata\ local \programs\python\python311\1ib\site-packages (from keras-applications<=1.8.8, >=1.0.7->efficientnet==1.0.0->keras-ocr) (3.10.8)
-Requirement already satisfied: networkx>=2.8 in c:\users\harsh\appdata\ local \programs\python\python311\lib\site-packages (from scikit-image->efficientnet==1.0.0->keras-ocr) (3.2.1)
-Requirement already satisfied: tifffile>=2022.8.12 in c:\users\harsh\appdata\ local \programs\python\python311\1ib\site-packages (from scikit-image->efficientnet==1.0.0->keras-ocr) (2024.8.30)
-Requirement already satisfied: packaging>=21 in c:\users\harsh\appdatai\ local \programs\python\python311\1ib\site-packages (from scikit-image->efficientnet=-1.0.0->keras-ocr) (24.8)
-Requirement already satisfied: lazy-loader>=0.4 in c:\users\harsh\appdata\ local \programs\python\python311\1ib\site-packages (from scikit-image->efficientnet==1.0.0->keras-ocr) (8.4)
-Requirement already satisfied: contourpy>=1.0.1 in c:\users\harsh\appdata\ local \programs\python\python311\1ib\site-packages (from matplotlib->imgaug->keras-ocr) (1.2.0)
-Requirement already satisfied: cycler>=0.10 in c:\users\harsh\appdata\ local \programs\python\python311\1ib\site-packages (from matplotlib->imgaug->keras-ocr) (8.12.1)
-Requirement already satisfied: kiwisolver>=1.3.1 in c:\users\harsh\appdata\ local \programs \python\python311\1ib\site-packages (from matplotlib->imgaug->keras-ocr) (1.4.5)
+Requirement already satisfied: cycler>=0.10 in c:\users\harsh\appdata\ local \programs\python \python311\lib\site-packages (from matplotlib->imgaug->keras-ocr) (8.12.1)
+Requirement already satisfied: kiwisolver>=1.3.1 in c:\users\harsh\appdata\ local \programs \python\python311\1ib\site-packages (from matplotlib->imgaug->keras-ocr} (1.4.5)
 Requirement already satisfied: pyparsing>=2.3.1 in c:\users\harsh\appdata\ local \programs\python\python311\1ib\site-packages (from matplotlib->imgaug->keras-ocr) (3.1.2)
-Requirement already satisfied: python-dateutil>=2.7 in c:\users\harsh\appdata\ local \programs \python\python311\1ib\site-packages (from matplotlib->imgaug->keras-ocr) (2.9.0.postd)
-[ ] A new release of pip is available: >
+Requirement already satisfied: python-dateutil>=2.7 in c:\users\harsh\appdata\ local \programs\python \python311\lib\site-packages (from matplot]ib->imgaug->keras-ocr) (2.9.0.post@)
+[ ] Anew release of pip is available: ->
 [ ] To update, run:
-D: \GitHubProjects\DevUtils\screencapture>python screen_capture.py
-
+D:\GitHubProjects\DevUtils\screencapture>python screen_capture.py
 File "D:\GitHubProjects\DevUtils\screencapture\screen_capture.py", line 67
-
-if _name_ == '_main_’:
+if _name_ == '_main_':
 IndentationError: expected an indented block after function definition on line 63
-D: \GitHubProjects\DevUtils\screencapture>python screen_capture.py
-INFO:ScreenCaptureLogger :Capturing screen...
-NIFTY . . = ENG cx oy ty 1217 pp
-oun am Search + Lk «=e °F @ Gg B+tA+4@0 + = ge aN PM ispa2004
-
------------------ SEPARATOR -----------------
-[Gf D:\GitHubProjects\DevUtils\screencapture\capture.log - Notepad++ - o xX
-
-File Edit Search View Encoding Language Settings Tools Macro Run Plugins Window 2 + vx
-
-JEG 2.8/4 bO|ae¢|@ el 2 s|ER)>71 FORA +e eeee
-
-Ed rew 10 3| Ed tanscribepy 13d trans-service.py 43 Bid trans-service-notes.pt 13[ Eid oit-tokens.nt 43|Ed modet cont 13[ Bid transcribe2 py .3|Ed meeting transcriptionet 3|d app ta 3|d app ta 13 Eid screen capturepy <3 [Af capturelog a| a
-
-276 Requirement already satisfied: colorama in c:\users\harsh\appdata\ local \programs \python\python311\lib\site-packages (from tqdm->keras—ocr) (8.4.6)
-
-277 Requirement already satisfied: hSpy in c:\users\harsh\appdata\ local \programs\python\python311\1ib\site-packages (from keras-applications<=1.8.8,
->=1.0.7->efficientnet==1.0.0->keras-ocr) (3.10.8)
-
-278 Requirement already satisfied: networkx>=2.8 in c:\users\harsh\appdata\ local \programs\python\python311\lib\site-packages (from scikit-image->efficientnet==1.0.0->keras-ocr) (3.2.1)
-
-279 Requirement already satisfied: tifffile>=2022.8.12 in c:\users\harsh\appdata\ local \programs\python\python311\1ib\site-packages (from scikit-image—>efficientnet==1.0.0->keras-ocr)
-(2024.8.30)
-
-280 Requirement already satisfied: packaging>=21 in c:\users\harsh\appdatai\ local \programs\python\python311\lib\site-packages (from scikit—image->efficientnet=-1.0.0->keras-ocr) (24.8)
-
-281 Requirement already satisfied: lazy-loader>=0.4 in c:\users\harsh\appdata\ local \programs\python\python311\1lib\site-packages (from scikit-image—>efficientnet==1.0.0->keras-ocr)
-(8.4)
-
-282 Requirement already satisfied: contourpy>=1.0.1 in c:\users\harsh\appdata\ local \programs\python\python311\1ib\site-packages (from matplotlib->imgaug->keras-ocr) (1.2.0)
-
-283 Requirement already satisfied: cycler>=0.10 in c:\users\harsh\appdata\ local \programs\python\python311\1ib\site-packages (from matplotlib->imgaug->keras-ocr) (8.12.1)
-
-284 Requirement already satisfied: kiwisolver>=1.3.1 in c:\users\harsh\appdata\ local \programs \python\python311\lib\site-packages (from matplotlib->imgaug->keras-ocr) (1.4.5)
-
-285 Requirement already satisfied: pyparsing>=2.3.1 in c:\users\harsh\appdata\ local \programs\python\python311\1ib\site-packages (from matplotlib->imgaug->keras-ocr) (3.1.2)
-
-286 Requirement already satisfied: python-dateutil>=2.7 in c:\users\harsh\appdata\ local \programs \python\python311\lib\site-packages (from matplotlib->imgaug->keras-ocr) (2.9.0.postd)
-
-287 [ ] A new release of pip is available: >
-
-288 [ ] To update, run:
-
-289 OD: \GitHubProjects\DevUtils\screencapture>python screen_capture.py
-
-290
-
-291 File "D:\GitHubProjects\DevUtils\screencapture\screen_capture.py", line 67
-
-292
-
-293 if mame == ' main’:
-
-294  IndentationError: expected an indented block after function definition on line 63
-
-295  D: \GitHubProjects\DevUtils\screencapture>python screen_capture.py
-
-296 INFO:ScreenCaptureLogger :Capturing screen...
-
-297 NIFTY . . = ENG cx oy ty 1217 pp
-
-298 oun am Search + Lk «=e °F @ Gg BHtA+4@0 + = ge aN PM ispa2004
-
-299
-
-Normal text file length : 17,182 lines : 299 Ln: 154 Col: 19° Pos: 7,209 Windows (CRLF) UTF-8 INS
-
-HP) vey an - = ¢ 1a] B a vid ENG ax 1217 pe
-
-+0.01% Bm Search hd LL =~ & € ® Bit+t@Oen : a NN FP) @ 6002008 &
+D:\GitHubProjects\DevUtils\screencapture>python screen_capture.py
+INFO: ScreenCaptureLogger :Capturing screen...
+INFO: ScreenCaptureLogger:Starting OCR...
+INFO:ScreenCaptureLogger:0CR completed in 1.93 seconds
+INFO: ScreenCaptureLogger :Uploading to Git...
+[main 1332c6c] Updated screen capture log
+1 file changed, 49 insertions(+)
+Enumerating objects: 11, done.
+Counting objects: 1¢@% (11/11), done.
+Delta compression using up to 16 threads
+Compressing objects: 100% (8/8), done.
+uriting objects: 100% (8/8), 2.24 KiB | 1.12 MiB/s, done.
+Total 8 (delta 4), reused @ (delta @), pack-reused @ (from @)
+remote: Resolving deltas: 100% (4/4), completed with 2 local objects.
+To https: //github.com/harshalpatil2@12/DevUtils.git
+3be296..1332c6c_ main -> main
+INFO: ScreenCaptureLogger:Successfully committed and pushed to GitHub
+INFO: ScreenCaptureLogger :Capturing screen...
+INFO: ScreenCaptureLogger:Starting OCR...
+INFO:ScreenCaptureLogger:0CR completed in 2.12 seconds
+INFO: ScreenCaptureLogger :Uploading to Git...
+[main £852c37] Updated screen capture log
+1 file changed, 66 insertions(+)
+Enumerating objects: 7, done.
+Counting objects: 1¢@% (7/7), done.
+Delta compression using up to 16 threads
+Compressing objects: 100% (4/4), done.
+uriting objects: 100% (4/4), 1.16 KiB | 1.16 MiB/s, done.
+Total 4 (delta 2), reused @ (delta @), pack-reused @ (from @)
+remote: Resolving deltas: 100% (2/2), completed with 2 local objects.
+To https: //github.com/harshalpati12@12/DevUtils.git
+1332c6c..#852c37_ main -> main
+INFO: ScreenCaptureLogger:Successfully committed and pushed to GitHub
+INFO: ScreenCaptureLogger :Capturing screen...
+NIFTY a a ENG cx ay tg, W217 gw
+Os a & Search bom & © 440+ 2 a TN DM iec9-2004 Be
