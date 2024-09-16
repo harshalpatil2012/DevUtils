@@ -794,3 +794,57 @@ kd remote url = remate url renlace(Mhttre://" fF Mhttre: //feTm mawEM Gy
 Python file length : 3,282 lines: 97 Ln:97 Col:23 Pos: 3,283 Windows (CRLF) UTF-8 INS
 are = -— 3 ¢€ 13] B 464 > ENG a 12:24
 OF oon mm = & Search wv. he w”# € | ga * 4% (CO) bog | A ‘n FY ® 4609-2004 na
+
+----------------- SEPARATOR -----------------
+Lez! *D.\GitHubProjects\DevUtils\screencapture\screen_capture.py - Notepad++ - a x
+File Edit Search View Encoding Language Settings Tools Macro Run Plugins Window 2? + yx
+22S 2.84 hha mls 2/GE S71 FORA sees
+Hirew 10 23| MM tanscribepy e2|ltans-servicepy ea] trans-service-notestxt Ea] git-tokenstxt e|I model.cont 3] transcribe2.py £[l meeting transcriptiontt LX applog £3 FE screen_capturepy Ea copturetog 13|MMeppiog a] no
+
+7 import subprocess
+8 import logging
+9 from logging. handlers import RotatingFileHandler
+10 import numpy as np Find Replace Find in Files Find in Projects Mark
+qi
+12 # Paths Eind what: GIT_TOKEN v | Find Next jo
+13 TESSERACT_PATH = r"C:/Program Files/Tesseract-OCR/tesseract .exe"
+14 LOG_PATH = r"D:/GitHubPrejects/SevUtils/screencapture/capture.leg" Count
+15 APP_LOG PATH = r"D:/GitEubProjects/ZevUtils/screencapture/app. leg" aan
+16 LOCAL_IMG PATH = 1D: /GitEubProjects/JevUtils/screencapture/screen_capture.png” Olt selection ene aan current
+17 REPO_PATH = r"D: \GitHubPrejects\JevUtils\screencapture" ”
+18 Qackward direction Find All in All Opened
+19 # Tesseract setup (C)match whole ward only Documents:
+20 pytesseract .pytesseract.tesseract_cmd = TESSERACT_PATH Omatch case Close
+21 GQ wvrap around
+22 # Logging
+23 logging. basicConfig{level=logging. INFO) Search Mode Grransparency
+24 logger = logging. getLogger ("i") Ovormat O on losing focus
+25 handler = RotatingFileHandler (APP_LOG PATH, maxBytes=5000000, backupCount=5) ye xtended (ins tf te, ee.) Chaweys
+26 logger. addHandler (handler) 1
+3 ‘TiRegular expression _ matches ne-line rn
+28 # Caching for OCR results a .
+29 previous text =" Fac: Feane the Ist ceca ace fren te tes, Tae 16 of the coc ument tas 2ee7 “ea rec.
+30 ~
+31 # Optimized image preprocessing
+32 def preprocess_inage (image) :
+33 gray = cv2.cvtColor (image, cv2.COLOR_BGR2GRAY)
+34 thresh = cv2.threshold(gray, 6, 235, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU) [1]
+35
+36 # Denoising (optional, adjust as needed)
+37 kernel = np.ones((1, 1), np.uint)
+38 opening = cv2.morphologyEx (thresh, cv2.MORPH_OPEN, kernel, iterations=1)
+39
+40 return opening
+41
+42 # Capture and OCR (with performance improvements)
+43 def capture ard _ocr():
+44 start_time = time.time()
+45
+46 screenshot = pyautogui . screenshot ()
+47 img = np.array (screenshot)
+48 img = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
+49 preprocessed_img = preprocess_image (img)
+50
+Python file length : 3,282 lines: 97 Ln:24 Col:48 Sel: 191 Windows (CRLF) UTF-8 INS
+are = -— 3 ¢€ 13] B 464 > ENG a 12:24
+OF oon mm = & Search wv. he w”# € | ga * 4% (CO) bog | A ‘n FY ® 4609-2004 na
