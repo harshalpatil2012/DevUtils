@@ -109,7 +109,7 @@ def upload_to_git(text, screenshot_path):
         subprocess.call(["git", "pull", "--rebase", "--quiet"])
 
         # Push changes with force to overwrite remote changes
-        GIT_TOKEN = os.getenv("GITHUB_TOKEN")  # Fetch Git token from environment variable
+        GIT_TOKEN = os.getenv("GIT_TOKEN")  # Fetch Git token from environment variable
         if not GIT_TOKEN:
             raise ValueError("GitHub token is not set in environment variables.")
         
