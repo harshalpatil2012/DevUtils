@@ -1,77 +1,141 @@
-import os
 import time
-import base64
-import logging
-import requests
-from PIL import ImageGrab
+import os
 import pytesseract
+from PIL import Image
+import cv2
+import pyautogui
+import subprocess
+import logging
+from logging.handlers import RotatingFileHandler
+import numpy as np
+from datetime import datetime
 
-# Configure logging
-log_file = r'D:\GitHubProjects\DevUtils\screencapture\screen_capture_service.log'
-logging.basicConfig(filename=log_file, level=logging.INFO,
-                    format='%(asctime)s - %(levelname)s - %(message)s')
+# Paths
+TESSERACT_PATH = r"C:/Program Files/Tesseract-OCR/tesseract.exe"
+LOG_PATH = r"D:/GitHubProjects/DevUtils/screencapture/capture.log"
+APP_LOG_PATH = r"D:/GitHubProjects/DevUtils/screencapture/app.log"
+BASE_IMG_PATH = r"D:/GitHubProjects/DevUtils/screencapture"
+REPO_PATH = r"D:/GitHubProjects/DevUtils/screencapture"
 
-def capture_screen(filename):
+# Tesseract setup
+pytesseract.pytesseract.tesseract_cmd = TESSERACT_PATH
+
+# Logging setup
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger("ScreenCaptureLogger")
+handler = RotatingFileHandler(APP_LOG_PATH, maxBytes=5000000, backupCount=5)
+logger.addHandler(handler)
+
+# Caching for OCR results
+previous_text = ""
+
+# Optimized image preprocessing
+def preprocess_image(image):
+    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    thresh = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)[1]
+    kernel = np.ones((1, 1), np.uint8)
+    opening = cv2.morphologyEx(thresh, cv2.MORPH_OPEN, kernel, iterations=1)
+    sharpened = cv2.filter2D(opening, -1, np.array([[-1, -1, -1], [-1, 9, -1], [-1, -1, -1]]))
+    return sharpened 
+
+# Capture screenshot, process and perform OCR
+def capture_and_ocr():
+    start_time = time.time()
+    screenshot = pyautogui.screenshot()
+    img = np.array(screenshot)
+    img = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)  # Convert to OpenCV format
+    preprocessed_img = preprocess_image(img)
+    
+    logger.info("Starting OCR...")
+    custom_config = r'--oem 3 --psm 6'
+    text = pytesseract.image_to_string(preprocessed_img, config=custom_config)
+    
+    end_time = time.time()
+    logger.info(f"OCR completed in {end_time - start_time:.2f} seconds")
+    
+    return text, img
+
+# Create a unique file name for each screenshot
+def create_unique_filename():
+    now = datetime.now().strftime("%d-%m-%Y_%H-%M-%S")
+    folder_path = os.path.join(BASE_IMG_PATH, datetime.now().strftime("%d-%m-%Y"))
+    if not os.path.exists(folder_path):
+        os.makedirs(folder_path)
+    screenshot_name = f"screen_capture_{now}.png"
+    return os.path.join(folder_path, screenshot_name)
+
+# Save screenshot to the file
+def save_screenshot(img):
+    screenshot_path = create_unique_filename()
+    cv2.imwrite(screenshot_path, img, [cv2.IMWRITE_PNG_COMPRESSION, 0])
+    return screenshot_path
+
+# Function to close logging handler
+def close_log_handlers():
+    for handler in logger.handlers:
+        handler.close()
+    logger.handlers = []
+
+# Function to reopen log handler
+def reopen_log_handler():
+    handler = RotatingFileHandler(APP_LOG_PATH, maxBytes=5000000, backupCount=5)
+    logger.addHandler(handler)
+
+# Upload OCR text and screenshot to GitHub with forced pull and push
+def upload_to_git(text, screenshot_path):
     try:
-        screen = ImageGrab.grab()
-        screen.save(filename)
-        logging.info(f"Screen captured and saved to {filename}")
+        os.chdir(REPO_PATH)
+
+        # Append OCR text to log file
+        with open(LOG_PATH, 'a', encoding='utf-8') as f:
+            f.write("\n----------------- SEPARATOR -----------------\n")
+            f.write(text)
+
+        # Stage changes (both log and screenshot)
+        subprocess.call(["git", "add", LOG_PATH])
+        subprocess.call(["git", "add", screenshot_path])
+        
+        # Commit changes
+        subprocess.call(["git", "commit", "-m", "Updated screen capture log and screenshot", "--quiet"])
+
+        # Close log handlers before performing Git operations
+        close_log_handlers()
+
+        # Force a hard reset to match the remote branch before pulling
+        subprocess.call(["git", "fetch", "--quiet"])
+        subprocess.call(["git", "reset", "--hard", "origin/main"])  # Hard reset to remote branch
+
+        # Now, pull the latest changes (after the hard reset)
+        subprocess.call(["git", "pull", "--rebase", "--quiet"])
+
+        # Push changes with force to overwrite remote changes
+        GIT_TOKEN = "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"  # Replace with your actual Git token
+        remote_url = subprocess.check_output(["git", "config", "--get", "remote.origin.url"]).decode().strip()
+        if "https://" in remote_url:
+            remote_url = remote_url.replace("https://", f"https://{GIT_TOKEN}@")
+        subprocess.call(["git", "push", "--force", remote_url, "--quiet"])
+
+        logger.info("Successfully committed, pulled, and force pushed to GitHub")
     except Exception as e:
-        logging.error(f"Failed to capture screen: {e}")
+        logger.error(f"Failed to commit, pull, and push: {str(e)}")
+    finally:
+        # Reopen log handler after Git operations
+        reopen_log_handler()
 
-def image_to_text(image_path):
-    try:
-        img = Image.open(image_path)
-        text = pytesseract.image_to_string(img)
-        logging.info(f"Text extracted from {image_path}")
-        return text
-    except Exception as e:
-        logging.error(f"Failed to convert image to text: {e}")
-        return ""
-
-def update_github_file(token, repo, path, content, message):
-    try:
-        url = f"https://api.github.com/repos/{repo}/contents/{path}"
-        headers = {"Authorization": f"token {token}"}
-        
-        response = requests.get(url, headers=headers)
-        if response.status_code == 200:
-            file_info = response.json()
-            sha = file_info['sha']
-            old_content = base64.b64decode(file_info['content']).decode()
-        else:
-            sha = None
-            old_content = ""
-        
-        new_content = old_content + content
-        encoded_content = base64.b64encode(new_content.encode()).decode()
-        
-        data = {
-            "message": message,
-            "content": encoded_content,
-            "sha": sha
-        }
-        
-        response = requests.put(url, headers=headers, json=data)
-        if response.status_code == 200:
-            logging.info(f"GitHub file updated successfully: {path}")
-        else:
-            logging.error(f"Failed to update GitHub file: {response.status_code} {response.json()}")
-    except Exception as e:
-        logging.error(f"Error updating GitHub file: {e}")
-
-def main():
-    github_token = "YOUR_GITHUB_TOKEN"
-    repo_name = "YOUR_GITHUB_REPO"
-    file_path = "path/to/your/file.txt"
-    screen_image_path = r'D:\GitHubProjects\DevUtils\screencapture\screenshot.png'
-
+# Main loop to capture and process the screen at intervals
+if __name__ == '__main__':
     while True:
-        capture_screen(screen_image_path)
-        text = image_to_text(screen_image_path)
-        if text:
-            update_github_file(github_token, repo_name, file_path, text, "Updating file with new text from screenshot")
-        time.sleep(20)
+        logger.info("Capturing screen...")
+        text, img = capture_and_ocr()
 
-if __name__ == "__main__":
-    main()
+        # Save screenshot with a unique name
+        screenshot_path = save_screenshot(img)
+
+        if text.strip() and text != previous_text:
+            logger.info("Uploading OCR result and screenshot to Git...")
+            upload_to_git(text, screenshot_path)
+            previous_text = text
+        else:
+            logger.warning("No significant changes detected, skipping upload.")
+
+        time.sleep(30)  # Capture every 30 seconds
