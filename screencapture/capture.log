@@ -1036,3 +1036,57 @@ charactarictics nf vaur ecrean cantires It's aesantial ta eyneriment with differ
 From your IP address - Update location Gemini may display inaccurate info, including about people, so double-check its responses. Your privacy and Gemini Apps
 Orr 4 Searct os ¢ os a] 44 @s @ A ENS as oy tem 1227 pp may
 Mastly sunny an pe aren * L - = > + WG & & u in > SP SSP 46-09-2024 one
+
+----------------- SEPARATOR -----------------
+ez’ *D:\GitHubProjects\DevUtils\screencapture\screen_capture.py - Notepad++ - a x
+File Edit Search View Encoding Language Settings Tools Macro Run Plugins Window 2? + yx
+sIES ssaléhhlae¢ mes 2/EES1 FORA see
+HB new 10 13|M tanscribepy 13|M trans-service py 13MM trans-service-notes.txt 13|IM oit-tokens.pt 13M modet cont 13| IMM tanscribe2 py 13M meeting transcriptiontxt 13| epplog 9 (Al screen_capture py Ea copturetog 13| epplog 43] no
+22 ¥ Logging
+23 logging. basicConfig(level=logging. INFO)
+
+24 logger = logging. getLogger ("ScreencaptureLcgger")
+25 handler = RotatingFileHandler (APP_LOG PATH, maxBytes=5000000, backupCount=5)
+26 logger. addHandler (handler)
+21
+28 # Caching for OCR results
+29 previous text = ""
+30
+31 # Optimized image preprocessing (with sharpening)
+32 def preprocess_inage (image) :
+33 gray = cv2.cvtColor (image, cv2.COLOR_BGR2GRAY)
+34 thresh = cv2.threshold(gray, 6, 235, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU) [1]
+35
+36 # Denoising
+37 kernel = np.ones((1, 1), np.uint@)
+38 opening = cv2.morphologyEx (thresh, cv2.MORPH_OPEN, kernel, iterations=1)
+39
+40 # Sharpening
+41 kernel = np.array({{[-1,-1,-11,
+42 [-1, 9,-1l,
+43 [-1,-1,-11])
+44 sharpened = cv2.filter2D (opening, -1, kernel)
+45
+46 return sharpened
+47
+48 # Capture and OCR
+49 def capture ard ocr():
+50 start_time = time.time()
+51
+52 screenshot = pyautogui . screenshot ()
+53 img = np.array (screenshot)
+54 img = cv2.cvtColor{img, cv2.COLOR_RGB2BGR)
+55 preprocessed_img = preprocess_image (img)
+56
+57 logger.info("Starting OCR...")
+58
+59 custom_config = r'--cem 3 --psm 6!
+60 text = pytesseract.image_to_string(preprocessed_img, config=custom_config)
+61
+62 end_time = time.time()
+63 logger. info(£"Ock completed in {end_time - start_time:.2f} seccnds")
+64
+a5 return fave
+Python file length : 3,414. lines: 103 Ln: 103 Col: 23 Pos: 3,415 Windows (CRLF) UTF-8 INS
+are a —_— = ¢ o| 8B 464 nd ENG a 12:28
+OF om mm = & Search ew: b= a7” € 2 aa * 4+ (CO) bOg i A ‘nF ®® 4609-2004 Lc
