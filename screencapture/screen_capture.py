@@ -15,7 +15,7 @@ TESSERACT_PATH = r"C:/Program Files/Tesseract-OCR/tesseract.exe"
 LOG_PATH = r"D:/GitHubProjects/DevUtils/screencapture/capture.log"
 APP_LOG_PATH = r"D:/GitHubProjects/DevUtils/screencapture/app.log"
 BASE_IMG_PATH = r"D:/GitHubProjects/DevUtils/screencapture"
-REPO_PATH = r"D:/GitHubProjects/DevUtils/screencapture"
+REPO_PATH = r"D:/GitHubProjects/DevUtils"
 
 # Tesseract setup
 pytesseract.pytesseract.tesseract_cmd = TESSERACT_PATH
@@ -55,12 +55,12 @@ def capture_and_ocr():
     
     return text, img
 
-# Create a unique file name for each screenshot
+# Create a unique file name for each screenshot and ensure it is saved in the Git folder
 def create_unique_filename():
     now = datetime.now().strftime("%d-%m-%Y_%H-%M-%S")
     folder_path = os.path.join(BASE_IMG_PATH, datetime.now().strftime("%d-%m-%Y"))
     if not os.path.exists(folder_path):
-        os.makedirs(folder_path)
+        os.makedirs(folder_path)  # Create the folder if it doesn't exist
     screenshot_name = f"screen_capture_{now}.png"
     return os.path.join(folder_path, screenshot_name)
 
@@ -70,13 +70,13 @@ def save_screenshot(img):
     cv2.imwrite(screenshot_path, img, [cv2.IMWRITE_PNG_COMPRESSION, 0])
     return screenshot_path
 
-# Function to close logging handler
+# Close log handlers
 def close_log_handlers():
     for handler in logger.handlers:
         handler.close()
     logger.handlers = []
 
-# Function to reopen log handler
+# Reopen log handler
 def reopen_log_handler():
     handler = RotatingFileHandler(APP_LOG_PATH, maxBytes=5000000, backupCount=5)
     logger.addHandler(handler)
@@ -109,7 +109,10 @@ def upload_to_git(text, screenshot_path):
         subprocess.call(["git", "pull", "--rebase", "--quiet"])
 
         # Push changes with force to overwrite remote changes
-        GIT_TOKEN = "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"  # Replace with your actual Git token
+        GIT_TOKEN = os.getenv("GITHUB_TOKEN")  # Fetch Git token from environment variable
+        if not GIT_TOKEN:
+            raise ValueError("GitHub token is not set in environment variables.")
+        
         remote_url = subprocess.check_output(["git", "config", "--get", "remote.origin.url"]).decode().strip()
         if "https://" in remote_url:
             remote_url = remote_url.replace("https://", f"https://{GIT_TOKEN}@")
