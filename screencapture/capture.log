@@ -1,401 +1,51 @@
 
 ----------------- SEPARATOR -----------------
-Administratar: Command Prompt - python screen_capture.py - oO x
-Requirement already satisfied: cycler>=0.10 in c:\users\harsh\appdata\ local \programs\python \python311\lib\site-packages (from matplotlib->imgaug->keras-ocr) (8.12.1)
-Requirement already satisfied: kiwisolver>=1.3.1 in c:\users\harsh\appdata\ local \programs \python\python311\1ib\site-packages (from matplotlib->imgaug->keras-ocr} (1.4.5)
-Requirement already satisfied: pyparsing>=2.3.1 in c:\users\harsh\appdata\ local \programs\python\python311\1ib\site-packages (from matplotlib->imgaug->keras-ocr) (3.1.2)
-Requirement already satisfied: python-dateutil>=2.7 in c:\users\harsh\appdata\ local \programs\python \python311\lib\site-packages (from matplot]ib->imgaug->keras-ocr) (2.9.0.post@)
-[ ] Anew release of pip is available: ->
-[ ] To update, run:
-D:\GitHubProjects\DevUtils\screencapture>python screen_capture.py
-File "D:\GitHubProjects\DevUtils\screencapture\screen_capture.py", line 67
-if _name_ == '_main_':
-IndentationError: expected an indented block after function definition on line 63
-D:\GitHubProjects\DevUtils\screencapture>python screen_capture.py
-INFO: ScreenCaptureLogger :Capturing screen...
-INFO: ScreenCaptureLogger:Starting OCR...
-INFO:ScreenCaptureLogger:0CR completed in 1.93 seconds
-INFO: ScreenCaptureLogger :Uploading to Git...
-[main 1332c6c] Updated screen capture log
-1 file changed, 49 insertions(+)
-Enumerating objects: 11, done.
-Counting objects: 1¢@% (11/11), done.
-Delta compression using up to 16 threads
-Compressing objects: 100% (8/8), done.
-uriting objects: 100% (8/8), 2.24 KiB | 1.12 MiB/s, done.
-Total 8 (delta 4), reused @ (delta @), pack-reused @ (from @)
-remote: Resolving deltas: 100% (4/4), completed with 2 local objects.
-To https: //github.com/harshalpatil2@12/DevUtils.git
-3be296..1332c6c_ main -> main
-INFO: ScreenCaptureLogger:Successfully committed and pushed to GitHub
-INFO: ScreenCaptureLogger :Capturing screen...
-INFO: ScreenCaptureLogger:Starting OCR...
-INFO:ScreenCaptureLogger:0CR completed in 2.12 seconds
-INFO: ScreenCaptureLogger :Uploading to Git...
-[main £852c37] Updated screen capture log
-1 file changed, 66 insertions(+)
-Enumerating objects: 7, done.
-Counting objects: 1¢@% (7/7), done.
-Delta compression using up to 16 threads
-Compressing objects: 100% (4/4), done.
-uriting objects: 100% (4/4), 1.16 KiB | 1.16 MiB/s, done.
-Total 4 (delta 2), reused @ (delta @), pack-reused @ (from @)
-remote: Resolving deltas: 100% (2/2), completed with 2 local objects.
-To https: //github.com/harshalpati12@12/DevUtils.git
-1332c6c..#852c37_ main -> main
-INFO: ScreenCaptureLogger:Successfully committed and pushed to GitHub
-INFO: ScreenCaptureLogger :Capturing screen...
-NIFTY a a ENG cx ay tg, W217 gw
-Os a & Search bom & © 440+ 2 a TN DM iec9-2004 Be
-
------------------ SEPARATOR -----------------
-vo™M oe x G & 6 6-000 aaesaaaszstets aazssasge@QOrst@eaqestt - a x
-€ CG —-&%_ gemini google.com/u/2/apo/eSae2ctfafcS5ce7 Q* @ 3 @ 8 o @O:
-= Gemini Advanced ~ H @
-
-ume In training, Keras UGR'S potential Tor even nigner accuracy tnrougn Tine-
-tuning could be valuable.
-+ Newchat
-Recommendation
-Recent . . 5 Pp
-For your scenario, | would strongly recommend starting with EasyOCR due to its
-DF Local Git Commit & Push built-in text detection, potential for higher accuracy on complex layouts, and
-(O Vosk Model Path Error multilingual support. If you find its performance or accuracy unsatisfactory, you can
-then explore Keras OCR or experiment further with Pytesseract configurations.
-SQL Interview Questions on...
-Current Scale Questions Remember
-Greeting and Inquiry The "best" OCR engine ultimately depends on the specific characteristics of your
-Show more screen captures. Experimentation and evaluation on a sample of your data are
-crucial to make an informed decision.
-4
-Y Gem manager Sources and related content ~ ©
-@® Help e
-®  Activi JaidedAl/EasyOCR: Ready-to-use
-tivity OCR with 80+ supported languag...
-Settings e . . .
-& 8 Didn't catch that. Try speaking again. (o) u
-@ Pune, Maharashtra, India
-From your IP address + Update location Gemini may display inaccurate info, including about people, so double-check its responses. Your privacy and Gemini Apps
-Onuity 4 Q Seare ye €¢ a8 44 @ g Bg A ENG as @y) tae 1217 ge ty
-+0,01% an search * L - = > > YY + u in PB 1609-2024 Sone
-
------------------ SEPARATOR -----------------
-ed’ D:\GitHubProjects\DevUtils\screencapture\capture.log - Notepad++ - eo xX
-File Edit Search View Encoding Language Settings Tools Macro Run Plugins Window 2 + ¥ xX
-eIHS 22.86 DO mel) 2 |RSS 7 FORA -|eenwe
-Badrew 10. ellis tanscribepy ealligltrans-service py lll trans-service-notes.ot ell ait-tokensoc [lig modelconf ell transcribe2.py elf meeting transcription tt (al app.too ella appog ea[fi screen_capturepy el A capturetog B| no
-35
-56 ume In training, Keras UGR'S potential Tor even nigner accuracy tnrougn Tine-
-
-57 tuning could be valuable.
-58 + Newchat
-59 Recommendation
-60 Recent . . 5 Pp
-61 For your scenario, | would strongly recommend starting with EasyOCR due to its
-62 DF Local Git Commit s Push built-in text detection, potential for higher accuracy on complex layouts, and
-63 (0 Vosk Model Path Error multilingual support. If you find its performance or accuracy unsatisfactory, you can
-64 then explore Keras OCR or experiment further with Pytesseract configurations.
-65 SQL Interview Questions on...
-66 Current Scale Questions Remember
-6? Greeting and Inquiry The “best™ OCR engine ultimately depends on the specific characteristics of your
-68 Show more screen captures. Experimentation and evaluation on a sample of your data are
-69 crucial to make an informed decision.
-70 4
-71 Y Gem manager Sources and related content ~ ©
-72 @® Help e
-73 ® Activi JaidedAl/EasyOCR: Ready-to-use
-74 tivity OCR with 80+ supported languag...
-75 Settingse...
-76 8 Didn't catch that. Try speaking again. (0) u
-77 @ pune, Maharashtra, India
-78 From your IP address + Update location Gemini may display inaccurate info, including about people, so double-check its responses. Your privacy and Gemini Apps
-79 onuity 4 Q Seare ye €¢ a8 44 @ g Bg A ENG as @y) tae 1217 ge ty
-80 +0,018 an search * L - = > > ¥¥ + u in PB 1609-2024 sone
-81
-Normal text file length : 4,450. lines : 81 Lat Col:t Pos: Windows (CRLF UTF-8 INS
-NIFTY - = ENG 1218 ge
-ane Bm Search ~etu tt © 4460893 5 - aN FO ® scorn &
-
------------------ SEPARATOR -----------------
-[Ef >GitHubProjects\DevUtils\screencapture\capture.log - Novepad-+ - a x
-Se Edt Search Yew Encoding Language Settngs Toos Macro Run 2ugins Whdow 2 +x
-.HG .2eléhh| sel des s/ER SI FORA + |e ee
-Ed rew 10 3d tanscribepy [Bid trans-servicepy 13[Bid tans-service-notes.pt 13 Eid oit-tokens.nt 13|fid modet cont 13 [fid transcribe2 py <3 Eid meeting transcription 3d epptca 3d epptca 13] Eid screen capturepy 3 [AY capturelog a| a
-35
-56 ume In training, Keras UGR'S potential Tor even nigner accuracy tnrougn Tine-
-
-37 tuning could be valuable.
-
-38 + Newchat
-
-39 Recommendation
-
-60 Recent. . 5 Pp
-
-61 For your scenario, | would strongly recommend starting with BasyOCR due to its
-
-62 DF Local Git Commit « Push built-in text detection, potential for higher accuracy on complex layouts, and
-
-63 (0 Vosk Model Path Error multilingual support. If you find its performance or accuracy unsatisfactory, you can
-
-64 then explore Keras OCR or experiment further with Pytesseract configurations.
-
-65 SQL Interview Questions on...
-
-66 Current Scale Questions Remember
-
-67 Greeting and Inquiry The “best™ OCR engine ultimately depends on the specific characteristics of your
-
-62 Show more screen captures. Experimentation and evaluation on a sample of your data are
-
-69 crucial to make an informed decision.
-
-70004
-
-71 Y Gem manager Sources and related content ~ ©
-
-72 @® Help ¢
-
-73. ® Activi JaidedAl/EasyOCR: Ready-to-use
-
-74 tivity OCR with 80+ supported languag...
-
-75 Settingse.. .
-
-76 @ 8 Didn't catch that. Try speaking again. (0) u
-
-77 @ Pune, Maharashtra, India
-
-78 From your IP address + Update location Gemini may display inaccurate info, including about people, so double-check its responses. Your privacy and Gemini Apps
-
-79 Onuity 4 Q Seare ye €¢ a8 44 @ g Bg A ENG as @y) tae 1217 ge ty
-
-20 +0,01% an search * L - = > > YY + u in PB 1609-2024 sone
-
-a1
-
-a2 ooo ------------- SEPARATOR -----------------
-
-83 ed’? D:\GitHubProjects\DevUtils\screencapture\capture.log - Notepad++ - eo «x
-
-@4 File Edit Search View Encoding Language Settings Tools Macro Run Plugins Window 2 + ¥ 2X
-
-as eIHS 22.86 DO mel) 2 |RSS 7 FORA -|cenwe
-
-86 Badrew 10. ellis tanscribepy ealligltrans-service py 111 trans-service-notes.ot ell ait-tokensoc [lig modelconf ell transcribe2.py elf meeting transcription tt (al app.too ella
-appog ea[fi screen_capturepy el A capturetog B| no
-
-a7 35
-
-ae 56 ume In training, Keras UGR'S potential Tor even nigner accuracy tnrougn Tine-
-
-ag
-
-90 57 tuning could be valuable.
-
-91 58 + Newchat
-
-92 59 Recommendation
-
-93 60 Recent . . 5 Bp
-
-94 61 For your scenario, | would strongly recommend starting with EasyOCR due to its
-
-95 62 DF Local Git Commit s Push built-in text detection, potential for higher accuracy on complex layouts, and
-
-96 63 (0 Vosk Model Path Error multilingual support. If you find its performance or accuracy unsatisfactory, you can
-
-Q7 GA then avniane verse ACD nr aynarimant further with Dutaccaract canfimiratiane
-
-Normal text file length | 6,540 lines: 118 Ln:61 Col:44 Pos: 3,291 Windows (CRLF) UTF-8 INS
-
-NIFTY = a ENG 1218 ge
-
-aie Be Q Search ~~. use © # 44 08 - aN FO seoozc SF
-
------------------ SEPARATOR -----------------
-[Ef >GitHubProjects\DevUtils\screencapture\capture.log - Novepad-+ - a x
-Se Edt Search Yew Encoding Language Settngs Toos Macro Run 2ugins Whdow 2 +x
-.HG .2eléhh| sel des s/ER SI FORA + |e ee
-Ed rew 10 3d tanscribepy [Bid trans-servicepy 13[Bid tans-service-notes.pt 13 Eid oit-tokens.nt 13|fid modet cont 13 [fid transcribe2 py <3 Eid meeting transcription 3d epptca 3d epptca 13] Eid screen capturepy 3 [AY capturelog a| a
-35
-56 ume In training, Keras UGR'S potential Tor even nigner accuracy tnrougn Tine-
-
-37 tuning could be valuable.
-38 + Newchat
-39 Recommendation
-60 Recent. . 5 Pp
-61 For your scenario, | would strongly recommend starting with BasyOCR due to its
-62 DF Local Git Commit « Push built-in text detection, potential for higher accuracy on complex layouts, and
-63 (0 Vosk Model Path Error multilingual support. If you find its performance or accuracy unsatisfactory, you can
-64 then explore Keras OCR or experiment further with Pytesseract configurations.
-65 SQL Interview Questions on...
-66 Current Scale Questions Remember
-67 Greeting and Inquiry The “best™ OCR engine ultimately depends on the specific characteristics of your
-62 Show more screen captures. Experimentation and evaluation on a sample of your data are
-69 crucial to make an informed decision.
-70004
-71 Y Gem manager Sources and related content ~ ©
-72 @® Help e
-73. ® Activi JaidedAl/EasyOCR: Ready-to-use
-74 tivity OCR with 80+ supported languag...
-75 Settingse.. .
-76 @ 8 Didn't catch that. Try speaking again. (0) u
-77 @ Pune, Maharashtra, India
-78 From your IP address + Update location Gemini may display inaccurate info, including about people, so double-check its responses. Your privacy and Gemini Apps
-79 Onuity 4 Q Seare ye €¢ a8 44 @ g Bg A ENG as @y) tae 1217 ge ty
-20 +0,01% an search * L - = > > YY + u in PB 1609-2024 sone
-a1
-a2 ooo ------------- SEPARATOR -----------------
-83 ed’? D:\GitHubProjects\DevUtils\screencapture\capture.log - Notepad++ - eo «x
-@4 File Edit Search View Encoding Language Settings Tools Macro Run Plugins Window 2 + ¥ 2X
-as eIHS 22.86 DO mel) 2 |RSS 7 FORA -|cenwe
-86 Badrew 10. ellis tanscribepy ealligltrans-service py 111 trans-service-notes.ot ell ait-tokensoc [lig modelconf ell transcribe2.py elf meeting transcription tt (al app.too ella
-appog ea[fi screen_capturepy el A capturetog B| no
-a7 35
-ae 56 ume In training, Keras UGR'S potential Tor even nigner accuracy tnrougn Tine-
-AG
-screencapture x Program Files (86) Python311 graph Tesseract-OCR & Downloads © Recycle Bin vosk-model-en-us-0.22
-Norra exe ine Fenguns 4619 uns? 219 LATO WoITad rust 3.241 WInGOWS WUIRLT) UIT. IND
-NIFTY — 3s ENG 1218 pe
-ane i: Q Search “= b= af € 5 4 4 @ S a £ A ‘nF D® seo9 2024 i ]
-
------------------ SEPARATOR -----------------
-7 screencapture x + - o x
-€ tT G © > ThisPC > Local Disk(D} » GitHubProjects » DevUtils >»  screencapture Search screencapture Q
-@nw~ &% O fF @M@ BS W Nsotr-~ Brview~ ++ CD Preview
-b Downloads * Name . Date modified Type Size
-~ GitHubProjects * capture 16-09-2024 12:18 Text Document 13 KB
-~ harsh * L) screen_capture.py 16-09-2024 12:17 Python File 3 KB
-~ Program Files * app 16-09-2024 12:18 Text Document 2KB
-~ tne IDEA 2024.1 . Bsr % O @M@ © YW ? Python File 3KB
-~ IntelliJ IDEA Community Edition 2024.1 # Open Enter
-1. PyCharm 2023.3.5 * 86 Open with >
-= Local * @ Share
-Documents * YY Add to Favorites
-WA Pictures * CD Compress to... >
-O Music * Copy as path Ctrl+Shift+¢ No preview available
-1 Java * & Properties Ait+Enter
-Di Videos * & Norton Security >
-— Interview . i@ Edit in Notepad
-— Manscribe . HY Edit with Notepad++
-1 screencapture * I winrar 5
-= vosk-model-en-us-0.22 *
-@& Show more options
-> MB This pc
-> GE Network
-Lae
-4items 1 item selected 1.91 KB ie ia
-ee BE sean LT ae eB 4A OGM P Nemes
-
------------------ SEPARATOR -----------------
-voN oe x G2 G 6 6-000 4a et aaadtft = aasca?eor-szeaqest - a xX
-€ G 2&3 geminigoogle.com/u/2/apa/eSae2ctfafcS5ce7 Qrx @ 5 @ a 7 8:
-= Gemini Advanced + HE @
-
-ume In training, KeraS UGR'S potential Tor even nigner accuracy tnrougn mne-
-tuning could be valuable.
-+ New chat
-Recommendation
-Recent . . 5 Pp
-For your scenario, | would strongly recommend starting with EasyOCR due to its
-FH Local Git Commit & Push built-in text detection, potential for higher accuracy on complex layouts, and
-( Vosk Model Path Error multilingual support. If you find its performance or accuracy unsatisfactory, you can
-then explore Keras OCR or experiment further with Pytesseract configurations.
-SQL Interview Questions on...
-Current Scale Questions Remember
-Greeting and Inquiry The "best" OCR engine ultimately depends on the specific characteristics of your
-Show more screen captures. Experimentation and evaluation on a sample of your data are
-crucial to make an informed decision.
-4
-Y Gem manager Sources and related content ~ ©
-@® Help e
-» oe JaidedAl/EasyOCR: Ready-to-use
-Activity OCR with 80+ supported languag...
-® Settings °
-° modi @® % &
-@ Pune, Maharashtra, India
-—e — . —_— Gemini may display inaccurate info, including about people, so double-check its responses. Your privacy and Gemini Apps
-https://github.com/JaicedAl/ZasyOCR#:~:text= EasyOCR-Reatly-to-use OCR with $0%23 sup
-Orc - yee ENG ax yy tay 1219 ay
-Mastly sunny aa Q Search * | ¢ rl ia] 4 4 @ Fg = Bg an FD 16.09.2004 B Te
-
------------------ SEPARATOR -----------------
-vo™M oe x G & 6 6-000 aaesaaaszstets aazssasge@QOrst@eaqestt - a x
-€ G 2&3 geminigoogle.com/u/2/apa/eSae2ctfafcS5ce7 Qrx @ 5 @ a 7 8:
-= Gemini Advanced ~ H @
-
-ume In training, Keras UGR'S potential Tor even nigner accuracy tnrougn Tine-
-tuning could be valuable.
-+ Newchat
-Recommendation
-Recent . . 5 Pp
-For your scenario, | would strongly recommend starting with EasyOCR due to its
-FD) Local Git Commit & Push built-in text detection, potential for higher accuracy on complex layouts, and
-(O Vosk Model Path Error multilingual support. If you find its performance or accuracy unsatisfactory, you can
-then explore Keras OCR or experiment further with Pytesseract configurations.
-SQL Interview Questions on...
-0 Current Scale Questions Remember
-Greeting and Inquiry The "best" OCR engine ultimately depends on the specific characteristics of your
-Show more screen captures. Experimentation and evaluation on a sample of your data are
-crucial to make an informed decision.
-4
-QU Gem manager Sources and related content ~ ©
-@® Help e
-» _ JaidedAl/EasyOCR: Ready-to-use
-Activity OCR with 80+ supported languag...
-Settings e . . + . 5 ee .
-& 9 modify earlier code to include silent git operation include git toker| @® & PE
-@ Pune, Maharashtra, India
-. . ea ; . “Your ork d.Gemini A
-https://github.com/JaicedAl/ZasyOCR#~:text= EasyCCR-,Reacly-to-use OCR with 80%23 supportec languages enc,%2C Jevanageri%2C Cyrillic%2C etc. ding about people, so double-check its responses. Your privacy and Gemini Apps
-Ore - a on ENG x yy ty 1219 pp
-Mastly sunny a Search + Lm & ¢ & 1a a4 @ cod = ? An SD seos-2004 Te
-
------------------ SEPARATOR -----------------
-voN 8 Kx GG © 6 ¢000 a4aasaaaasf <4 aazsaspeoqgoersz+6068 84 + - a x
-€ G 2&3 geminigoogle.com/u/2/apa/eSae2ctfafcS5ce7 Qrx @ 5 @ ag 7 8:
-= Gemini Advanced HE @
-+ Newchat a modify earlier code to include silent git operation include git token if rewquired it
-was opening popup for login
-
-Recent
-
-F) Local Git Commit & Push x
-
-( Vesk Model Path Error >
-
-6 SQL Interview Questions on... a.
-
-Current Seale Questions
-
-Os Greeting and Inquiry
-
-Y — Show more
-
-Gem manager
-
-@® Help e
-
-> Activity
-
-Settings ° Didn't catch that. Try speaking again. @® F a
-
-@ Pune, Maharashtra, India
-
-From your IP address + Update location Gemini may display inaccurate info, including about people, so double-check its responses. Your privacy and Gemini Apps
-OF on wd Ser Moet CBODBL4A GO em eae C2 eH
-
------------------ SEPARATOR -----------------
-fae’ D:\GitHubProjects\DevUtils\screencapture\app.log - Notepad++ - oo x
-File Edit Search View Encoding Language Settings Tools Macro Run Plugins Window 2 + vx
-6488 3G8|4 bh ae] aes 4 (FREER Aas eee
-
-a 9 2) | | |) ES al 2200 63 ao
-
-ae
-
-Normal text file length :0 lines :1 Ln: Col:1 Pos:1 Windows (CRLF) UTF-8 INS
-
-arc Pty Geach ENG 12:19
-O25 oy Bm. Q Search Lome | a aw © % @ i 4 4 @ = al | aw Fe ® 6-09-2024 & a
+[ez D\GitHubProjects\DevUtils\screencapture\screen_capture.py - Notepad++ - a x
+File Edit Search View Encoding Language Settings Tools Macro Run Plugins Window 2? + yx
+s2HS 284 hb ae2l mls 2/GE S71 FORA sees
+HB new 10 13|M tanscribepy 13|M trans-service py 13MM trans-service-notes.txt 13|IM oit-tokens.pt 13M modet cont 13| IMM tanscribe2 py 13M meeting transcriptiontxt 13| epplog 69 (Al screen_capture py Ea copturetog 13| epplog 43] no
+46 img = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
+
+47 preprocessed_img = preprocess_image (img)
+48
+49 logger.info("Starting OCR...")
+50
+51 # Experiment with different Tesseract configurations for optimal results
+52 custom_config = r'--cem 3 --psm 6!
+53 text = pytesseract.image_to_string(preprocessed_img, config=custom_config)
+54
+55 end_time = time.time()
+56 logger. info(£"Ock completed in {end_time - start_time:.2f} seccnds")
+57
+58 return text
+59
+60 # Upload to Git
+61 |Eidef upload _to_cit (text):
+62 IF] try:
+63 os.chdir{REPO_PATH)
+64 |
+6 1H with open(LOG PATH, ‘a’, encoding='utf-8') as £:
+66 f£.write ("\n----------------- SEPARATOR -----------------\n")
+67 f.write (text)
+68
+69 subprocess.call({"git", "add", LOG_PATH])
+70 subprocess.call(["git", "ccmmit", "-m", "Updated screen capture log’)
+7 subprocess.call(["git", "push"])
+72 logger. info("Successfully committed and pushed te GitEub")
+73 IA) except Exception as e:
+74 logger.error({£"Failed te commit and push: {str(e)}")
+75
+16 # Main loop
+77 |e name = '_mair_':
+78 IE] while True:
+79 logger. info("Capturing screen...")
+80 text = capture_and_ocr()
+gl A if text.strip(): # Check if text is not empty after stripping whitespace
+82 logger. info("Upleading te Git...")
+83 upload_to_git (text)
+aa 1A else:
+85 logger.warning("Nc significant text detected in the screen capture.")
+86 time. sleep(1C)
+Python file length : 2,988. lines : 86 Ln:64 Col: 1 Pos: 2,073 Windows (CRLF) UTF-8 INS
+are = -— 3 ¢€ 13] B 464 > ENG a 12:19
+OF oon mm = & Search wv. he w”# € | ga * 4% (CO) bog | A ‘nF ®® 46092004 na
