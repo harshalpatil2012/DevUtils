@@ -5,3 +5,30 @@ D: \GitHubProjects\DevUtils\screencapture>cls
 D: \GitHubProjects\DevUtils\screencapture>python screen_capture.py
 O 26° - . ~ ENG » tay 1206 2 0
 “i ad Serres “bes CP MBL4O Me na eg) te scoot BT
+
+----------------- SEPARATOR -----------------
+Administratar: Command Prompt - python screen_capture.py - oO x
+D: \GitHubProjects\DevUtils\screencapture>cls
+D: \GitHubProjects\DevUtils\screencapture>python screen_capture.py
+INFO:ScreenCaptureLogger :Capturing screen...
+INFO:ScreenCaptureLogger :Starting OCR...
+INFO:ScreenCaptureLogger :0CR completed in 8.63 seconds
+INFO:ScreenCaptureLogger :Uploading to Git...
+[main 627db1b] Updated screen capture log
+1 file changed, 5 insertions(+), 104 deletions(-
+Enumerating objects: 14, done.
+Counting objects: 180% (14/14), done.
+Delta compression using up to 16 threads
+Compressing objects: 100% (12/12), done.
+Writing objects: 100% (12/12), 3.31 KiB | 1.10 MiB/s, done.
+Total 12 (delta 4), reused @ (delta @), pack-reused @ (from 8)
+remote: Resolving deltas: 100% (4/4), completed with 1 local object.
+To https: //github.com/harshalpatil2012/Devutils.git
+2407e58..627db1b main -> main
+
+INFO:ScreenCaptureLogger :Successfully committed and pushed to GitHub
+INFO:ScreenCaptureLogger :Capturing screen...
+
+O 26% 4 Q Seach a @ 446 9 ENG ax ayy tay 1207 gp
+
+Sut aa Search . we ow-kz © 8 + + uw in SH  6.9-2004 Fone
