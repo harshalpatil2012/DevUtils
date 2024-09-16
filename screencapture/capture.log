@@ -704,3 +704,38 @@ $ [Didn't catch that. Try speaking again. @® F
 From your IP address - Update location Gemini may display inaccurate info, including about people, so double-check its responses. Your privacy and Gemini Apps
 Ore AQ Searct ye ¢ os a] 4 4 ro) ° @ A ENS as oy tem 12:24 gp my
 Mostly sunny an search * Lm & >> W@W em In > 9? SS 46-09-2024 “ont
+
+----------------- SEPARATOR -----------------
+voM # x Go © 6 ¢0Q000 a4aspaaeacsf<s aasasgpgeOO fF 56 @O0686 SF + - a x
+€ G 2° geminigoogle.com/u/2/apa/eSae2ctfafcS5ce7 Rar e@ a @e@8 +7 8:
+GIT_TOKEN 120 a v x
+= Gemini Advanced + HE @
+custom_config = r‘--oem 3 --psm 6'
+text = pytesseract.image_to_string(preprocessed_img, config=custom_<
++ New chat
+end_time = time.time()
+logger .info(f"OCR completed in {end_time - start_time:.2f} seconds"?
+Recent
+return text
+FA Local Git Commit & Push
+= Joood to Gl. {wlth si_ea. Gl. cseratlors era aavdeeded weker}
+(1 Vesk Model Path Error def upload_to_git(text):
+try:
+SQL Interview Questions on... os.chdir(REPO_PATH)
+1 Current Scale Questions with open(LOG_PATH, ‘a‘', encoding='utf-8') as f:
+; ; f.write("\n----------------- SEPARATOR -----------------\n!
+0 Greeting and Inquiry f.write(text)
+¥ Show more subprocess.call(["git", “add", LOG_PATH])
+subprocess.call(["git"”, “commit", “-m", "Updated screen capture
+2 bavaceded Gli taken freploce with your actual icker}
+& Gem manager GIT_TOKEN = "YOUR_GIT_TOKEN"
+remote_url = subprocess.check_output([“git", “config”, "--get",
+@® Help e if "https://" in remote_url:
+remote_url = remote_url.replace("https://", f"https://{GIT_”
+> Activity subprocess.call(["git", "push", remote_url, "--quiet"])
+® Settings ° . F .
+$ [Didn't catch that. Try speaking again. @® F a
+@ Pune, Maharashtra, India
+From your IP address - Update location Gemini may display inaccurate info, including about people, so double-check its responses. Your privacy and Gemini Apps
+Ore AQ Searct ye ¢ os a] 4 4 ro) ° @ A ENS as oy tem 12:24 gp my
+Mostly sunny an search * Lm & + + rg u In > 9? SS 46-09-2024 “ont
