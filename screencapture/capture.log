@@ -1,212 +1,30 @@
 
 ----------------- SEPARATOR -----------------
-vo™Mo 8s x G&G & 6 6 ¢0Q000 4a 5 aaastft <« aascsasoeors+@6oaoH ss + - ao xXx
+M41+190101@1O! ¥1 ¥1O1O1O1 101 G1 @IOISGI@IO/@1G1 B1O1 =|GIO G1 @1 eo Bi ©l@1of~x\Ol+ - 9 x
+€ > & ©) hackerrank.com/challenges/challenges/problem erx)e@ @©@e@oens!ls4 @:
+i TC
 
-€ G 2&3 geminigoogle.com/u/2/apa/eSae2ctfafcS5ce7 Qrx @ 5 @ ag 7 8:
-
-= Gemini Advanced + HE @
-
-frozen_east_text_detection.pb model file and place it in your project directory
-
-+ New chat or update the EAST_MODEL_PATH accordingly.
-+ Experiment with parameters: The EAST text detector has some parameters you
-
-Recent can adjust to fine-tune its performance. Refer to the OpenCV documentation for
-
-F Local Git Commit & Push details.
-
-©) Vosk Model Path Error Let me know if you have any further questions or modifications.
-
-SQL Interview Questions on...
-
-. Sources andrelated content ~ @
-
-Current Seale Questions
-
-F Greeting and Inquiry www.giters.com 99 github.com ”
-
-Y — Show more
-www.giters.com github.com
-
-Gem manager
-og Ff <€< vw:
-
-@® Help e
-
-> Activity
-
-Settings °
-
-° provi ®@® %& Bb
-@ Pune, Maharashtra, India
-From your IP address - Update location Gemini may display inaccurate info, including about people, so double-check its responses. Your privacy and Gemini Apps
-Ore y| mene os ¢ os a] 4 4 ® . @ A ENS as oy tem 1231 pp ay
-Mastly sunny am & Search * L -_ = > > wo es u in > SW? SS 46-09-2024 owe
-
------------------ SEPARATOR -----------------
-ey’ D:\GitHubProjects\DevUtils\screencapture\capture.log - Notepad++ - @ x
-File Edit Search View Encoding Language Settings Tools Macro Run Plugins Window 2 + ¥ xX
-2e2RS s.8lsé ORF mls 2S EOE RAWK sens
-Hew 10 £3[ Ml tanscribepy £2[[tans-servicepy 3] vans-service-notestt E3|Mgit-tokenstt £3] modet.cont é2|M transcribe2.py | meeting transcriptiontt 3] appog £3|[M screen capturepy 4 A capturelog ELM app.iog a] no
-28 ¥ — Show more
-29° www.giters.com github.com
-30
-31 Gem manager
-32 og FE << vw:
-
-33
-34 @® Help e
-35
-36 > Activity
-31
-38 Settings °
-39
-40  ° provi @@@ %= Bb
-41 @ Pune, Maharashtra, India
-42 From your IP address - Update location Gemini may display inaccurate info, including about people, so double-check its responses. Your privacy and Gemini Apps
-43 Ore y| mene os ¢ os a] 44 @. @ A ENS as oy tem 1231 pp ay
-44 Mastly sunny am & Search * L -_ = > > wo es u in > SW? SS 46-09-2024 owe
-45
-Normal text file length : 1,296 lines : 45 Ln:30. Col: 1 Pos: 873 Windows (CRLF) UTF-8 INS
-are -: — 3 ¢€ 10] B 44 id ENG a 12:32 ge
-O25, ciny me SO Search UWS #@CP#OB+tA4 OSE: aN FO® seo02000 F
-
------------------ SEPARATOR -----------------
-Lei! *D.\ GitHubProjects\DevUtils\screencapture\screen_capture.py - Notepad-+ - a x
-File Edit Search View Encoding Language Settings Tools Macro Run Plugins Window 2 +4 Xx
-22S 2.84 hha mls 2/GE S71 FORA sees
-Hirew 10 23| MM tanscribepy e2|ltans-servicepy ea] trans-service-notestxt Ea] git-tokenstxt e|I model.cont 3] transcribe2.py £3|l meeting transcriptiontt L3|IMM app-log £3 FE screen _capturepy Ea copturetog 13|MMeppiog a] no
-115
-116 end_time = time.time() Find x
-117 logger. info(£"Ock completed in {end_time - start_time:.2f} seccnds")
-
-118 7~ 7~ Find Replace Find in Files Find in Projects Mark
-119 return text
-121 # Upload to Git (with silent Git operations and hardcoded token)
-
-122 |[EJdef upload_to_git(text): Count
-123 |) try:
-
-124 os.chdir{REPO_PATH) In selection Find alin Current
-125
-we |G with open(LOG PATH, ‘a’, encoding='utf-§"') as f: Ctactard direction Find Allin All Opened
-127 f£.write("\n----------------- SEPARATOR -----------------\n") Catch whole word only Documents
-128 f.write (text) (Cmatch case dose
-129 @wrap around
-130 subprocess.call({"git", "add", LOG_PATH])
-
-131 subprocess.call(["git", "commit", "-m", "Updated screen capture log", "--quiet"]) Search Mode RA rransparency
-132 Onormal on losing focus
-133 # Hardcoded Git token (replace with your actual token) Oatended (jn, rt 10, be.) Oatways
-134 GTT_TOKEN = "YOUR_GTT_TOKEN" ORegular expression, matches newline i]
-
-135 remote_url = subprocess.check_output(["git", "config", "--get", "remote.origin.url"]) .de . A
-136 1A if "https://" in remote_url:
-
-137 remote_url = remote_url.replace("https://", f£"https://{GIT_TOKEN}@") N /
-
-138 subprocess.call(["git", "push", remote_url, "--quiet"])
-
-139
-140 logger. info("Successfully committed and pushed te GitEub")
-
-141 |E) — except Exception as e:
-
-142 logger.error({£"Failed te commit and push: {str(e)}")
-
-143
-144 # Main loop
-145 [Eig name = '_ mair_':
-
-146 |E) while True:
-
-147 logger. info("Capturing screen...")
-
-148 text = capture_and_ocr()
-
-149
-150 A if text.strip{) and text != previous_text:
-
-151 logger. info("Upleading te Git...")
-
-152 upload_to_git (text)
-
-153 previous text = text
-is4 1A else:
-
-155 logger.warning("Nc significant changes detected, skipping upload.")
-
-156
-157 time.sleep (30)
-
-Python file length | 5,492. lines: 157 Ln: 157 Col: 23 Pos: 5,493 Windows (CRLF) UTF-8 INS
-
-are - @ ENG 1232 pe
-OF oon i Q Search "= bo Ff € 2 4 4 (CO) bog a £ A ‘nF ®® 6092004 na
-
------------------ SEPARATOR -----------------
-[EX Administrator: Command Prompt - python screen_capture.py - o x
-D:\GithubProjects\Dewtils\screencapture>python]screen¥ capture. py) |
-INFO:ScreenCaptureLogger: Capturing}screen =m
-Beara SR aOR GCAO
-INEO: ScreenCapturelogger,: Detecting \text{regionsuas
-racebiack] (most}recent {cal plast):
-Fileb-\GithubProjects\Devitil’s\screencapture\screen¥capturespyz Line} 148 ping<module>y
-Crext{-ycapturefandFocr-(),
-File}: \GithubProjects\Devtils\screencapture \screen¥capturespy” sgLine}104 spin capture¥and loce)
-Boxes¥-Y detect ¥ text Pregions( ing)
-ip 4D: \GithubProjects\Devutils \screencapture \screen¥capture:pygn Hline]52.pintdetect*text*regions,
-[nette¥cv2¥dan*readtvet(EASTIMODEMPATH)
-cy2renror: J openCv(4718"8)]D: \a\opency, python \opency, python \opency\modules\dnn\src\caffe\caffebioncpp:1138- (52: Unspecified{error)[FATLED:Bfs~is¥open() @Canatgopenbafrozenteastt text? detections pbagin}
-ony cv: -dnn: :ReadProtolromBinaryriles
-D:\GithubProjects \Devtils\screencapture>pipyinstallfopency. python
-RequirenentYalready[satisfied:Yopencvspython¥in ce usecs \harsh\appdata\local \progeans \python \python211 \lib\sitespackages§(4"10.0.84)
-Requirement}already}satistied:¥numpyse1*21"2pinfc: \users\harsh\appdata\ local \programs \python \python211\Lib\sitespackagesy (frompopency=python) @msp
-Ingtice ]fAlnew}release, fot} pipyisy avai lable- 240 OR 2402]
-[notice |hiogupdates pythonvexce-mypipjinstallk-uperade] pip)
-D:\GithubProjects\Dewtils\screencapturertesseract version
-siesseractghisfnot{recognizedfasfanfinternalforYexternal (command 3)
-operable}programfor{bat ch} rile’
-D:\GithubProjects\Dewtils\screencapture>python]screen¥ capture. py)
-INFO:ScreenCaptureLogger: Capturing}screen =m
-Beara SR aOR GCAO
-INEO: ScreenCapturelogger,: Detecting \text{regionsuas
-racebiack] (most}recent {cal plast):
-Fileb-\GithubProjects\Devitil’s\screencapture\screen¥capturespyz Line} 148 ping<module>y
-Crext{-ycapturefandFocr-(),
-File}: \GithubProjects\Devtils\screencapture \screen¥capturespy” sgLine}104 spin capture¥and loce)
-Boxes¥-Y detect ¥ text Pregions( ing)
-File BO: \Gitlubbrojects\Devutils\screencaptune\screenr capture -Pygs Hine] 90.pintdetect*text*regions,
-boxes{=Ycv2¥dnnt NMSBoxesRotated(rects {confidences O'S Ors)
-TypeErron-{Canat{parseb bboxes gg Sequencepitenpwithbindex[Olhasfalwrong type]
-D: \GitHubProjects \DevUtils\screencapture>python}screen*capture py,
-& OSs any Poot Gee cance a Bh Q Search —> as ae ey. oS. a a} Me ual ys a = S @. & =| SS Sane ®) eo 16-09-2004 2 Ga
-
------------------ SEPARATOR -----------------
-[EX Administrator: Command Prompt - python screen_capture.py - o x
-
-D: \GitHubProjects \DevUtils\screencapture>python}screen*capture py, |
-gu he ey a — =a Ty : By 6 a a. Qe ©. 3: a ee SING ae ge 1252" A
-BG 1000306 988 NRE Re a er EA mG ‘cl tad a, i be s Pe ND Sh RS. RINSE Ses Es Se 2 16-09-2028 Ssh
-
------------------ SEPARATOR -----------------
-FER Administrator: Command Prompt - python screen_capture.py = a x
-D:\GithubProjects\Dewtils\screencapture>python]screen¥ capture. py) |
-INFO: ScheenCapturelogger: Capturingyscreen sm
-INFO; ScneenCaptuneloggen:Stanting{ocR am
-INFO; ScneenCaptureloggeq:0CR{conpletedpin}a"69{seconds,
-INFO: ScheenCaptureLogger,:Uploading[OCR) resultYand[screenshot gto Gitwe
-
-opnttps=/7 eithub% ‘con/harshalpati12012/DevUtilsvgit
-
-Q (peiected] maingesymaim (Fetchfrinst)
-error Bfailedgtoypush¥somegret sktoehttps-//eithubycom/harshalpatil2012/DevUtilsveity
-hint: Updatestwere{re jected] because] thefrenote}containsywork{thathyoudoynot]
-hint: haveflocally Mihis¥isyusually{caused] byfanothenfrepositoryyoushinepto)
-hint-—the]sameYrefBitfyouywanth tof integrate} thefremote2changesspuse]
-hint: IB eit}pullg[beforefpushingfagains
-hint:[see}thef Notefabout[fast-forwardsghinkeit En he lpg forydetailse
-INFO: ScreenCapturelogger.: Successfullyyconmitted pushed] toyGithuby
->
-
-& #2 .0.03% Ee ee Re og el ER Q Search os 1s teal ey © 2 a. i. Ul ae A, ee @® Oe =| SSeS IN ®) eo 16-09-2024 & Ga
+Problem Submissions | Leaderboard | Discussions
+Julia asked her stuclents to create some coding challenges. Write a query to print the hacker_id, name, and the total number of ‘Author AvmnuSng
+challenges created by each student. Sort your results by the total number of challenges in descending order. If more than one student Difficulty Medium
+created the same number of challenges, then sort the result by hacker_id. lf more than one student created the same number of Max Score 30
+challenges and the count is less than the maximum number of challenges created, then exclude those students from the result. Submitted By 153554
+Input Format NEED HELP?
+The following tables contain challenge data:
+[&) View discussions
+© View top submissions
+|_cotwmn | pe |
+RATE THIS CHALLENGE
+hacker_id
+Kee
+[| oe |
+aye “ * MORE DETAILS.
+* Hackers: The hacker_id is the id of the hacker, and name is the name of the hacker. Co
+* Challenges: The challenge_id is the id of the challenge, and hacker_id is the id of the student who created the challenge. 4, Download problem statement
+w, Download sample test cases
+challenge_id
+iy BO
+hacker_id
+Sample Input 0 hd
+ieee ao) ean Sy Se Te pp 4 ak Oe ns SS
+& OE 03% COE Reo en othe i gel RRL Q Search —> el Teal: ey 4 (o] a a: tad ae ok = (OF BOs a SAS. ane ED) °. $16-09-2024 ee Be
