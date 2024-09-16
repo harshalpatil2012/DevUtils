@@ -77,7 +77,7 @@ def upload_to_git(text):
         subprocess.call(["git", "commit", "-m", "Updated screen capture log", "--quiet"])
 
         # Hardcoded Git token (replace with your actual token)
-        GIT_TOKEN = "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"  
+        GIT_TOKEN = ""  
         remote_url = subprocess.check_output(["git", "config", "--get", "remote.origin.url"]).decode().strip()
         if "https://" in remote_url:
             remote_url = remote_url.replace("https://", f"https://{GIT_TOKEN}@")
