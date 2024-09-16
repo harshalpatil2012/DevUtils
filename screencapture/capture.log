@@ -1,0 +1,39 @@
+
+
+--- SEPARATOR ---
+
+Administratar: Command Prompt - python screen_capture.py - oO x
+Microsoft Windows [Version 10.0.22631.4169]
+(c) Microsoft Corporation. All rights reserved.
+C:\Windows \System32>cd_D:\GitHubProjects\DevUtils\screencapture
+C:\Windows \System32>python sc.exe
+C:\Windows \System32>
+C:\Windows \System32>cd D:
+D: \GitHubProjects\DevUtils\screencapture
+C:\Windows \System32>D:
+D: \GitHubProjects \DevUtils\screencapture>python
+Python 3.11.8 (tags/v3.11.8:db85d51, Feb 6 2024, 22:03:32) [MSC v.1937 64 bit (AMD64)] on win32
+Type “help", "copyright", "credits" or “license” for more information.
+>>>
+KeyboardInterrupt
+>>> AZAZAX
+KeyboardInterrupt
+>>> AZ
+D: \GitHubProjects\DevUtils\screencapture>python screen_capture.py
+Usage: 'screen_capture.py [options] install|update|remove|start [...]|stop|restart [...]|debug [...]
+Options for ‘install’ and ‘update’ commands only:
+--usernane domain\username : The Username the service is to run under
+--password password : The password for the username
+--startup [manual|auto|disabled|delayed] : How the service starts, default = manual
+--interactive : Allow the service to interact with the desktop
+--perfnionini file: .ini file to use for registering performance monitor data
+--perfniondll file: .dll file to use when querying the service for
+performance data, default = perfmondata.dll
+Options for ‘start’ and ‘stop’ commands only:
+--wait seconds: Wait for the service to actually start or stop.
+If you specify --wait with the ‘stop’ option, the service
+and all dependent services will be stopped, each waiting
+the specified period.
+D: \GitHubProjects\DevUtils\screencapture>python screen_capture.py
+Ox © Q Search os «a © 8 4460 @. A NS ag ie , 8 gt
+Su ai search * } s+ 3 . . n 7” 16-09-2024 om
