@@ -613,3 +613,58 @@ D Activity = Loggers
 From your IP address - Update location Gemini may display inaccurate info, including about people, so double-check its responses. Your privacy and Gemini Apps
 Ore 4 Searct oe ¢ os a] 4 4 ® . @ A ENS as oy tem 1223 ge,
 Mastly sunny an pe aren * Lom & > + WG & & u in 2 SEY 16-09-2024 ene
+
+----------------- SEPARATOR -----------------
+ez’ *D:\GitHubProjects\DevUtils\screencapture\screen_capture.py - Notepad++ - a x
+File Edit Search View Encoding Language Settings Tools Macro Run Plugins Window 2? + yx
+22S sss hla els 2/EE S71 FORA sees
+Hirew 10 23| MM tanscribepy e2|tans-servicepy ea] trans-service-notestxt Ea] git-tokensxt e3|I model.cont 3] transcribe2.py £|l meeting transcriptiontt 3M applog £3 [El screen _capturepy Ea copturetog 13|MMeppiog a] no
+24
+25 # Logging
+26 logging. basicConfig(level=logging. INFO)
+
+27 logger = logging. getLogger ("ScreencaptureLcgger") Find Replace Find in Files Find in Projects Mark
+28 handler = RotatingFileHandler (APP_LOG PATH, maxBytes=5000000, backupCount=5)
+29 logger. addHandler (handler) Bind what: GIT_TOKEN v [ Find Next lo
+30
+31 # Caching for OCR results Count
+32 previous text = "" =
+33 ~ On selection Find all in Current
+ama ; ; ‘Document
+34 # Optimized image preprocessing —
+35 ldef preprocess imace (image) : C8ackward direction Find all in All Opened
+36 # Convert to grayscale (match whole ward only Documents:
+37 gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY) (match case Close
+38 GQ wvrap around
+39 # Adaptive thresholding for better handling of varying lighting
+40 thresh = cv2.adaptiveThreshold(gray, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, Search Mode Grransparency
+41 cv2.THRESH BINARY, 11, 2) O Normal on losing focus
+42 . . . <Coextended (in, tr, tte 10, en) Calways
+43 # Morphological opening for noise removal Fyequl ches neline 1
+a4 kernel = np-ones(tl, 1), np.uints) TpRegular expression —_ matches ne:sling rn
+45 opening = cv2.morphologyEx (thresh, cv2.MORPH_OPEN, kernel, iterations=1) woe .
+46 _ Fac: Fede tie Ist cecaverce fem tre tes, Te e1c ef tre cocumient tas See1 “eacrec.
+47 return opening
+48
+49 # Capture and OCR (with performance improvements)
+50 def capture ard _ocr():
+51 start_time = time.time()
+52
+53 # Capture directly to numpy array
+54 screenshot = pyautogui . screenshot ()
+55 img = np.array (screenshot)
+56 img = cv2.cvtColor{img, cv2.COLOR_RGB2BGR)
+57 preprocessed_img = preprocess_image (img)
+58
+59 logger.info("Starting OCR...")
+60
+61 # Experiment with different Tesseract configurations for optimal results
+62 custom_config = r'--cem 3 --psm 6!
+63 text = pytesseract.image_to_string(preprocessed_img, config=custom_config)
+64
+65 end_time = time.time()
+66 logger. info(£"Ock completed in {end_time - start_time:.2f} seccnds")
+52
+Python file length : 3,732 lines: 108 Ln:93. Col: 1 Pos: 3,226 Windows (CRLF) UTF-8 INS
+are = _— = ¢ o | B 464 nd ENG a 12:23
+OF om mm = & Search wv. he w@# € 2 ga * + (CO) bog | A ‘nN FY ® 4609-2004 a
