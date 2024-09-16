@@ -354,3 +354,55 @@ D Activity ¢ Performance Optimization: The code is streamlined for faster execu
 From your IP address - Update location Gemini may display inaccurate info, including about people, so double-check its responses. Your privacy and Gemini Apps
 Ore 4 Searct yee ¢ a a] 4 4 ® . © A ENS as oy tem 1222 gee,
 Mastly sunny an pe aren * L - = > + WG & & u in > 9? SSP 46-09-2024 one
+
+----------------- SEPARATOR -----------------
+[ez D\GitHubProjects\DevUtils\screencapture\screen_capture.py - Notepad++ - oa x
+File Edit Search View Encoding Language Settings Tools Macro Run Plugins Window 2? + vx
+s2HS sss hha els 2/GES1 FORA sees
+Hirew 10 23| MM tanscribepy e2|ltans-servicepy ea] trans-service-notestxt Ea] git-tokenstxt e|I model.cont 3] transcribe2.py £3|l meeting transcriptiontt LSM applog 3 [AA screen _capturepy Ea copturetog 13|MMeppiog a] no
+66 Jogger. info(£"Ock completed in (end time - start_time:.2f) seccnds")
+67
+68 return text
+69
+70 # Upload to Git (with silent Git operations and token handling)
+71 |[Ejdef upload_to_cit (text):
+72 IF) try:
+73 os.chdir{REPO_PATH)
+74
+7 18 with open(LOG PATH, ‘a’, encoding='utf-8') as £:
+76 f£.write ("\n----------------- SEPARATOR -----------------\n")
+77 £.write (text)
+78
+79 subprocess.call({"git", "add", LOG_PATH])
+80 subprocess.call(["git", "commit", "-m", "Updated screen capture log", "--quiet"])
+a1
+82 A if, GIT_TOKEN:
+83 remote_url = subprocess.check_output(["git", "config", "--get", "remote.origin.url"]) .decode() .strip()
+aa 1A if “https://" in remote_url:
+a5 remote_url = remote_url.replace("https://", f£"https://{GIT_TOKEN}@")
+86 subprocess.call(["git", "push", remote_url, "--quiet"])
+a7 1A else:
+a8 subprocess.call(["git", "push", "--quiet"])
+89
+90 logger. info("Successfully committed and pushed te GitEub")
+91 |A) except Exception as e:
+92 logger.error({£"Failed te commit and push: {str(e)}")
+93
+94 # Main loop
+95 |Ejif name = '_main_':
+96 |E| while True:
+97 logger. info("Capturing screen...")
+98 text = capture_and_ocr()
+99
+100 # Check for significant changes before uploading
+101 A if text.strip{) and text != previous_text:
+102 logger. info("Upleading te Git...")
+103 upload_to_git (text)
+104 previous text = text # Update cached text
+105 18 else:
+106 logger.warning("Nc significant changes detected, skipping upload.")
+107
+108 time.sleep (30)
+Python file length | 3,732 lines: 108 Ln: 108 Col: 23 Pos: 3,733 Windows (CRLF) UTF-8 INS
+are = -— 3 ¢€ 13] B 464 > ENG a 12:22 pe
+OF oon mm = & Search wv. he w”# € | ga * 4% (CO) bog | A ‘nF ® ® 4609-2004 na
