@@ -739,3 +739,58 @@ $ [Didn't catch that. Try speaking again. @® F a
 From your IP address - Update location Gemini may display inaccurate info, including about people, so double-check its responses. Your privacy and Gemini Apps
 Ore AQ Searct ye ¢ os a] 4 4 ro) ° @ A ENS as oy tem 12:24 gp my
 Mostly sunny an search * Lm & + + rg u In > 9? SS 46-09-2024 “ont
+
+----------------- SEPARATOR -----------------
+Lez! *D.\GitHubProjects\DevUtils\screencapture\screen_capture.py - Notepad++ - oa x
+File Edit Search View Encoding Language Settings Tools Macro Run Plugins Window 2? + vx
+22S 2.84 hha mls 2/GE S71 FORA sees
+Hirew 10 23| MM tanscribepy e2|ltans-servicepy ea] trans-service-notestxt Ea] git-tokenstxt e|I model.cont 3] transcribe2.py £[l meeting transcriptiontt LX applog £3 FE screen_capturepy Ea copturetog 13|MMeppiog a] no
+34 thresh = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU) [1]
+
+35
+36 # Denoising (optional, adjust as needed)
+37 kernel = np.ones((1, 1), np.uint) Find Replace Find in Files Find in Projects Mark
+38 opening = cv2.morphologyEx (thresh, cv2.MORPH_OPEN, kernel, iterations=1)
+39 Eind what: GIT_TOKEN v | Find Next }o
+40 return opening
+41 count
+42 # Capture and OCR (with performance improvements)
+In selection Find All in Current.
+43 def capture ard _ocr(): 0 Document
+44 start_time = time.time() —
+45 Qtectoward direction Find All in All Opened
+46 screenshot = pyautogui.screenshot () Cmatch vehole word only Documents
+47 img = np.array (screenshot) COmatch case Close
+48 img = cv2.cvtColor{img, cv2.COLOR_RGB2BGR) @vvrep around
+49 preprocessed_img = preprocess_image (img)
+50 Search Mode Orransparency
+51 logger.info("Starting OcR...") O Normal on losing focus
+52 . (Toextended (in, tr, tte 10, Wen) Dalways
+53 custom_config = r'--cem 3 --psm 6° Fapegul ches neline 1
+54 text = pytesseract.image_to_string(preprocessed_img, config=custom_config) ~? Regular expression matinee nevaine A
+55
+56 end time = time.time() Fac: Fede tie Ist cecaverce fem tre tes, Te e1c ef tre cocumient tas See1 “eacrec.
+57 logger. info(£"Ock completed in {end_time - start_time:.2f} seccnds")
+58
+59 return text
+60
+61 # Upload to Git (with silent Git operations and hardcoded token)
+62 |[Ejdef upload _to_cit (text):
+6s |IAl try:
+64 os.chdir{REPO_PATH)
+65
+6s 1H with open(LOG PATH, ‘a’, encoding='utf-8') as £:
+6? f£.write ("\n----------------- SEPARATOR -----------------\n")
+68 £.write (text)
+69
+70 subprocess.call({"git", "add", LOG_PATH])
+7 subprocess.call(["git", "commit", "-m", "Updated screen capture log", "--quiet"])
+72
+73 # Hardcoded Git token (replace with your actual token)
+74 GIT_TOKEN = "YOUR_GIT_TOKEN"
+75 remote_url = subprocess.check_output(["git", "config", "--get", "remote.origin.url"]) .decode() .strip()
+76 18 if "https://" in remote_url:
+kd remote url = remate url renlace(Mhttre://" fF Mhttre: //feTm mawEM Gy
+Python file length : 3,282 lines: 97 Ln:97 Col:23 Pos: 3,283 Windows (CRLF) UTF-8 INS
+are = -— 3 ¢€ 13] B 464 > ENG a 12:24
+OF oon mm = & Search wv. he w”# € | ga * 4% (CO) bog | A ‘n FY ® 4609-2004 na
