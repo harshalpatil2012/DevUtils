@@ -41,17 +41,20 @@
 - Reduced feature release cycle from 70 days to 40-45 days, a 35-43% improvement, aligning with MA's strategic priority of delivering value quickly to customers.
 - Optimally allocated story points and segmented feature stories, helping PMT in efficient project management and improving sprint planning accuracy.
 - Focused on delivering high-impact features that directly contribute to fraud detection and system performance, aligning work with key business priorities.
+- Actively participated in release planning and feature planning sessions, ensuring that technical priorities aligned with business objectives and contributing to more efficient and effective product development cycles
 
 ### Learn and pivot
 - Quickly adapted to new responsibilities, taking on tech lead role for two teams instead of one, demonstrating flexibility and leadership capabilities.
 - Demonstrated ability to learn and apply new technologies and methodologies to improve team performance and product quality, such as implementing automated testing tools.
 - Conducted exploratory testing personally to ensure optimal product quality, showing adaptability and commitment to excellence.
+- Demonstrated adaptability and cross-functional collaboration through active involvement in CRQ and XLR review processes, contributing technical expertise to improve change management and project coordination
 
 ### Own the outcome
 - Took ownership of multiple releases for provider and consumer API, as well as supporting DS core release and adhoc CRQ support for patch releases, ensuring timely delivery and quality.
 - Executed with speed and agility, delivering tangible results in resolving production issues and implementing performance improvements, often under tight deadlines.
 - Ensured clarity on actions and decisions, engaging the right stakeholders and escalating when necessary to make decisions with urgency, particularly in resolving critical production issues.
 - Took responsibility for the end-to-end delivery of scalable and resilient features, ensuring high-quality outcomes that meet business needs.
+- Took ownership of the entire software development lifecycle by actively contributing to release planning, feature planning, and critical review processes (CRQ and XLR), ensuring high-quality outcomes from inception to deployment
 
 ## Key Achievements Summary
 - Resolved 10+ production issues, including critical billing problems, safeguarding MA's reputation.
@@ -116,6 +119,12 @@ This self-review demonstrates my commitment to MA's values of creating value, gr
      - Resolved over 10 production issues, including critical billing problems that posed reputation risks
      - Provided rapid response and support for multiple TRTs (Technical Resolution Teams) for production support
      - Demonstrated ability to work under pressure and deliver results in time-sensitive situations
+
+Actively participated in and contributed to release planning sessions, ensuring alignment between technical capabilities and business objectives
+Played a key role in feature planning, leveraging technical expertise to guide prioritization and feasibility assessments
+Conducted thorough CRQ (Change Request) reviews, maintaining high standards for change management and risk mitigation
+Participated in XLR (Cross-Lifecycle Request) reviews, facilitating smooth coordination between different teams and project phases
+Provided valuable technical insights during planning and review processes, contributing to more informed decision-making and improved project outcomes
 
 Overall Performance Summary:
 Throughout the review period, I consistently met or exceeded the set objectives. My focus on system performance, delivery efficiency, and technical leadership has resulted in significant improvements across multiple areas. The ability to balance strategic improvements with critical issue resolution demonstrates my commitment to both long-term goals and immediate business needs. Moving forward, I aim to build on these achievements, further enhancing our systems' capabilities and continuing to foster a high-performing, innovative engineering culture.
