@@ -1,0 +1,25 @@
+from pyspark.sql import SparkSession
+from pyspark.sql.types import *
+
+# Create a SparkSession
+spark = SparkSession.builder.appName("LoadExcel").getOrCreate()
+
+# Define the schema of your Excel data (adjust as needed)
+schema = StructType([
+    StructField("column1", StringType(), True),  # Example column, replace with your actual column names and types
+    StructField("column2", IntegerType(), True),
+    # ... more columns
+])
+
+# Read the Excel file (replace "your_file.xlsx" and "Sheet1" with your actual file and sheet name)
+df = spark.read.format("com.crealytics.spark.excel") \
+    .option("header", "true") \
+    .option("inferSchema", "false") \
+    .schema(schema) \
+    .load("your_file.xlsx", sheetName="Sheet1")
+
+# Display the DataFrame
+df.show()
+
+# Stop the SparkSession
+spark.stop()
