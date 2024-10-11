@@ -2,7 +2,7 @@
 
 ## Executive Summary
 
-As a Lead Software Engineer at Mastercard, I have consistently demonstrated high performance and alignment with our core values of Creating Value, Growing Together, and Moving Fast. Over the review period, I have led significant technical improvements, mentored team members, driven process efficiencies, and contributed to strategic planning. My work has directly impacted system performance, release efficiency, and overall engineering excellence.
+As a Lead Software Engineer at MA, I have consistently demonstrated high performance and alignment with our core values of Creating Value, Growing Together, and Moving Fast. Over the review period, I have led significant technical improvements, mentored team members, driven process efficiencies, and contributed to strategic planning. My work has directly impacted system performance, release efficiency, and overall engineering excellence.
 
 ## CREATE VALUE
 
@@ -12,7 +12,7 @@ As a Lead Software Engineer at Mastercard, I have consistently demonstrated high
 - Initiated and drove improvements in the release cycle for operation API, resulting in a 60% performance enhancement through query refactoring and N+1 query problem resolution.
 
 ### Innovate with Intention
-- Proactively addressed customer pain points by resolving over 10 production issues, including critical billing issues that posed reputation risks to Mastercard's brand.
+- Proactively addressed customer pain points by resolving over 10 production issues, including critical billing issues that posed reputation risks to MA's brand.
 - Implemented innovative solutions such as Gzip improvement, leading to a 40% improvement in execution time for API calls.
 - Introduced new business features to improve fraud detection for card testing attacks, demonstrating understanding of customer needs and industry challenges.
 - Increased resilience for preq service, enhancing the overall stability and reliability of the system.
@@ -40,12 +40,12 @@ As a Lead Software Engineer at Mastercard, I have consistently demonstrated high
 - Mentored junior engineers, providing guidance and support in code debugging and development practices, contributing to their professional growth.
 - Delegated responsibilities to team members, fostering their growth and development while maintaining overall project accountability.
 - Shared expertise through multiple knowledge sharing sessions, contributing to the team's overall skill enhancement and promoting a culture of continuous learning.
-- Engaged in 4 Mastercard care events, contributing to the company's social responsibility initiatives and fostering a culture of giving back.
+- Engaged in 4 MA care events, contributing to the company's social responsibility initiatives and fostering a culture of giving back.
 
 ## MOVE FAST
 
 ### Prioritize what matters
-- Reduced feature release cycle from 70 days to 40-45 days, a 35-43% improvement, aligning with Mastercard's strategic priority of delivering value quickly to customers.
+- Reduced feature release cycle from 70 days to 40-45 days, a 35-43% improvement, aligning with MA's strategic priority of delivering value quickly to customers.
 - Optimally allocated story points and segmented feature stories, helping PMT in efficient project management and improving sprint planning accuracy.
 - Focused on delivering high-impact features that directly contribute to fraud detection and system performance, aligning work with key business priorities.
 - Actively participated in release planning and feature planning sessions, ensuring that technical priorities aligned with business objectives and contributing to more efficient and effective product development cycles.
@@ -127,7 +127,7 @@ As a Lead Software Engineer at Mastercard, I have consistently demonstrated high
      - Improved average team velocity, leading to more predictable and efficient sprint cycles
 
 ## Key Achievements Summary
-- Resolved 10+ production issues, including critical billing problems, safeguarding Mastercard's reputation.
+- Resolved 10+ production issues, including critical billing problems, safeguarding MA's reputation.
 - Reduced merchant fullfeed processing time by 75-80% (from 9-10 hours to 2 hours).
 - Improved API performance by 60% through query optimization.
 - Reduced feature release cycle by 35-43% (from 70 days to 40-45 days).
@@ -137,20 +137,20 @@ As a Lead Software Engineer at Mastercard, I have consistently demonstrated high
 - Leveraged technical expertise to enhance decision-making in cross-functional planning and review meetings.
 - Led successful upgrades to JDK 17 and Spring Boot 3, improving system performance and capabilities.
 - Conducted JMeter performance testing to optimize system efficiency.
-- Participated in 4 Mastercard care events, demonstrating commitment to corporate social responsibility.
+- Participated in 4 MA care events, demonstrating commitment to corporate social responsibility.
 - Regularly attended guild sessions, contributing to and learning from the broader engineering community.
 
 ## Areas for Future Growth
-- Continue to seek opportunities to innovate and think big, potentially exploring new technologies or methodologies that could benefit Mastercard's fraud detection capabilities and overall system performance.
+- Continue to seek opportunities to innovate and think big, potentially exploring new technologies or methodologies that could benefit MA's fraud detection capabilities and overall system performance.
 - Further develop skills in cross-functional collaboration and communication to drive even greater impact across teams and geographies, particularly in aligning technical solutions with business strategies.
 - Seek out additional leadership development opportunities to enhance ability to mentor and grow team members, with the goal of building a high-performing, innovative engineering culture.
 - Focus on further improving the release cycle and exploring additional automation opportunities to increase team productivity and software quality.
-- Explore opportunities to contribute more strategically to Mastercard's long-term technical vision and roadmap.
+- Explore opportunities to contribute more strategically to MA's long-term technical vision and roadmap.
 
 ## Conclusion
 
-Throughout this review period, I have consistently demonstrated my commitment to Mastercard's values and objectives. My technical expertise, leadership skills, and dedication to continuous improvement have allowed me to make significant contributions to our team's success and the broader organization's goals. I have not only met but exceeded expectations in most areas, driving improvements in system performance, release efficiency, and overall engineering practices.
+Throughout this review period, I have consistently demonstrated my commitment to MA's values and objectives. My technical expertise, leadership skills, and dedication to continuous improvement have allowed me to make significant contributions to our team's success and the broader organization's goals. I have not only met but exceeded expectations in most areas, driving improvements in system performance, release efficiency, and overall engineering practices.
 
 My ability to balance strategic improvements with critical issue resolution showcases my versatility and commitment to both long-term goals and immediate business needs. The successful upgrades to JDK 17 and Spring Boot 3, along with the implementation of performance testing and quality assurance practices, highlight my focus on keeping our technology stack current and efficient.
 
-Moving forward, I am excited to continue growing in my role, taking on more strategic responsibilities, and further developing my leadership skills. I am committed to driving innovation, fostering a culture of excellence within our engineering teams, and contributing to Mastercard's continued success in the ever-evolving financial technology landscape.
+Moving forward, I am excited to continue growing in my role, taking on more strategic responsibilities, and further developing my leadership skills. I am committed to driving innovation, fostering a culture of excellence within our engineering teams, and contributing to MA's continued success in the ever-evolving financial technology landscape.
