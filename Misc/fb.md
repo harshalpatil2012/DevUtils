@@ -8,7 +8,7 @@
 - Initiated and drove improvements in the release cycle for operation API, resulting in a 60% performance enhancement through query refactoring and N+1 query problem resolution.
 
 ### Innovate with Intention
-- Proactively addressed customer pain points by resolving over 10 production issues, including critical billing issues that posed reputation risks to Mastercard's brand.
+- Proactively addressed customer pain points by resolving over 10 production issues, including critical billing issues that posed reputation risks to MA's brand.
 - Implemented innovative solutions such as Gzip improvement, leading to a 40% improvement in execution time for API calls.
 - Introduced new business features to improve fraud detection for card testing attacks, demonstrating understanding of customer needs and industry challenges.
 - Increased resilience for preq service, enhancing the overall stability and reliability of the system.
@@ -38,7 +38,7 @@
 ## MOVE FAST
 
 ### Prioritize what matters
-- Reduced feature release cycle from 70 days to 40-45 days, a 35-43% improvement, aligning with Mastercard's strategic priority of delivering value quickly to customers.
+- Reduced feature release cycle from 70 days to 40-45 days, a 35-43% improvement, aligning with MA's strategic priority of delivering value quickly to customers.
 - Optimally allocated story points and segmented feature stories, helping PMT in efficient project management and improving sprint planning accuracy.
 - Focused on delivering high-impact features that directly contribute to fraud detection and system performance, aligning work with key business priorities.
 
@@ -54,7 +54,7 @@
 - Took responsibility for the end-to-end delivery of scalable and resilient features, ensuring high-quality outcomes that meet business needs.
 
 ## Key Achievements Summary
-- Resolved 10+ production issues, including critical billing problems, safeguarding Mastercard's reputation.
+- Resolved 10+ production issues, including critical billing problems, safeguarding MA's reputation.
 - Reduced merchant fullfeed processing time by 75-80% (from 9-10 hours to 2 hours).
 - Improved API performance by 60% through query optimization.
 - Reduced feature release cycle by 35-43% (from 70 days to 40-45 days).
@@ -62,9 +62,62 @@
 - Implemented automation and quality assurance practices, improving overall code quality and team efficiency.
 
 ## Areas for Future Growth
-- Continue to seek opportunities to innovate and think big, potentially exploring new technologies or methodologies that could benefit Mastercard's fraud detection capabilities and overall system performance.
+- Continue to seek opportunities to innovate and think big, potentially exploring new technologies or methodologies that could benefit MA's fraud detection capabilities and overall system performance.
 - Further develop skills in cross-functional collaboration and communication to drive even greater impact across teams and geographies, particularly in aligning technical solutions with business strategies.
 - Seek out additional leadership development opportunities to enhance ability to mentor and grow team members, with the goal of building a high-performing, innovative engineering culture.
 - Focus on further improving the release cycle and exploring additional automation opportunities to increase team productivity and software quality.
 
-This self-review demonstrates my commitment to Mastercard's values of creating value, growing together, and moving fast. I have consistently worked to deliver high-quality, scalable solutions that address critical business needs while also fostering a collaborative and growth-oriented team environment. Moving forward, I am excited to continue contributing to Mastercard's success and further developing my skills as a technical leader.
+This self-review demonstrates my commitment to MA's values of creating value, growing together, and moving fast. I have consistently worked to deliver high-quality, scalable solutions that address critical business needs while also fostering a collaborative and growth-oriented team environment. Moving forward, I am excited to continue contributing to MA's success and further developing my skills as a technical leader.
+
+# Lead Software Engineer Self-Review - Final Version
+
+[Previous sections remain unchanged]
+
+## Results for Individual Objectives
+
+1. Objective: Improve System Performance and Scalability
+   - Result: Exceeded expectations
+   - Key Achievements:
+     - Reduced merchant fullfeed processing time by 75-80% (from 9-10 hours to 2 hours)
+     - Improved API performance by 60% through query optimization and N+1 query problem resolution
+     - Implemented Gzip improvement, leading to a 40% improvement in execution time for API calls
+
+2. Objective: Enhance Release Cycle and Delivery Efficiency
+   - Result: Exceeded expectations
+   - Key Achievements:
+     - Reduced feature release cycle by 35-43% (from 70 days to 40-45 days)
+     - Successfully delivered two releases for provider and consumer API
+     - Supported one DS core release and multiple adhoc CRQ patch releases
+
+3. Objective: Improve Code Quality and Testing Practices
+   - Result: Met expectations
+   - Key Achievements:
+     - Implemented local jacoco and sonarqube integration for quality checks
+     - Conducted knowledge sharing sessions on sonarqube, plantuml, and diffblue to increase and automate unit testing
+     - Performed exploratory testing to ensure optimal product quality
+
+4. Objective: Provide Technical Leadership and Mentorship
+   - Result: Exceeded expectations
+   - Key Achievements:
+     - Took on tech lead role for two teams, effectively managing increased responsibilities
+     - Mentored junior engineers, providing guidance in code debugging and development practices
+     - Conducted multiple knowledge sharing sessions, contributing to overall team skill enhancement
+
+5. Objective: Enhance Fraud Detection Capabilities
+   - Result: Met expectations
+   - Key Achievements:
+     - Introduced new business features to improve fraud detection for card testing attacks
+     - Increased resilience for preq service, enhancing overall system stability
+     - Collaborated with cross-functional teams to refine requirements and prepare HLDs and LLDs for fraud detection improvements
+
+6. Objective: Resolve Critical Production Issues
+   - Result: Exceeded expectations
+   - Key Achievements:
+     - Resolved over 10 production issues, including critical billing problems that posed reputation risks
+     - Provided rapid response and support for multiple TRTs (Technical Resolution Teams) for production support
+     - Demonstrated ability to work under pressure and deliver results in time-sensitive situations
+
+Overall Performance Summary:
+Throughout the review period, I consistently met or exceeded the set objectives. My focus on system performance, delivery efficiency, and technical leadership has resulted in significant improvements across multiple areas. The ability to balance strategic improvements with critical issue resolution demonstrates my commitment to both long-term goals and immediate business needs. Moving forward, I aim to build on these achievements, further enhancing our systems' capabilities and continuing to foster a high-performing, innovative engineering culture.
+
+[Subsequent sections (Key Achievements Summary and Areas for Future Growth) remain unchanged]
